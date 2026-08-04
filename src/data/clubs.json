@@ -143,5 +143,23 @@
     "isUs": false,
     "hasLogo": false,
     "logo": "/clubs/hsg-freiburg.png"
+  },
+  {
+    "slug": "tus-metzingen",
+    "name": "TuS Metzingen",
+    "short": "Metzingen",
+    "city": "Metzingen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/tus-metzingen.png"
+  },
+  {
+    "slug": "hsg-bensheim-auerbach",
+    "name": "HSG Bensheim/Auerbach",
+    "short": "Flames",
+    "city": "Bensheim",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/hsg-bensheim-auerbach.png"
   }
 ]

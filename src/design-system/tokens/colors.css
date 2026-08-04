@@ -20,6 +20,13 @@
   --fb-white: #ffffff;
   --fb-red: #c62828;
 
+  /* Auswärts-Trikot (Pink) — dezent in Kacheln nutzen */
+  --fb-away: #d81b7a;
+  --fb-away-soft: #fce8f3;
+  --fb-away-line: #f0b6d4;
+  --fb-home-soft: var(--fb-green-100);
+  --fb-home-line: #b7dfc6;
+
   --fb-bg: var(--fb-white);
   --fb-surface: var(--fb-white);
   --fb-surface-alt: var(--fb-soft);

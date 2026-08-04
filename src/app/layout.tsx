@@ -20,7 +20,15 @@ export const metadata: Metadata = {
     template: "%s · Füchse Berlin Frauen",
   },
   description:
-    "Offizielle Website der Füchse Berlin Frauen — 2. Handball-Bundesliga. Spielplan, Tabelle, Team, Matchday & Fan-Tools.",
+    "Fan-Website Füchse Berlin Frauen — 2. Handball-Bundesliga. Spielplan, Tabelle, Team, Matchday & Fan-Tools.",
+  icons: {
+    icon: [
+      { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+  },
 };
 
 export default function RootLayout({

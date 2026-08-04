@@ -13,6 +13,8 @@
   --color-fb-muted: var(--fb-muted);
   --color-fb-soft: var(--fb-soft);
   --color-fb-accent: var(--fb-accent);
+  --color-fb-away: var(--fb-away);
+  --color-fb-away-soft: var(--fb-away-soft);
   --font-sans: var(--fb-font-sans);
   --font-display: var(--fb-font-display);
 }

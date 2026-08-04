@@ -1,7 +1,47 @@
 [
   {
+    "id": "sun-cup-metzingen",
+    "competitionKind": "turnier",
+    "competitionLabel": "SUN Handball Cup",
+    "round": "Gruppenphase",
+    "matchday": null,
+    "homeSlug": "tus-metzingen",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-08-08T14:00:00+02:00",
+    "venue": "Ballei / Sulmhalle",
+    "city": "Neckarsulm",
+    "status": "scheduled",
+    "streamUrl": null
+  },
+  {
+    "id": "sun-cup-bensheim",
+    "competitionKind": "turnier",
+    "competitionLabel": "SUN Handball Cup",
+    "round": "Gruppenphase",
+    "matchday": null,
+    "homeSlug": "hsg-bensheim-auerbach",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-08-09T12:00:00+02:00",
+    "venue": "Ballei / Sulmhalle",
+    "city": "Neckarsulm",
+    "status": "scheduled",
+    "streamUrl": null
+  },
+  {
+    "id": "pokal-r1-bremen",
+    "competitionKind": "pokal",
+    "competitionLabel": "DHB-Pokal Frauen",
+    "round": "1. Runde",
+    "matchday": null,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "werder-bremen",
+    "startsAt": "2026-08-21T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
     "id": "md01",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 1,
     "homeSlug": "hl-buchholz-rosengarten",
     "awaySlug": "fuechse-berlin",
@@ -10,7 +50,8 @@
   },
   {
     "id": "md02",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 2,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "bergischer-hc",
@@ -19,7 +60,8 @@
   },
   {
     "id": "md03",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 3,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "rostocker-hc",
@@ -28,7 +70,8 @@
   },
   {
     "id": "md04",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 4,
     "homeSlug": "vfl-waiblingen",
     "awaySlug": "fuechse-berlin",
@@ -37,7 +80,8 @@
   },
   {
     "id": "md05",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 5,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sg-nuertingen-zizishausen",
@@ -46,7 +90,8 @@
   },
   {
     "id": "md06",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 6,
     "homeSlug": "bayer-leverkusen",
     "awaySlug": "fuechse-berlin",
@@ -55,7 +100,8 @@
   },
   {
     "id": "md07",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 7,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "mainz-05",
@@ -64,7 +110,8 @@
   },
   {
     "id": "md08",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 8,
     "homeSlug": "hsv-solingen-graefrath",
     "awaySlug": "fuechse-berlin",
@@ -73,7 +120,8 @@
   },
   {
     "id": "md09",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 9,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "esv-regensburg",
@@ -82,7 +130,8 @@
   },
   {
     "id": "md10",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 10,
     "homeSlug": "tus-lintfort",
     "awaySlug": "fuechse-berlin",
@@ -91,7 +140,8 @@
   },
   {
     "id": "md11",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 11,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "werder-bremen",
@@ -100,7 +150,8 @@
   },
   {
     "id": "md12",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 12,
     "homeSlug": "hc-roedertal",
     "awaySlug": "fuechse-berlin",
@@ -109,7 +160,8 @@
   },
   {
     "id": "md13",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 13,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sg-kirchhof",
@@ -118,7 +170,8 @@
   },
   {
     "id": "md14",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 14,
     "homeSlug": "sv-todesfelde",
     "awaySlug": "fuechse-berlin",
@@ -127,7 +180,8 @@
   },
   {
     "id": "md15",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 15,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hsg-freiburg",
@@ -136,7 +190,8 @@
   },
   {
     "id": "md16",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 16,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hl-buchholz-rosengarten",
@@ -145,7 +200,8 @@
   },
   {
     "id": "md17",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 17,
     "homeSlug": "bergischer-hc",
     "awaySlug": "fuechse-berlin",
@@ -154,7 +210,8 @@
   },
   {
     "id": "md18",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 18,
     "homeSlug": "rostocker-hc",
     "awaySlug": "fuechse-berlin",
@@ -163,7 +220,8 @@
   },
   {
     "id": "md19",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 19,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "vfl-waiblingen",
@@ -172,7 +230,8 @@
   },
   {
     "id": "md20",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 20,
     "homeSlug": "sg-nuertingen-zizishausen",
     "awaySlug": "fuechse-berlin",
@@ -181,7 +240,8 @@
   },
   {
     "id": "md21",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 21,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "bayer-leverkusen",
@@ -190,7 +250,8 @@
   },
   {
     "id": "md22",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 22,
     "homeSlug": "mainz-05",
     "awaySlug": "fuechse-berlin",
@@ -199,7 +260,8 @@
   },
   {
     "id": "md23",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 23,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hsv-solingen-graefrath",
@@ -208,7 +270,8 @@
   },
   {
     "id": "md24",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 24,
     "homeSlug": "esv-regensburg",
     "awaySlug": "fuechse-berlin",
@@ -217,7 +280,8 @@
   },
   {
     "id": "md25",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 25,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "tus-lintfort",
@@ -226,7 +290,8 @@
   },
   {
     "id": "md26",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 26,
     "homeSlug": "werder-bremen",
     "awaySlug": "fuechse-berlin",
@@ -235,7 +300,8 @@
   },
   {
     "id": "md27",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 27,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hc-roedertal",
@@ -244,7 +310,8 @@
   },
   {
     "id": "md28",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 28,
     "homeSlug": "sg-kirchhof",
     "awaySlug": "fuechse-berlin",
@@ -253,7 +320,8 @@
   },
   {
     "id": "md29",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 29,
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sv-todesfelde",
@@ -262,7 +330,8 @@
   },
   {
     "id": "md30",
-    "competition": "2. Handball-Bundesliga Frauen",
+    "competitionKind": "liga",
+    "competitionLabel": "2. Bundesliga Frauen",
     "matchday": 30,
     "homeSlug": "hsg-freiburg",
     "awaySlug": "fuechse-berlin",
