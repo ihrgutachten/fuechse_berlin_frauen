@@ -1,0 +1,10 @@
+[
+  { "rank": 1, "team": "Thüringer HC", "played": 2, "won": 2, "draw": 0, "lost": 0, "goalsFor": 68, "goalsAgainst": 52, "points": 4, "isUs": false },
+  { "rank": 2, "team": "Füchse Berlin Frauen", "played": 2, "won": 2, "draw": 0, "lost": 0, "goalsFor": 64, "goalsAgainst": 55, "points": 4, "isUs": true },
+  { "rank": 3, "team": "SG BBM Bietigheim", "played": 2, "won": 1, "draw": 1, "lost": 0, "goalsFor": 61, "goalsAgainst": 58, "points": 3, "isUs": false },
+  { "rank": 4, "team": "TuS Metzingen", "played": 2, "won": 1, "draw": 0, "lost": 1, "goalsFor": 57, "goalsAgainst": 59, "points": 2, "isUs": false },
+  { "rank": 5, "team": "HSG Bensheim/Auerbach", "played": 2, "won": 1, "draw": 0, "lost": 1, "goalsFor": 55, "goalsAgainst": 58, "points": 2, "isUs": false },
+  { "rank": 6, "team": "BV Borussia Dortmund", "played": 2, "won": 0, "draw": 1, "lost": 1, "goalsFor": 52, "goalsAgainst": 56, "points": 1, "isUs": false },
+  { "rank": 7, "team": "VfL Oldenburg", "played": 2, "won": 0, "draw": 0, "lost": 2, "goalsFor": 48, "goalsAgainst": 62, "points": 0, "isUs": false },
+  { "rank": 8, "team": "Frisch Auf Göppingen", "played": 2, "won": 0, "draw": 0, "lost": 2, "goalsFor": 50, "goalsAgainst": 65, "points": 0, "isUs": false }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "next-1",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 3,
+    "home": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
+    "away": { "name": "TuS Metzingen", "short": "Metzingen", "isUs": false },
+    "startsAt": "2026-08-15T18:00:00+02:00",
+    "venue": "Sporthalle Charlottenburg",
+    "city": "Berlin",
+    "isHome": true,
+    "streamUrl": "https://www.sportdeutschland.tv",
+    "ticketUrl": null,
+    "status": "scheduled"
+  },
+  {
+    "id": "past-1",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 2,
+    "home": { "name": "HSG Bensheim/Auerbach", "short": "Flames", "isUs": false },
+    "away": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
+    "startsAt": "2026-08-01T19:30:00+02:00",
+    "venue": "Weststadthalle",
+    "city": "Bensheim",
+    "isHome": false,
+    "homeScore": 28,
+    "awayScore": 31,
+    "status": "finished"
+  },
+  {
+    "id": "next-2",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 4,
+    "home": { "name": "BV Borussia Dortmund", "short": "BVB", "isUs": false },
+    "away": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
+    "startsAt": "2026-08-22T17:00:00+02:00",
+    "venue": "Helmut-Körnig-Halle",
+    "city": "Dortmund",
+    "isHome": false,
+    "status": "scheduled"
+  }
+]

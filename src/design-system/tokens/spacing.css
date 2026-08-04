@@ -1,0 +1,16 @@
+:root {
+  --fb-space-1: 0.25rem;
+  --fb-space-2: 0.5rem;
+  --fb-space-3: 0.75rem;
+  --fb-space-4: 1rem;
+  --fb-space-5: 1.5rem;
+  --fb-space-6: 2rem;
+  --fb-space-7: 3rem;
+  --fb-space-8: 4rem;
+  --fb-space-9: 6rem;
+
+  --fb-container: 72rem;
+  --fb-gutter: clamp(1rem, 4vw, 1.5rem);
+  --fb-radius: 0.25rem;
+  --fb-radius-lg: 0.5rem;
+}

@@ -1,0 +1,29 @@
+/* Füchse Berlin Frauen — Typography */
+:root {
+  --fb-font-display: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
+  --fb-font-sans: var(--font-barlow), "Barlow", system-ui, sans-serif;
+
+  --fb-fw-regular: 400;
+  --fb-fw-medium: 500;
+  --fb-fw-semibold: 600;
+  --fb-fw-bold: 700;
+  --fb-fw-black: 800;
+
+  --fb-fs-hero: clamp(2.75rem, 10vw, 5.5rem);
+  --fb-fs-h2: clamp(1.75rem, 4vw, 2.5rem);
+  --fb-fs-h3: 1.35rem;
+  --fb-fs-lead: 1.125rem;
+  --fb-fs-title: 1.05rem;
+  --fb-fs-body: 1rem;
+  --fb-fs-sm: 0.875rem;
+  --fb-fs-xs: 0.75rem;
+  --fb-fs-label: 0.6875rem;
+
+  --fb-lh-tight: 0.95;
+  --fb-lh-snug: 1.2;
+  --fb-lh-normal: 1.5;
+  --fb-lh-relaxed: 1.65;
+
+  --fb-ls-tight: -0.02em;
+  --fb-ls-label: 0.14em;
+}

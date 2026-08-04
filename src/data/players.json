@@ -1,0 +1,8 @@
+[
+  { "slug": "lena-hoffmann", "name": "Lena Hoffmann", "number": 9, "position": "Rückraum Mitte", "nationality": "GER", "height": "178 cm", "bio": "Spielmacherin mit Überblick und Tempo." },
+  { "slug": "mira-jensen", "name": "Mira Jensen", "number": 1, "position": "Tor", "nationality": "DEN", "height": "182 cm", "bio": "Ruhig im 1-gegen-1, laut in der Abwehrkommunikation." },
+  { "slug": "sofia-brandt", "name": "Sofia Brandt", "number": 7, "position": "Linksaußen", "nationality": "GER", "height": "168 cm", "bio": "Schnelle Linie, gefährlich im Gegenstoß." },
+  { "slug": "amelie-krause", "name": "Amelie Krause", "number": 14, "position": "Kreis", "nationality": "GER", "height": "176 cm", "bio": "Kampf um jeden Meter, Abschlüsse aus dem Gewühl." },
+  { "slug": "nora-vik", "name": "Nora Vik", "number": 22, "position": "Rückraum links", "nationality": "NOR", "height": "181 cm", "bio": "Wurfstärke von außen und Druck auf die Abwehr." },
+  { "slug": "emma-richter", "name": "Emma Richter", "number": 3, "position": "Rechtsaußen", "nationality": "GER", "height": "170 cm", "bio": "Präzise Abschlüsse und starke Defensivarbeit." }
+]

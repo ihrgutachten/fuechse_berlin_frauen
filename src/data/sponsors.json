@@ -1,0 +1,8 @@
+[
+  { "id": "haupt-1", "name": "Hauptpartner A", "tier": "haupt", "url": "#" },
+  { "id": "partner-1", "name": "Partner B", "tier": "partner", "url": "#" },
+  { "id": "partner-2", "name": "Partner C", "tier": "partner", "url": "#" },
+  { "id": "foerder-1", "name": "Förderer D", "tier": "foerderer", "url": "#" },
+  { "id": "foerder-2", "name": "Förderer E", "tier": "foerderer", "url": "#" },
+  { "id": "foerder-3", "name": "Förderer F", "tier": "foerderer", "url": "#" }
+]

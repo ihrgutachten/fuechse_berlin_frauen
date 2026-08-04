@@ -1,0 +1,18 @@
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--fb-bg);
+    color: var(--fb-text);
+    font-family: var(--fb-font-sans);
+    font-size: var(--fb-fs-body);
+    line-height: var(--fb-lh-normal);
+  }
+
+  ::selection {
+    background: var(--fb-green-300);
+    color: var(--fb-ink);
+  }
+}

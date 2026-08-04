@@ -1,0 +1,35 @@
+/* Füchse Berlin Frauen — Color tokens */
+:root {
+  --fb-green-950: #04140c;
+  --fb-green-900: #0a2818;
+  --fb-green-800: #0f3d24;
+  --fb-green-700: #145c34;
+  --fb-green-600: #1a7a42;
+  --fb-green-500: #22a055;
+  --fb-green-400: #3dbe6f;
+  --fb-green-300: #7ad49e;
+  --fb-green-100: #e4f6eb;
+
+  --fb-ink: #0b1210;
+  --fb-ink-2: #1a2420;
+  --fb-muted: #4a5a52;
+  --fb-faint: #7a8a82;
+  --fb-line: #d5e0da;
+  --fb-soft: #f2f6f3;
+  --fb-soft-2: #e6eee9;
+  --fb-white: #ffffff;
+  --fb-red: #c62828;
+
+  --fb-bg: var(--fb-white);
+  --fb-surface: var(--fb-white);
+  --fb-surface-alt: var(--fb-soft);
+  --fb-text: var(--fb-ink);
+  --fb-text-muted: var(--fb-muted);
+  --fb-text-faint: var(--fb-faint);
+  --fb-border: var(--fb-line);
+  --fb-accent: var(--fb-green-700);
+  --fb-accent-hover: var(--fb-green-800);
+  --fb-accent-bright: var(--fb-green-500);
+  --fb-on-accent: #ffffff;
+  --fb-on-dark: #ffffff;
+}

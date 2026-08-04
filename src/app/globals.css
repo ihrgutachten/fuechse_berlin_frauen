@@ -1,26 +1,55 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "../design-system/styles.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-fb-green-950: var(--fb-green-950);
+  --color-fb-green-900: var(--fb-green-900);
+  --color-fb-green-800: var(--fb-green-800);
+  --color-fb-green-700: var(--fb-green-700);
+  --color-fb-green-500: var(--fb-green-500);
+  --color-fb-green-300: var(--fb-green-300);
+  --color-fb-green-100: var(--fb-green-100);
+  --color-fb-ink: var(--fb-ink);
+  --color-fb-muted: var(--fb-muted);
+  --color-fb-soft: var(--fb-soft);
+  --color-fb-accent: var(--fb-accent);
+  --font-sans: var(--fb-font-sans);
+  --font-display: var(--fb-font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.animate-fade-up-delay {
+  animation: fade-up 0.7s ease-out 0.15s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.7s ease-out 0.3s both;
+}
+
+.hero-glow {
+  animation: pulse-soft 4s ease-in-out infinite;
 }

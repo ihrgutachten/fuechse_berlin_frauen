@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Füchse Berlin Frauen
 
-## Getting Started
+Offizielle Vereinswebsite (Next.js) — Phase 1: Struktur, CI, Mock-Daten, Vercel-ready.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS v4
+- Design-Tokens unter `src/design-system/` (analog GND, schlank ohne DB/Auth)
+
+## Lokal starten
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Öffne [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Befehl | Zweck |
+|--------|--------|
+| `npm run dev` | Dev-Server (Turbopack) |
+| `npm run build` | Production-Build |
+| `npm start` | Production-Server |
+| `npm run lint` | ESLint |
 
-## Learn More
+## Live
 
-To learn more about Next.js, take a look at the following resources:
+- **Production:** https://fuechse-berlin-frauen.vercel.app
+- Vercel-Projekt: `vibetastic/fuechse-berlin-frauen`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy auf Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Bereits verknüpft. Erneut deployen:
 
-## Deploy on Vercel
+```bash
+npx vercel --prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+GitHub-Remote (optional, für Auto-Deploy bei Push) — zuerst `gh auth login`, dann:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+gh repo create fuechse-berlin-frauen --private --source=. --remote=origin --push
+```
+
+Danach im Vercel-Dashboard das GitHub-Repo an das bestehende Projekt hängen.
+
+## Ordnerstruktur
+
+```
+docs/PROJEKT-BRIEF.md
+src/
+  app/(public)/     # Sitemap-Routen
+  components/       # layout, match, news, players, sponsors, ui
+  data/             # Mock-JSON (später austauschbar)
+  design-system/    # CI-Tokens
+  lib/              # data helpers, format
+```
+
+## Nächste Schritte
+
+- Phase 2: handball.net, Matchday live, Tippspiel, Szenario-Rechner, CMS für Nina
+- Phase 3: Fanzone-Mechaniken, Social-Aggregation
