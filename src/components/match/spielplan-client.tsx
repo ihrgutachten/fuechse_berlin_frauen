@@ -11,7 +11,7 @@ type Filter = "all" | CompetitionKind;
 const filters: Filter[] = ["all", "liga", "pokal", "turnier"];
 
 export function SpielplanClient({ matches }: { matches: Match[] }) {
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>("liga");
 
   const visible = useMemo(
     () => (filter === "all" ? matches : matches.filter((m) => m.competitionKind === filter)),
