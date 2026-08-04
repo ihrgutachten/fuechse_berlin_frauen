@@ -4,6 +4,7 @@ import { StandingsPreview } from "@/components/match/standings-preview";
 import { NewsCard } from "@/components/news/news-card";
 import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
+import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getNews, getNextMatch, getSponsors, getStandings } from "@/lib/data";
 
@@ -15,6 +16,7 @@ export default function HomePage() {
 
   return (
     <>
+      <FanProjectOverlay />
       <section className="relative isolate min-h-[88vh] overflow-hidden bg-[var(--fb-green-950)] text-white">
         <div
           className="hero-glow pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-[var(--fb-green-500)]/30 blur-3xl"
