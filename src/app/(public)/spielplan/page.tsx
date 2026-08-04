@@ -1,22 +1,25 @@
 import { MatchCard } from "@/components/match/match-card";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
-import { getMatches } from "@/lib/data";
+import { getLogoStatus, getMatches } from "@/lib/data";
 
 export const metadata = { title: "Spielplan" };
 
 export default function SpielplanPage() {
   const matches = getMatches();
+  const logos = getLogoStatus();
 
   return (
     <>
       <PageHero
-        eyebrow="Saison"
+        eyebrow="Saison 2026/27"
         title="Spielplan"
-        description="Heim- und Auswärtsspiele. Quelle später: handball.net."
+        description="Alle 30 Spiele der 2. Handball-Bundesliga Frauen. Ergebnisse später automatisch."
       />
       <div className="mx-auto max-w-[var(--fb-container)] space-y-6 px-[var(--fb-gutter)] py-10 md:py-14">
         <PlaceholderNote>
-          Platzhalter-Spielplan mit lokalen Mock-Daten.
+          Club-Logos: {logos.ready}/{logos.total} bereit. Fehlende Dateien unter{" "}
+          <code className="text-[var(--fb-ink)]">public/clubs/&lt;slug&gt;.png</code> ablegen und in{" "}
+          <code className="text-[var(--fb-ink)]">clubs.json</code> <code className="text-[var(--fb-ink)]">hasLogo: true</code> setzen.
         </PlaceholderNote>
         <div className="grid gap-5 lg:grid-cols-2">
           {matches.map((match) => (

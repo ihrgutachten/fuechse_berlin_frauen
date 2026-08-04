@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClubLogo } from "@/components/match/club-logo";
 import type { StandingRow } from "@/lib/data";
 import { cn } from "@/lib/format";
 
@@ -26,7 +27,7 @@ export function StandingsPreview({ rows, limit = 6 }: StandingsPreviewProps) {
           <tbody>
             {visible.map((row) => (
               <tr
-                key={row.team}
+                key={row.teamSlug}
                 className={cn(
                   "border-t border-[var(--fb-border)]",
                   row.isUs
@@ -35,7 +36,18 @@ export function StandingsPreview({ rows, limit = 6 }: StandingsPreviewProps) {
                 )}
               >
                 <td className="px-3 py-3 tabular-nums">{row.rank}</td>
-                <td className="px-3 py-3">{row.team}</td>
+                <td className="px-3 py-3">
+                  <span className="inline-flex items-center gap-2">
+                    <ClubLogo
+                      name={row.team}
+                      short={row.short}
+                      logo={row.logo}
+                      hasLogo={row.hasLogo}
+                      size="sm"
+                    />
+                    <span>{row.team}</span>
+                  </span>
+                </td>
                 <td className="px-3 py-3 text-right tabular-nums">{row.played}</td>
                 <td className="px-3 py-3 text-right tabular-nums">
                   {row.goalsFor}:{row.goalsAgainst}

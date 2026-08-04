@@ -1,42 +1,272 @@
 [
   {
-    "id": "next-1",
+    "id": "md01",
     "competition": "2. Handball-Bundesliga Frauen",
-    "matchday": 3,
-    "home": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
-    "away": { "name": "TuS Metzingen", "short": "Metzingen", "isUs": false },
-    "startsAt": "2026-08-15T18:00:00+02:00",
-    "venue": "Sporthalle Charlottenburg",
-    "city": "Berlin",
-    "isHome": true,
-    "streamUrl": "https://www.sportdeutschland.tv",
-    "ticketUrl": null,
+    "matchday": 1,
+    "homeSlug": "hl-buchholz-rosengarten",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-08-30T16:00:00+02:00",
     "status": "scheduled"
   },
   {
-    "id": "past-1",
+    "id": "md02",
     "competition": "2. Handball-Bundesliga Frauen",
     "matchday": 2,
-    "home": { "name": "HSG Bensheim/Auerbach", "short": "Flames", "isUs": false },
-    "away": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
-    "startsAt": "2026-08-01T19:30:00+02:00",
-    "venue": "Weststadthalle",
-    "city": "Bensheim",
-    "isHome": false,
-    "homeScore": 28,
-    "awayScore": 31,
-    "status": "finished"
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "bergischer-hc",
+    "startsAt": "2026-09-05T19:00:00+02:00",
+    "status": "scheduled"
   },
   {
-    "id": "next-2",
+    "id": "md03",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 3,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "rostocker-hc",
+    "startsAt": "2026-09-12T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md04",
     "competition": "2. Handball-Bundesliga Frauen",
     "matchday": 4,
-    "home": { "name": "BV Borussia Dortmund", "short": "BVB", "isUs": false },
-    "away": { "name": "Füchse Berlin Frauen", "short": "Füchse", "isUs": true },
-    "startsAt": "2026-08-22T17:00:00+02:00",
-    "venue": "Helmut-Körnig-Halle",
-    "city": "Dortmund",
-    "isHome": false,
+    "homeSlug": "vfl-waiblingen",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-09-19T18:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md05",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 5,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "sg-nuertingen-zizishausen",
+    "startsAt": "2026-10-10T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md06",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 6,
+    "homeSlug": "bayer-leverkusen",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-10-17T18:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md07",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 7,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "mainz-05",
+    "startsAt": "2026-10-31T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md08",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 8,
+    "homeSlug": "hsv-solingen-graefrath",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-11-07T18:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md09",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 9,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "esv-regensburg",
+    "startsAt": "2026-11-14T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md10",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 10,
+    "homeSlug": "tus-lintfort",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-11-21T19:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md11",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 11,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "werder-bremen",
+    "startsAt": "2026-12-19T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md12",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 12,
+    "homeSlug": "hc-roedertal",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-12-30T18:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md13",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 13,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "sg-kirchhof",
+    "startsAt": "2027-01-02T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md14",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 14,
+    "homeSlug": "sv-todesfelde",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-01-09T20:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md15",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 15,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "hsg-freiburg",
+    "startsAt": "2027-01-23T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md16",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 16,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "hl-buchholz-rosengarten",
+    "startsAt": "2027-01-30T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md17",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 17,
+    "homeSlug": "bergischer-hc",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-02-06T18:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md18",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 18,
+    "homeSlug": "rostocker-hc",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-02-13T18:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md19",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 19,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "vfl-waiblingen",
+    "startsAt": "2027-02-20T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md20",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 20,
+    "homeSlug": "sg-nuertingen-zizishausen",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-02-27T19:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md21",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 21,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "bayer-leverkusen",
+    "startsAt": "2027-03-13T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md22",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 22,
+    "homeSlug": "mainz-05",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-03-20T19:30:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md23",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 23,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "hsv-solingen-graefrath",
+    "startsAt": "2027-03-27T19:00:00+01:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md24",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 24,
+    "homeSlug": "esv-regensburg",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-04-03T18:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md25",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 25,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "tus-lintfort",
+    "startsAt": "2027-04-17T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md26",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 26,
+    "homeSlug": "werder-bremen",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-04-24T18:30:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md27",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 27,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "hc-roedertal",
+    "startsAt": "2027-05-01T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md28",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 28,
+    "homeSlug": "sg-kirchhof",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-05-08T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md29",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 29,
+    "homeSlug": "fuechse-berlin",
+    "awaySlug": "sv-todesfelde",
+    "startsAt": "2027-05-22T19:00:00+02:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "md30",
+    "competition": "2. Handball-Bundesliga Frauen",
+    "matchday": 30,
+    "homeSlug": "hsg-freiburg",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2027-05-29T18:00:00+02:00",
     "status": "scheduled"
   }
 ]

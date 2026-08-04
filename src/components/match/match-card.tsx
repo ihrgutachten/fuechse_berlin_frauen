@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
 import { Button } from "@/components/ui/button";
 import type { Match } from "@/lib/data";
@@ -9,6 +10,42 @@ type MatchCardProps = {
   showCountdown?: boolean;
   className?: string;
 };
+
+function TeamBlock({
+  team,
+  align,
+}: {
+  team: Match["home"];
+  align: "left" | "right";
+}) {
+  return (
+    <div
+      className={cn(
+        "flex min-w-0 items-center gap-2",
+        align === "right" ? "flex-row-reverse text-right" : "text-left",
+      )}
+    >
+      <ClubLogo
+        name={team.name}
+        short={team.short}
+        logo={team.logo}
+        hasLogo={team.hasLogo}
+        size="md"
+      />
+      <div className="min-w-0">
+        <p
+          className={cn(
+            "font-[family-name:var(--fb-font-display)] text-lg font-bold uppercase leading-tight md:text-xl",
+            team.isUs && "text-[var(--fb-accent)]",
+          )}
+        >
+          {team.short}
+        </p>
+        <p className="truncate text-xs text-[var(--fb-text-faint)]">{team.name}</p>
+      </div>
+    </div>
+  );
+}
 
 export function MatchCard({ match, showCountdown = false, className }: MatchCardProps) {
   const finished = match.status === "finished";
@@ -28,20 +65,10 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
       </div>
 
       <div className="px-4 py-5">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-          <div className="text-right">
-            <p
-              className={cn(
-                "font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase leading-tight md:text-2xl",
-                match.home.isUs && "text-[var(--fb-accent)]",
-              )}
-            >
-              {match.home.short}
-            </p>
-            <p className="mt-1 text-xs text-[var(--fb-text-faint)]">{match.home.name}</p>
-          </div>
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-3">
+          <TeamBlock team={match.home} align="right" />
 
-          <div className="min-w-[4.5rem] text-center">
+          <div className="min-w-[3.5rem] text-center md:min-w-[4.5rem]">
             {finished ? (
               <p className="font-[family-name:var(--fb-font-display)] text-3xl font-extrabold tabular-nums">
                 {match.homeScore}:{match.awayScore}
@@ -53,17 +80,7 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
             )}
           </div>
 
-          <div>
-            <p
-              className={cn(
-                "font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase leading-tight md:text-2xl",
-                match.away.isUs && "text-[var(--fb-accent)]",
-              )}
-            >
-              {match.away.short}
-            </p>
-            <p className="mt-1 text-xs text-[var(--fb-text-faint)]">{match.away.name}</p>
-          </div>
+          <TeamBlock team={match.away} align="left" />
         </div>
 
         <p className="mt-4 text-center text-sm text-[var(--fb-text-muted)]">

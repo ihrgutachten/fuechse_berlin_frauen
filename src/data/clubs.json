@@ -1,0 +1,147 @@
+[
+  {
+    "slug": "fuechse-berlin",
+    "name": "Füchse Berlin",
+    "short": "Füchse",
+    "city": "Berlin",
+    "venue": "Sporthalle Charlottenburg",
+    "isUs": true,
+    "hasLogo": true,
+    "logo": "/clubs/fuechse-berlin.png"
+  },
+  {
+    "slug": "hl-buchholz-rosengarten",
+    "name": "HL Buchholz 08-Rosengarten",
+    "short": "Buchholz",
+    "city": "Buchholz",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/hl-buchholz-rosengarten.png"
+  },
+  {
+    "slug": "bergischer-hc",
+    "name": "Bergischer HC",
+    "short": "BHC",
+    "city": "Wuppertal",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/bergischer-hc.png"
+  },
+  {
+    "slug": "rostocker-hc",
+    "name": "Rostocker Handball Club",
+    "short": "Rostock",
+    "city": "Rostock",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/rostocker-hc.png"
+  },
+  {
+    "slug": "vfl-waiblingen",
+    "name": "VfL Waiblingen",
+    "short": "Waiblingen",
+    "city": "Waiblingen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/vfl-waiblingen.png"
+  },
+  {
+    "slug": "sg-nuertingen-zizishausen",
+    "name": "SG Nürtingen-Zizishausen",
+    "short": "Nürtingen",
+    "city": "Nürtingen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/sg-nuertingen-zizishausen.png"
+  },
+  {
+    "slug": "bayer-leverkusen",
+    "name": "TSV Bayer 04 Leverkusen",
+    "short": "Leverkusen",
+    "city": "Leverkusen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/bayer-leverkusen.png"
+  },
+  {
+    "slug": "mainz-05",
+    "name": "1. FSV Mainz 05",
+    "short": "Mainz",
+    "city": "Mainz",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/mainz-05.png"
+  },
+  {
+    "slug": "hsv-solingen-graefrath",
+    "name": "HSV Solingen-Gräfrath 76",
+    "short": "Solingen",
+    "city": "Solingen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/hsv-solingen-graefrath.png"
+  },
+  {
+    "slug": "esv-regensburg",
+    "name": "ESV 1927 Regensburg",
+    "short": "Regensburg",
+    "city": "Regensburg",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/esv-regensburg.png"
+  },
+  {
+    "slug": "tus-lintfort",
+    "name": "TuS Lintfort",
+    "short": "Lintfort",
+    "city": "Kamp-Lintfort",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/tus-lintfort.png"
+  },
+  {
+    "slug": "werder-bremen",
+    "name": "SV Werder Bremen",
+    "short": "Bremen",
+    "city": "Bremen",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/werder-bremen.png"
+  },
+  {
+    "slug": "hc-roedertal",
+    "name": "HC Rödertal",
+    "short": "Rödertal",
+    "city": "Großröhrsdorf",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/hc-roedertal.png"
+  },
+  {
+    "slug": "sg-kirchhof",
+    "name": "SG 09 Kirchhof",
+    "short": "Kirchhof",
+    "city": "Kirchhof",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/sg-kirchhof.png"
+  },
+  {
+    "slug": "sv-todesfelde",
+    "name": "SV Todesfelde",
+    "short": "Todesfelde",
+    "city": "Todesfelde",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/sv-todesfelde.png"
+  },
+  {
+    "slug": "hsg-freiburg",
+    "name": "HSG Freiburg",
+    "short": "Freiburg",
+    "city": "Freiburg",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/hsg-freiburg.png"
+  }
+]
