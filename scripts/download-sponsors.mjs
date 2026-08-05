@@ -44,7 +44,7 @@ const sponsors = [
     slug: "gh-payment",
     name: "GH Payment",
     url: "https://gh-payment.de",
-    src: "https://fuechseberlinfrauen.de/wp-content/uploads/2025/09/GH-Payment-Logo768x768.jpg",
+    src: "https://fuechseberlinfrauen.de/wp-content/uploads/2026/07/GH-Payment-Logo768x768.jpg",
   },
   // Silber
   {
