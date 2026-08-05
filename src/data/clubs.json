@@ -5,6 +5,7 @@
     "short": "Füchse",
     "city": "Berlin",
     "venue": "Sporthalle Charlottenburg",
+    "venueAddress": "Sömmeringstraße 29, 10589 Berlin",
     "isUs": true,
     "hasLogo": true,
     "logo": "/clubs/fuechse-berlin.png"
@@ -14,6 +15,8 @@
     "name": "HL Buchholz 08-Rosengarten",
     "short": "Buchholz",
     "city": "Buchholz",
+    "venue": "Nordheidehalle",
+    "venueAddress": "Holzweg 4, 21244 Buchholz",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/hl-buchholz-rosengarten.png"

@@ -15,6 +15,7 @@ export type Club = {
   short: string;
   city: string;
   venue?: string;
+  venueAddress?: string;
   isUs: boolean;
   hasLogo: boolean;
   logo: string;
@@ -45,6 +46,8 @@ type MatchRecord = {
   status: "scheduled" | "live" | "finished";
   venue?: string;
   city?: string;
+  venueAddress?: string;
+  mapsUrl?: string | null;
 };
 
 export type Match = {
@@ -58,6 +61,8 @@ export type Match = {
   startsAt: string;
   venue: string;
   city: string;
+  venueAddress: string | null;
+  mapsUrl: string | null;
   isHome: boolean;
   streamUrl?: string | null;
   ticketUrl?: string | null;
@@ -65,6 +70,10 @@ export type Match = {
   awayScore?: number;
   status: "scheduled" | "live" | "finished";
 };
+
+function mapsDirUrl(address: string): string {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+}
 
 export type StandingRow = {
   rank: number;
@@ -239,6 +248,14 @@ function hydrateMatch(record: MatchRecord): Match {
           ? null
           : "https://www.sportdeutschland.tv"));
 
+  const venue = record.venue ?? host.venue ?? `Spielstätte ${host.city}`;
+  const city = record.city ?? host.city;
+  const venueAddress = record.venueAddress ?? host.venueAddress ?? null;
+  const mapsUrl =
+    record.mapsUrl === null
+      ? null
+      : (record.mapsUrl ?? (venueAddress ? mapsDirUrl(venueAddress) : null));
+
   return {
     id: record.id,
     competitionKind: record.competitionKind,
@@ -248,8 +265,10 @@ function hydrateMatch(record: MatchRecord): Match {
     home: toTeamSide(home),
     away: toTeamSide(away),
     startsAt: record.startsAt,
-    venue: record.venue ?? host.venue ?? `Spielstätte ${host.city}`,
-    city: record.city ?? host.city,
+    venue,
+    city,
+    venueAddress,
+    mapsUrl,
     isHome,
     streamUrl,
     ticketUrl: record.ticketUrl ?? null,
