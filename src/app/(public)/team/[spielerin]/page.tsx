@@ -104,23 +104,21 @@ export default async function PlayerPage({ params }: Props) {
           ) : null}
 
           {player.patron ? (
-            <div className="mt-6 rounded-[var(--fb-radius)] border border-[var(--fb-border)] bg-[var(--fb-soft)] px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--fb-text-faint)]">
-                Sponsoren-Patenschaft
-              </p>
+            <p className="mt-6 text-sm text-[var(--fb-text-muted)]">
+              Patenschaft ·{" "}
               {player.patronUrl ? (
                 <a
                   href={player.patronUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 inline-block font-semibold text-[var(--fb-accent)] underline-offset-2 hover:underline"
+                  className="underline-offset-2 hover:text-[var(--fb-ink)] hover:underline"
                 >
                   {player.patron}
                 </a>
               ) : (
-                <p className="mt-1 font-semibold text-[var(--fb-ink)]">{player.patron}</p>
+                player.patron
               )}
-            </div>
+            </p>
           ) : null}
 
           <div className="mt-8">

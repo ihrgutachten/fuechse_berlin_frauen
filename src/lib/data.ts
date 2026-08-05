@@ -4,6 +4,8 @@ import standings from "@/data/standings.json";
 import news from "@/data/news.json";
 import players from "@/data/players.json";
 import sponsors from "@/data/sponsors.json";
+import sponsorOrthoPed from "@/data/sponsor-profiles/sponsor-ortho-ped.json";
+import sponsorMalermeisterRewolinski from "@/data/sponsor-profiles/sponsor-malermeister-rewolinski.json";
 
 export type CompetitionKind = "liga" | "pokal" | "turnier";
 
@@ -117,12 +119,81 @@ export type Player = {
   namePhonetic?: string;
 };
 
+export type SponsorTier =
+  | "platin"
+  | "gold"
+  | "silber"
+  | "premium"
+  | "partner"
+  | "ausruestung"
+  | "gesundheit"
+  | "mobil"
+  | "medien"
+  | "versicherung"
+  | "hbf";
+
 export type Sponsor = {
   id: string;
   name: string;
-  tier: "haupt" | "partner" | "foerderer";
+  tier: SponsorTier;
+  tierLabel: string;
   url: string;
+  logo: string;
+  /** Internal portrait page slug, e.g. sponsor-ortho-ped */
+  profileSlug?: string;
 };
+
+export type SponsorProfileSection = {
+  title: string;
+  body: string;
+};
+
+export type SponsorProfileLocation = {
+  name: string;
+  address: string;
+  phone?: string;
+  email: string;
+};
+
+export type SponsorProfileImage = {
+  src: string;
+  alt: string;
+};
+
+export type SponsorProfile = {
+  slug: string;
+  sponsorId: string;
+  headline: string;
+  tagline: string;
+  intro: string;
+  sections: SponsorProfileSection[];
+  images: SponsorProfileImage[];
+  services: string[];
+  locations: SponsorProfileLocation[];
+  website: string;
+  sourceNote?: string;
+};
+
+export const sponsorTierOrder: SponsorTier[] = [
+  "platin",
+  "gold",
+  "silber",
+  "premium",
+  "partner",
+  "ausruestung",
+  "gesundheit",
+  "mobil",
+  "medien",
+  "versicherung",
+  "hbf",
+];
+
+export const homepageSponsorTiers: SponsorTier[] = [
+  "platin",
+  "gold",
+  "silber",
+  "premium",
+];
 
 const clubList = clubs as Club[];
 
@@ -251,6 +322,23 @@ export function getPlayerBySlug(slug: string): Player | undefined {
 
 export function getSponsors(): Sponsor[] {
   return sponsors as Sponsor[];
+}
+
+export function getSponsorById(id: string): Sponsor | undefined {
+  return getSponsors().find((s) => s.id === id);
+}
+
+const sponsorProfiles: SponsorProfile[] = [
+  sponsorOrthoPed as SponsorProfile,
+  sponsorMalermeisterRewolinski as SponsorProfile,
+];
+
+export function getSponsorProfiles(): SponsorProfile[] {
+  return sponsorProfiles;
+}
+
+export function getSponsorProfileBySlug(slug: string): SponsorProfile | undefined {
+  return sponsorProfiles.find((p) => p.slug === slug);
 }
 
 export function speechLangFromNationality(nationality?: string): string {

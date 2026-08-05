@@ -13,7 +13,7 @@ export default function SponsorenPage() {
       <PageHero
         eyebrow="Partner"
         title="Sponsoren"
-        description="Gestuft: Hauptpartner, Partner, Förderer — plus Einstieg für Interessierte."
+        description="Gemeinsam stark: Platin bis Partner, plus Ausrüstung, Gesundheit, Medien und mehr."
       />
       <div className="mx-auto max-w-[var(--fb-container)] space-y-10 px-[var(--fb-gutter)] py-10 md:py-14">
         <SponsorWall sponsors={sponsors} />
@@ -22,7 +22,7 @@ export default function SponsorenPage() {
             Sponsor werden
           </h2>
           <p className="mt-3 max-w-xl text-white/75">
-            Sichtbarkeit rund um Spieltage, Matchday-Center und Fan-Tools. Pakete folgen — Kontakt schon jetzt möglich.
+            Sichtbarkeit rund um Spieltage, Trikots, Social Media und Fan-Tools. Werde Teil des Netzwerks.
           </p>
           <div className="mt-6">
             <Button href="/kontakt" variant="on-dark">

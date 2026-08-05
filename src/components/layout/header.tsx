@@ -5,7 +5,7 @@ import { navLinks } from "@/components/layout/nav-links";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 border-b border-white/10 bg-[var(--fb-green-950)]/95 text-white backdrop-blur-md">
+    <header className="sticky top-0 z-[210] border-b border-white/10 bg-[var(--fb-green-950)] text-white">
       <div className="mx-auto flex h-16 max-w-[var(--fb-container)] items-center justify-between gap-4 px-[var(--fb-gutter)] md:h-[4.5rem]">
         <Link href="/" className="flex shrink-0 items-center">
           <Image

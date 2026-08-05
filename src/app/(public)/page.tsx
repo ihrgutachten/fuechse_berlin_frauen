@@ -6,7 +6,7 @@ import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
 import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getNews, getNextMatch, getSponsors, getStandings } from "@/lib/data";
+import { getNews, getNextMatch, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
 
 export default function HomePage() {
   const nextMatch = getNextMatch();
@@ -151,7 +151,7 @@ export default function HomePage() {
               </Button>
             }
           />
-          <SponsorWall sponsors={sponsors} />
+          <SponsorWall sponsors={sponsors} tiers={homepageSponsorTiers} />
         </div>
       </section>
     </>

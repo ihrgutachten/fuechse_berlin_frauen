@@ -1,0 +1,60 @@
+{
+  "slug": "sponsor-ortho-ped",
+  "sponsorId": "ortho-ped",
+  "headline": "Handball-Leidenschaft, die in Berlin verbindet.",
+  "tagline": "Gesundheitspartner der Füchse Berlin Frauen",
+  "intro": "Als Teil des Partner-Netzwerks stellen wir Sponsoren vor, die den Verein und den Sport unterstützen. Heute im Porträt: Ortho-Ped – exklusives Sanitätshaus in Berlin (inkl. Q33 Store am Kurfürstendamm).",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Wir sind Ortho-Ped – das exklusive Sanitätshaus. Seit 2011 in Berlin und seit vielen Jahren Partner und Versorger des Spitzensports. Mit unseren beiden Standorten in Wilmersdorf und am Kurfürstendamm verbinden wir traditionelles Handwerk mit modernster Hightech-Versorgung. Besonders macht uns unsere enge Zusammenarbeit mit Spitzensportler:innen – sie vertrauen auf uns als Top-Versorger."
+    },
+    {
+      "title": "Was macht ihr genau?",
+      "body": "Unser Kerngeschäft ist die orthopädische Versorgung auf höchstem Niveau – von Einlagen und Kompressionsstrümpfen bis hin zu Hightech-Messverfahren wie dem Bodytronic sowie der 3D-Helmversorgung „Talee“ für Babys. USP: Individuelle Beratung, schnelle Umsetzung und die Verbindung von Hightech und Handwerk."
+    },
+    {
+      "title": "Wie seid ihr zu den Füchsen gekommen?",
+      "body": "Der erste Kontakt entstand über den Berliner Sportsupport und gemeinsame Netzwerke im Leistungssport. Überzeugt haben uns die Leidenschaft und der Teamgeist der Füchse Berlin Frauen – genau das passt zu unserer Philosophie."
+    },
+    {
+      "title": "Was bedeutet das Sponsoring für euch?",
+      "body": "Frauensport verdient Sichtbarkeit und starke Partner. Mit den Füchsen Berlin Frauen unterstützen wir ein Team, das Dynamik, Professionalität und Fannähe verkörpert. Für uns ist das Sponsoring ein klares Statement: Sport ist Zukunft – und die fördern wir gerne. Unsere Unterstützung reicht weit über Berlin hinaus: Wir sponsern u. a. die BR Volleys Berlin, die KW Volleys, die Füchse Berlin Frauen (2. Bundesliga Handball), den Paphos FC sowie die Diskuswerferin Claudine Vita und weitere Spitzensportler:innen."
+    },
+    {
+      "title": "Euer tollstes Erlebnis mit dem Team?",
+      "body": "Definitiv die gemeinsame Zeit mit den Spielerinnen, zum Beispiel bei uns im Store. Die Energie, die Nähe zur Mannschaft und der direkte Kontakt – das sorgt jedes Mal für Gänsehaut pur."
+    }
+  ],
+  "images": [
+    {
+      "src": "/sponsors/ortho-ped/ortho-ped-sanitaetshaus-berlin-01.jpg",
+      "alt": "Ortho-Ped Sanitätshaus Berlin – Beratung und Versorgung"
+    },
+    {
+      "src": "/sponsors/ortho-ped/ortho-ped-sanitaetshaus-berlin-02.jpg",
+      "alt": "Ortho-Ped Berlin – Orthopädie und Hightech-Versorgung"
+    },
+    {
+      "src": "/sponsors/ortho-ped/ortho-ped-sanitaetshaus-berlin-03.jpg",
+      "alt": "Ortho-Ped Q33 Store am Kurfürstendamm Berlin"
+    }
+  ],
+  "services": ["Sanitätshaus", "Orthopädie", "Rehatechnik", "Podologie"],
+  "locations": [
+    {
+      "name": "Ortho-Ped Wilmersdorf",
+      "address": "Blissestraße 13/15, 10713 Berlin",
+      "phone": "030 / 921008211",
+      "email": "info@ortho-ped.berlin"
+    },
+    {
+      "name": "Q33 Store am Ku’damm",
+      "address": "Kurfürstendamm 33, 10719 Berlin",
+      "phone": "030 / 921008233",
+      "email": "q33@ortho-ped.berlin"
+    }
+  ],
+  "website": "https://www.ortho-ped.berlin/",
+  "sourceNote": "Porträt angelehnt an ihr-gutachten.com/partner-ortho-ped-podologie-berlin/"
+}
