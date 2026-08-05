@@ -56,8 +56,28 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 px-[var(--fb-gutter)] py-4 text-center text-xs text-white/50">
-        © {new Date().getFullYear()} Füchse Berlin Frauen · Platzhalter-Impressum folgt
+      <div className="border-t border-white/10 px-[var(--fb-gutter)] py-4">
+        <div className="mx-auto flex max-w-[var(--fb-container)] flex-col items-center justify-between gap-4 sm:flex-row">
+          <p className="text-center text-xs text-white/50 sm:text-left">
+            © {new Date().getFullYear()} Füchse Berlin Frauen · Platzhalter-Impressum folgt
+          </p>
+          <a
+            href="https://www.alsco-hbf.de/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex opacity-90 transition hover:opacity-100"
+            aria-label="Alsco Handball Bundesliga Frauen — zur Liga-Website"
+          >
+            <Image
+              src="/league/alsco-hbf.svg"
+              alt="Alsco Handball Bundesliga Frauen"
+              width={72}
+              height={82}
+              className="h-12 w-auto"
+              unoptimized
+            />
+          </a>
+        </div>
       </div>
     </footer>
   );

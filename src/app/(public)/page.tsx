@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { MatchCard } from "@/components/match/match-card";
 import { StandingsPreview } from "@/components/match/standings-preview";
@@ -18,21 +19,16 @@ export default function HomePage() {
     <>
       <FanProjectOverlay />
       <section className="relative isolate min-h-[88vh] overflow-hidden bg-[var(--fb-green-950)] text-white">
-        <div
-          className="hero-glow pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-[var(--fb-green-500)]/30 blur-3xl"
-          aria-hidden
+        <Image
+          src="/hero/team-hero.webp"
+          alt="Mannschaftsfoto der Füchse Berlin Frauen"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_35%]"
         />
         <div
-          className="pointer-events-none absolute -right-16 bottom-0 h-96 w-96 rounded-full bg-[var(--fb-green-700)]/40 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 20%, transparent 0 2px, rgba(255,255,255,0.35) 2px 3px, transparent 3px), linear-gradient(135deg, transparent 40%, rgba(34,160,85,0.25))",
-            backgroundSize: "28px 28px, 100% 100%",
-          }}
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--fb-green-950)] via-[var(--fb-green-950)]/55 to-black/25"
           aria-hidden
         />
 
@@ -40,11 +36,11 @@ export default function HomePage() {
           <p className="animate-fade-up text-[var(--fb-fs-label)] font-semibold uppercase tracking-[0.22em] text-[var(--fb-green-300)]">
             2. Handball-Bundesliga · Berlin
           </p>
-          <h1 className="animate-fade-up-delay mt-4 max-w-4xl font-[family-name:var(--fb-font-display)] text-[length:var(--fb-fs-hero)] font-extrabold uppercase leading-[0.9] tracking-tight">
+          <h1 className="animate-fade-up-delay mt-4 max-w-4xl font-[family-name:var(--fb-font-display)] text-[length:var(--fb-fs-hero)] font-extrabold uppercase leading-[0.9] tracking-tight drop-shadow-sm">
             Füchse Berlin
             <span className="block text-[var(--fb-green-300)]">Frauen</span>
           </h1>
-          <p className="animate-fade-up-delay-2 mt-5 max-w-xl text-lg text-white/80">
+          <p className="animate-fade-up-delay-2 mt-5 max-w-xl text-lg text-white/85">
             Handball aus dem Revier. Tempo, Härte, Berliner Attitude — jetzt unter einem Namen mit den Herren.
           </p>
           <div className="animate-fade-up-delay-2 mt-8 flex flex-wrap gap-3">
