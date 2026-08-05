@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks, secondaryLinks } from "@/components/layout/nav-links";
+import { SocialLinks } from "@/components/layout/social-links";
 
 export function Footer() {
   return (
@@ -19,6 +20,7 @@ export function Footer() {
           <p className="mt-3 max-w-sm text-sm text-white/70">
             Frauen-Handball aus Berlin. 2. Bundesliga. Revier Charlottenburg.
           </p>
+          <SocialLinks className="mt-5" />
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-green-300)]">
