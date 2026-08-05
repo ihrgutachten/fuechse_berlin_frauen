@@ -39,10 +39,12 @@ export function PageHero({
   title,
   description,
   eyebrow,
+  titleAction,
 }: {
   title: string;
   description?: string;
   eyebrow?: string;
+  titleAction?: ReactNode;
 }) {
   return (
     <div className="border-b border-[var(--fb-border)] bg-[var(--fb-green-950)] px-[var(--fb-gutter)] py-10 text-white md:py-14">
@@ -52,9 +54,12 @@ export function PageHero({
             {eyebrow}
           </p>
         ) : null}
-        <h1 className="font-[family-name:var(--fb-font-display)] text-4xl font-extrabold uppercase leading-none tracking-tight md:text-5xl">
-          {title}
-        </h1>
+        <div className="flex flex-wrap items-center gap-3 md:gap-4">
+          <h1 className="font-[family-name:var(--fb-font-display)] text-4xl font-extrabold uppercase leading-none tracking-tight md:text-5xl">
+            {title}
+          </h1>
+          {titleAction}
+        </div>
         {description ? (
           <p className="mt-3 max-w-2xl text-white/75">{description}</p>
         ) : null}

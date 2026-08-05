@@ -90,14 +90,31 @@ export type NewsItem = {
   coverLabel: string;
 };
 
+export type TeamRole = "spielerin" | "coach" | "staff";
+
 export type Player = {
   slug: string;
   name: string;
-  number: number;
+  number: number | null;
+  role: TeamRole;
   position: string;
-  nationality: string;
-  height: string;
-  bio: string;
+  positionLabel: string;
+  nickname?: string;
+  birthPlace?: string;
+  joined?: string;
+  height?: string;
+  previousClubs?: string;
+  patron?: string;
+  patronUrl?: string;
+  photo: string;
+  nationality?: string;
+  bio?: string;
+  /** Optional recorded pronunciation (preferred). */
+  nameAudio?: string;
+  /** BCP-47 lang for TTS fallback, e.g. nl-NL */
+  nameLang?: string;
+  /** Phonetic spelling for better TTS */
+  namePhonetic?: string;
 };
 
 export type Sponsor = {
@@ -219,15 +236,40 @@ export function getNewsBySlug(slug: string): NewsItem | undefined {
 }
 
 export function getPlayers(): Player[] {
-  return players as Player[];
+  return (players as Player[]).filter((p) => p.role === "spielerin");
+}
+
+export function getTeamMembers(role?: TeamRole | "all"): Player[] {
+  const list = players as Player[];
+  if (!role || role === "all") return list;
+  return list.filter((p) => p.role === role);
 }
 
 export function getPlayerBySlug(slug: string): Player | undefined {
-  return getPlayers().find((p) => p.slug === slug);
+  return (players as Player[]).find((p) => p.slug === slug);
 }
 
 export function getSponsors(): Sponsor[] {
   return sponsors as Sponsor[];
+}
+
+export function speechLangFromNationality(nationality?: string): string {
+  switch (nationality) {
+    case "NED":
+      return "nl-NL";
+    case "FRA":
+      return "fr-FR";
+    case "HUN":
+      return "hu-HU";
+    case "ITA":
+      return "it-IT";
+    case "DEN":
+      return "da-DK";
+    case "NOR":
+      return "nb-NO";
+    default:
+      return "de-DE";
+  }
 }
 
 export function getLogoStatus() {
