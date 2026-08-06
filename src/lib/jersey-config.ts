@@ -18,9 +18,12 @@ export const heimtrikotLayout: JerseyPrintLayout = {
   productId: "heimtrikot",
   blankoImage: "/shop/trikot-heim-blanko.jpg",
   exampleImage: "/shop/trikot-heim.jpg",
-  frontNumber: { left: 31.8, top: 33.0, fontSizeVw: 4.4 },
-  backNumber: { left: 68.8, top: 47.2, fontSizeVw: 11.5 },
-  backName: { left: 68.8, top: 57.2, fontSizeVw: 4.3 },
+  /** Unter BEW-Patch, Träger-rechte Brust (Bild links). */
+  frontNumber: { left: 25.0, top: 28.2, fontSizeVw: 3.6 },
+  /** Zentriert unter „FÜCHSE BERLIN“, gemessen am Beispiel-Flyer. */
+  backNumber: { left: 74.0, top: 52.6, fontSizeVw: 11.2 },
+  /** Unter Rückennummer, über RODE. */
+  backName: { left: 74.0, top: 59.6, fontSizeVw: 4.0 },
 };
 
 export const jerseyPrintFonts = [
