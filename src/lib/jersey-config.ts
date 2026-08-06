@@ -1,29 +1,38 @@
-/** Overlay positions as % of the blanko flyer (width/height). Tunable. */
+/** Pixel box on the blanko flyer (top-left → bottom-right). */
+export type JerseyPrintBox = {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+};
+
+/** Overlay layout for a blanko flyer (pixel coords of the source image). */
 export type JerseyPrintLayout = {
   productId: string;
   blankoImage: string;
   /** Example flyer for reference (optional) */
   exampleImage?: string;
-  frontNumber: { left: number; top: number; fontSizeVw: number };
-  backNumber: { left: number; top: number; fontSizeVw: number };
-  backName: { left: number; top: number; fontSizeVw: number };
+  /** Blanko pixel size (Photoshop measurement space) */
+  width: number;
+  height: number;
+  frontNumber: JerseyPrintBox;
+  backNumber: JerseyPrintBox;
+  backName: JerseyPrintBox;
 };
 
 /**
  * Heimtrikot blanko: Vorderseite links, Rückseite rechts.
- * Front: kleine Zahl obere rechte Brust (Träger-Sicht) → im Bild links am Brustbereich.
- * Back: große Zahl + Name darunter, unter Teamzeile / über RODE.
+ * Boxen aus Photoshop (oben links x,y — unten rechts x,y) auf 1080×1350.
  */
 export const heimtrikotLayout: JerseyPrintLayout = {
   productId: "heimtrikot",
   blankoImage: "/shop/trikot-heim-blanko.jpg",
   exampleImage: "/shop/trikot-heim.jpg",
-  /** Unter BEW-Patch, Träger-rechte Brust (Bild links) — gemessen am Beispiel. */
-  frontNumber: { left: 21.2, top: 47.1, fontSizeVw: 5.0 },
-  /** Zentriert unter „FÜCHSE BERLIN“, gemessen am Beispiel-Flyer. */
-  backNumber: { left: 74.0, top: 52.6, fontSizeVw: 11.2 },
-  /** Unter Rückennummer, über RODE. */
-  backName: { left: 74.0, top: 59.6, fontSizeVw: 4.0 },
+  width: 1080,
+  height: 1350,
+  frontNumber: { x1: 195, y1: 607, x2: 262, y2: 652 },
+  backNumber: { x1: 703, y1: 652, x2: 900, y2: 782 },
+  backName: { x1: 707, y1: 797, x2: 900, y2: 839 },
 };
 
 export const jerseyPrintFonts = [
@@ -44,4 +53,18 @@ export function normalizePrintName(value: string): string {
 
 export function normalizePrintNumber(value: string): string {
   return value.replace(/\D/g, "").slice(0, 2);
+}
+
+/** Convert a Photoshop pixel box to CSS % of the blanko. */
+export function boxToPercent(
+  box: JerseyPrintBox,
+  width: number,
+  height: number,
+): { left: number; top: number; width: number; height: number } {
+  return {
+    left: (box.x1 / width) * 100,
+    top: (box.y1 / height) * 100,
+    width: ((box.x2 - box.x1) / width) * 100,
+    height: ((box.y2 - box.y1) / height) * 100,
+  };
 }

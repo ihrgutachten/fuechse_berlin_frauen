@@ -9,10 +9,12 @@ import {
   type FormEvent,
 } from "react";
 import {
+  boxToPercent,
   heimtrikotLayout,
   jerseyPrintFonts,
   normalizePrintName,
   normalizePrintNumber,
+  type JerseyPrintBox,
   type JerseyPrintFontId,
 } from "@/lib/jersey-config";
 import { formatShopPrice, type ShopConfig, type ShopProduct } from "@/lib/shop";
@@ -53,18 +55,29 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
   const displayName = printName || "NAME";
 
   function overlayStyle(
-    spot: { left: number; top: number; fontSizeVw: number },
-    opts?: { letterSpacing?: string },
+    box: JerseyPrintBox,
+    opts?: { letterSpacing?: string; fontScale?: number },
   ): CSSProperties {
-    // fontSizeVw ≈ % of preview width (container query units)
+    const pct = boxToPercent(box, layout.width, layout.height);
+    // Font size ≈ box height as % of preview width (cqw), slight scale for padding
+    const fontScale = opts?.fontScale ?? 0.92;
+    const fontSizeCqw = (pct.height * (layout.height / layout.width)) * fontScale;
     return {
-      left: `${spot.left}%`,
-      top: `${spot.top}%`,
-      fontSize: `${spot.fontSizeVw}cqw`,
+      left: `${pct.left}%`,
+      top: `${pct.top}%`,
+      width: `${pct.width}%`,
+      height: `${pct.height}%`,
+      fontSize: `${fontSizeCqw}cqw`,
       fontFamily: font.cssVar,
       fontWeight: fontId === "oswald" ? 700 : 400,
       letterSpacing: opts?.letterSpacing ?? "0.02em",
-      transform: "translate(-50%, -50%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+      lineHeight: 1,
+      overflow: "hidden",
+      whiteSpace: "nowrap",
     };
   }
 
