@@ -34,13 +34,15 @@ export default function ShopPage() {
                 key={product.id}
                 className="overflow-hidden rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white"
               >
-                <div className="relative aspect-[4/3] bg-[var(--fb-green-950)]">
-                  {/* Native img: reliable for static product art on Vercel */}
+                <div className="bg-[var(--fb-green-950)]">
+                  {/* Flyer are 4:5 — show full image, no crop */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={product.image}
                     alt={`${product.name} — Füchse Berlin Frauen`}
-                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    width={1080}
+                    height={1350}
+                    className="h-auto w-full object-contain"
                   />
                 </div>
                 <div className="p-5">
