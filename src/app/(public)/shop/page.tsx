@@ -63,12 +63,21 @@ export default function ShopPage() {
                       Inkl. Wunschdruck
                     </p>
                   ) : null}
-                  <a
-                    href="#bestellung"
-                    className="mt-5 inline-flex items-center justify-center rounded-[var(--fb-radius)] bg-[var(--fb-accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--fb-accent-hover)]"
-                  >
-                    Bestellen
-                  </a>
+                  {product.id === "heimtrikot" ? (
+                    <a
+                      href="/shop/heimtrikot"
+                      className="mt-5 inline-flex items-center justify-center rounded-[var(--fb-radius)] bg-[var(--fb-accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--fb-accent-hover)]"
+                    >
+                      Konfigurieren
+                    </a>
+                  ) : (
+                    <a
+                      href="#bestellung"
+                      className="mt-5 inline-flex items-center justify-center rounded-[var(--fb-radius)] bg-[var(--fb-accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--fb-accent-hover)]"
+                    >
+                      Bestellen
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
