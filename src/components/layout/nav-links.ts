@@ -4,6 +4,7 @@ export const navLinks = [
   { href: "/team", label: "Team" },
   { href: "/matchday", label: "Matchday" },
   { href: "/news", label: "News" },
+  { href: "/shop", label: "Shop" },
   { href: "/tools", label: "Tools" },
   { href: "/fanzone", label: "Fanzone" },
   { href: "/sponsoren", label: "Sponsoren" },

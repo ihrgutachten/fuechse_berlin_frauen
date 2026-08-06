@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "orderEmail": "kontakt@fuechseberlinfrauen.de",
+  "intro": "Offizielle Trikots der Füchse Berlin Frauen — Bestellwunsch per E-Mail. Preise inkl. Wunschdruck.",
+  "windowNote": "Bestellungen nehmen wir zu Saisonbeginn für etwa acht Wochen entgegen.",
+  "closedTitle": "Shop geschlossen",
+  "closedMessage": "Aktuell nehmen wir keine Bestellungen an. Zu Saisonbeginn öffnen wir den Shop wieder für etwa acht Wochen — dann findest du hier die Trikots.",
+  "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+  "products": [
+    {
+      "id": "heimtrikot",
+      "name": "Heimtrikot",
+      "subtitle": "Grün · Saisontrikot",
+      "price": 80,
+      "image": "/shop/trikot-heim.svg",
+      "includesPrint": true,
+      "description": "Offizielle Heimtrikot inkl. Wunschdruck (Name & Nummer)."
+    },
+    {
+      "id": "auswaertstrikot",
+      "name": "Auswärtstrikot",
+      "subtitle": "Pink · Saisontrikot",
+      "price": 70,
+      "image": "/shop/trikot-auswaerts.svg",
+      "includesPrint": true,
+      "description": "Offizielle Auswärtstrikot inkl. Wunschdruck (Name & Nummer)."
+    }
+  ]
+}
