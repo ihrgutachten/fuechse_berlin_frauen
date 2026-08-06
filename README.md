@@ -47,16 +47,24 @@ gh repo create fuechse-berlin-frauen --private --source=. --remote=origin --push
 
 Danach im Vercel-Dashboard das GitHub-Repo an das bestehende Projekt hängen.
 
+## Shop
+
+Einfacher Trikot-Shop unter `/shop` — Bestellwunsch per E-Mail (kein Checkout).
+
+- Produkte & Texte: `src/data/shop.json`
+- An/Aus: `SHOP_ENABLED` in `.env` (siehe `.env.example`) oder `enabled` in `shop.json`
+- Optional: `RESEND_API_KEY` für echten Mail-Versand; sonst öffnet sich `mailto:`
+
 ## Ordnerstruktur
 
 ```
 docs/PROJEKT-BRIEF.md
 src/
   app/(public)/     # Sitemap-Routen
-  components/       # layout, match, news, players, sponsors, ui
+  components/       # layout, match, news, players, shop, sponsors, ui
   data/             # Mock-JSON (später austauschbar)
   design-system/    # CI-Tokens
-  lib/              # data helpers, format
+  lib/              # data helpers, format, shop
 ```
 
 ## Nächste Schritte
