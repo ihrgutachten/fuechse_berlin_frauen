@@ -12,7 +12,7 @@
       "name": "Heimtrikot",
       "subtitle": "Grün · Saisontrikot",
       "price": 80,
-      "image": "/shop/trikot-heim.png",
+      "image": "/shop/trikot-heim.jpg",
       "includesPrint": true,
       "description": "Offizielle Heimtrikot inkl. Wunschdruck (Name & Nummer)."
     },
@@ -21,7 +21,7 @@
       "name": "Auswärtstrikot",
       "subtitle": "Pink · Saisontrikot",
       "price": 70,
-      "image": "/shop/trikot-auswaerts.png",
+      "image": "/shop/trikot-auswaerts.jpg",
       "includesPrint": true,
       "description": "Offizielle Auswärtstrikot inkl. Wunschdruck (Name & Nummer)."
     }
