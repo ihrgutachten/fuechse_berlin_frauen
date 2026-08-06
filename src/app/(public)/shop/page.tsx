@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { OrderForm } from "@/components/shop/order-form";
 import { PageHero } from "@/components/ui/page-hero";
 import { formatShopPrice, getShopConfig } from "@/lib/shop";
@@ -36,14 +35,12 @@ export default function ShopPage() {
                 className="overflow-hidden rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white"
               >
                 <div className="relative aspect-[4/3] bg-[var(--fb-green-950)]">
-                  <Image
+                  {/* Native img: reliable for static product art on Vercel */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={product.image}
                     alt={`${product.name} — Füchse Berlin Frauen`}
-                    fill
-                    className="object-cover object-center"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={product.id === "heimtrikot"}
-                    unoptimized
+                    className="absolute inset-0 h-full w-full object-cover object-center"
                   />
                 </div>
                 <div className="p-5">
