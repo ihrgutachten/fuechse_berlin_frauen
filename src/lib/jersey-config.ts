@@ -30,9 +30,11 @@ export const heimtrikotLayout: JerseyPrintLayout = {
   exampleImage: "/shop/trikot-heim.jpg",
   width: 1080,
   height: 1350,
-  frontNumber: { x1: 195, y1: 607, x2: 262, y2: 652 },
-  backNumber: { x1: 703, y1: 652, x2: 900, y2: 782 },
-  backName: { x1: 707, y1: 797, x2: 900, y2: 839 },
+  /** Photoshop-Boxen, Zahlen +40 % vom Zentrum skaliert. */
+  frontNumber: { x1: 182, y1: 598, x2: 275, y2: 661 },
+  backNumber: { x1: 664, y1: 626, x2: 939, y2: 808 },
+  /** Name etwas nach unten, damit Abstand zur größeren Rückennummer bleibt. */
+  backName: { x1: 707, y1: 823, x2: 900, y2: 865 },
 };
 
 export const jerseyPrintFonts = [
