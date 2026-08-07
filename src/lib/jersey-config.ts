@@ -32,7 +32,7 @@ export const heimtrikotLayout: JerseyPrintLayout = {
   height: 1350,
   /** Photoshop-Boxen, Zahlen +40 % vom Zentrum skaliert. */
   frontNumber: { x1: 182, y1: 598, x2: 275, y2: 661 },
-  backNumber: { x1: 664, y1: 626, x2: 939, y2: 808 },
+  backNumber: { x1: 664, y1: 636, x2: 939, y2: 818 },
   /** Name etwas nach unten, damit Abstand zur größeren Rückennummer bleibt. */
   backName: { x1: 707, y1: 823, x2: 900, y2: 865 },
 };
