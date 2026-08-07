@@ -27,7 +27,7 @@
     "short": "BHC",
     "city": "Wuppertal",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/bergischer-hc.png"
   },
   {
@@ -36,7 +36,7 @@
     "short": "Rostock",
     "city": "Rostock",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/rostocker-hc.png"
   },
   {
@@ -54,7 +54,7 @@
     "short": "Nürtingen",
     "city": "Nürtingen",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/sg-nuertingen-zizishausen.png"
   },
   {
@@ -72,7 +72,7 @@
     "short": "Mainz",
     "city": "Mainz",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/mainz-05.png"
   },
   {
@@ -81,7 +81,7 @@
     "short": "Solingen",
     "city": "Solingen",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/hsv-solingen-graefrath.png"
   },
   {
@@ -135,7 +135,7 @@
     "short": "Todesfelde",
     "city": "Todesfelde",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/sv-todesfelde.png"
   },
   {
@@ -144,7 +144,7 @@
     "short": "Freiburg",
     "city": "Freiburg",
     "isUs": false,
-    "hasLogo": false,
+    "hasLogo": true,
     "logo": "/clubs/hsg-freiburg.png"
   },
   {
