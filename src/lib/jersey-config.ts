@@ -30,8 +30,8 @@ export const heimtrikotLayout: JerseyPrintLayout = {
   exampleImage: "/shop/trikot-heim.jpg",
   width: 1080,
   height: 1350,
-  /** Photoshop-Boxen, Zahlen +40 % vom Zentrum skaliert. */
-  frontNumber: { x1: 182, y1: 598, x2: 275, y2: 661 },
+  /** Brustnummer: +30 % Größe, +5 px nach unten. */
+  frontNumber: { x1: 168, y1: 594, x2: 289, y2: 675 },
   backNumber: { x1: 664, y1: 636, x2: 939, y2: 818 },
   /** Name: −10 px oben, +10 % Größe (vom Zentrum). */
   backName: { x1: 697, y1: 811, x2: 910, y2: 857 },
