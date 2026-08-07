@@ -46,10 +46,10 @@ export type JerseyPrintFontId = (typeof jerseyPrintFonts)[number]["id"];
 
 export function normalizePrintName(value: string): string {
   return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ß/g, "SS")
+    .replace(/ẞ/g, "SS")
     .toUpperCase()
-    .replace(/[^A-Z0-9 \-]/g, "")
+    .replace(/[^A-ZÄÖÜ0-9 \-]/g, "")
     .slice(0, 12);
 }
 
