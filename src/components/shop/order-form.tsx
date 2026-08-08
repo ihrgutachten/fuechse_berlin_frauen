@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useId, useState, useTransition, type FormEvent } from "react";
+import { useCallback, useEffect, useId, useState, useTransition, type FormEvent } from "react";
 import type { ShopConfig, ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/format";
+import { LogoCaptcha } from "@/components/shop/logo-captcha";
 
 type OrderFormProps = {
   shop: ShopConfig;
@@ -32,6 +33,8 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<"sent" | "mailto" | null>(null);
+  const [captchaProof, setCaptchaProof] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0);
   const [form, setForm] = useState<FormState>({
     productId: initialProductId || shop.products[0]?.id || "",
     size: shop.sizes[2] || "M",
@@ -43,6 +46,10 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
     customerPhone: "",
     note: "",
   });
+
+  const onProofChange = useCallback((proof: string | null) => {
+    setCaptchaProof(proof);
+  }, []);
 
   useEffect(() => {
     if (!initialProductId) return;
@@ -62,6 +69,11 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
     setError(null);
     setSuccess(null);
 
+    if (!captchaProof) {
+      setError("Bitte zuerst den Captcha lösen — Logo auf den Füchse-Umriss.");
+      return;
+    }
+
     startTransition(async () => {
       try {
         const res = await fetch("/api/shop/order", {
@@ -77,6 +89,7 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
             customerEmail: form.customerEmail,
             customerPhone: form.customerPhone,
             note: form.note,
+            captchaProof,
           }),
         });
 
@@ -90,6 +103,10 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
 
         if (!res.ok) {
           setError(data.error || "Bestellung konnte nicht gesendet werden.");
+          if (data.error?.toLowerCase().includes("captcha")) {
+            setCaptchaProof(null);
+            setCaptchaKey((k) => k + 1);
+          }
           return;
         }
 
@@ -101,6 +118,8 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
         }
 
         setSuccess("sent");
+        setCaptchaProof(null);
+        setCaptchaKey((k) => k + 1);
         setForm((prev) => ({
           ...prev,
           printName: "",
@@ -275,6 +294,13 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
             placeholder="Abholung, Lieferadresse, …"
           />
         </div>
+
+        <LogoCaptcha
+          key={captchaKey}
+          proofToken={captchaProof}
+          onProofChange={onProofChange}
+          disabled={pending}
+        />
       </div>
 
       {error ? (
@@ -314,7 +340,7 @@ export function OrderForm({ shop, initialProductId }: OrderFormProps) {
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || !captchaProof}
         className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--fb-radius)] bg-[var(--fb-accent)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--fb-accent-hover)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Wird vorbereitet…" : "Bestellwunsch senden"}

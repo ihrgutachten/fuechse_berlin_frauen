@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getShopConfig, getShopProduct, isShopOpen } from "@/lib/shop";
+import { consumeCaptchaProof } from "@/lib/shop-captcha";
 
 export type ShopOrderPayload = {
   productId: string;
@@ -11,6 +12,7 @@ export type ShopOrderPayload = {
   customerEmail: string;
   customerPhone?: string;
   note?: string;
+  captchaProof?: string;
 };
 
 function isNonEmptyString(value: unknown, max = 200): value is string {
@@ -52,6 +54,12 @@ export async function POST(request: Request) {
   }
 
   const data = body as Partial<ShopOrderPayload>;
+
+  const captcha = consumeCaptchaProof(data.captchaProof);
+  if (!captcha.ok) {
+    return NextResponse.json({ error: captcha.error }, { status: 400 });
+  }
+
   const shop = getShopConfig();
   const product = data.productId ? getShopProduct(data.productId) : undefined;
 
