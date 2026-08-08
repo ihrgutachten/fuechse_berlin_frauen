@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import {
+  useCallback,
+  useEffect,
   useId,
   useState,
   useTransition,
@@ -19,6 +21,7 @@ import {
 } from "@/lib/jersey-config";
 import { formatShopPrice, type ShopConfig, type ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/format";
+import { LogoCaptcha } from "@/components/shop/logo-captcha";
 
 const fieldClass =
   "mt-1.5 w-full rounded-[var(--fb-radius)] border border-[var(--fb-border)] bg-white px-3 py-2.5 text-sm text-[var(--fb-ink)] outline-none transition focus:border-[var(--fb-accent)] focus:ring-2 focus:ring-[var(--fb-green-100)]";
@@ -48,18 +51,37 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<"sent" | "mailto" | null>(null);
   const [previewSrc, setPreviewSrc] = useState(layout.blankoImage);
+  const [captchaOpen, setCaptchaOpen] = useState(false);
+  const [captchaKey, setCaptchaKey] = useState(0);
+  const [captchaProof, setCaptchaProof] = useState<string | null>(null);
   const usingFallback = previewSrc !== layout.blankoImage;
 
   const font = jerseyPrintFonts.find((f) => f.id === fontId) ?? jerseyPrintFonts[0];
   const displayNumber = printNumber || "·";
   const displayName = printName || "NAME";
 
+  useEffect(() => {
+    if (!captchaOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape" && !pending) {
+        setCaptchaOpen(false);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [captchaOpen, pending]);
+
   function overlayStyle(
     box: JerseyPrintBox,
     opts?: { letterSpacing?: string; fontScale?: number },
   ): CSSProperties {
     const pct = boxToPercent(box, layout.width, layout.height);
-    // Font size ≈ box height as % of preview width (cqw), slight scale for padding
     const fontScale = opts?.fontScale ?? 0.92;
     const fontSizeCqw = (pct.height * (layout.height / layout.width)) * fontScale;
     return {
@@ -81,20 +103,7 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
     };
   }
 
-  function onSubmit(event: FormEvent) {
-    event.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    if (!printNumber) {
-      setError("Bitte eine Rücken-/Brustnummer angeben.");
-      return;
-    }
-    if (!printName) {
-      setError("Bitte einen Wunschname angeben.");
-      return;
-    }
-
+  function sendOrder(proof: string) {
     startTransition(async () => {
       try {
         const res = await fetch("/api/shop/order", {
@@ -110,6 +119,7 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
             customerEmail,
             customerPhone,
             note: [note, `Schrift: ${font.label}`].filter(Boolean).join(" · "),
+            captchaProof: proof,
           }),
         });
 
@@ -123,6 +133,11 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
 
         if (!res.ok) {
           setError(data.error || "Bestellung konnte nicht gesendet werden.");
+          if (data.error?.toLowerCase().includes("captcha")) {
+            setCaptchaOpen(true);
+            setCaptchaKey((k) => k + 1);
+            setCaptchaProof(null);
+          }
           return;
         }
 
@@ -138,6 +153,43 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
         setError("Netzwerkfehler — bitte später erneut versuchen.");
       }
     });
+  }
+
+  function onSubmit(event: FormEvent) {
+    event.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (!printNumber) {
+      setError("Bitte eine Rücken-/Brustnummer angeben.");
+      return;
+    }
+    if (!printName) {
+      setError("Bitte einen Wunschname angeben.");
+      return;
+    }
+
+    setCaptchaProof(null);
+    setCaptchaKey((k) => k + 1);
+    setCaptchaOpen(true);
+  }
+
+  const onCaptchaProofChange = useCallback(
+    (proof: string | null) => {
+      setCaptchaProof(proof);
+      if (!proof) return;
+      setCaptchaOpen(false);
+      sendOrder(proof);
+    },
+    // sendOrder closes over latest form values; re-create when they change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: fire once per solved proof
+    [product.id, size, quantity, printName, printNumber, customerName, customerEmail, customerPhone, note, font.label],
+  );
+
+  function closeCaptcha() {
+    if (pending) return;
+    setCaptchaOpen(false);
+    setCaptchaProof(null);
   }
 
   return (
@@ -175,7 +227,6 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
                 </p>
               ) : null}
 
-              {/* Front small number */}
               <span
                 aria-hidden
                 className="pointer-events-none absolute font-bold uppercase leading-none text-white"
@@ -184,7 +235,6 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
                 {displayNumber === "·" ? "" : displayNumber}
               </span>
 
-              {/* Back large number */}
               <span
                 aria-hidden
                 className="pointer-events-none absolute font-bold uppercase leading-none text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.35)]"
@@ -193,7 +243,6 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
                 {displayNumber === "·" ? "" : displayNumber}
               </span>
 
-              {/* Back name */}
               <span
                 aria-hidden
                 className="pointer-events-none absolute font-bold uppercase leading-none text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"
@@ -408,6 +457,39 @@ export function JerseyConfigurator({ shop, product, fontClassName }: Props) {
           </button>
         </form>
       </div>
+
+      {captchaOpen ? (
+        <div
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-[var(--fb-green-950)]/85 p-4 backdrop-blur-sm md:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="configurator-captcha-title"
+          onClick={closeCaptcha}
+        >
+          <div
+            className="animate-fade-up max-h-[min(92vh,900px)] w-full max-w-[680px] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p id="configurator-captcha-title" className="sr-only">
+              Sicherheitscheck vor dem Absenden
+            </p>
+            <LogoCaptcha
+              key={captchaKey}
+              proofToken={captchaProof}
+              onProofChange={onCaptchaProofChange}
+              disabled={pending}
+            />
+            <button
+              type="button"
+              onClick={closeCaptcha}
+              disabled={pending}
+              className="mt-3 w-full rounded-[var(--fb-radius)] border border-white/25 bg-transparent px-4 py-2.5 text-sm font-semibold text-white/80 transition hover:bg-white/10 disabled:opacity-50"
+            >
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
