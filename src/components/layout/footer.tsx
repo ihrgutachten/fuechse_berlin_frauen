@@ -5,7 +5,7 @@ import { SocialLinks } from "@/components/layout/social-links";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-[var(--fb-border)] bg-[var(--fb-green-950)] text-white">
+    <footer className="fb-footer-pattern mt-auto border-t border-[var(--fb-border)] text-white">
       <div className="mx-auto grid max-w-[var(--fb-container)] gap-8 px-[var(--fb-gutter)] py-10 md:grid-cols-[1.2fr_1fr_1fr]">
         <div>
           <Link href="/" className="inline-flex">
@@ -60,6 +60,10 @@ export function Footer() {
         <div className="mx-auto flex max-w-[var(--fb-container)] flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-center text-xs text-white/50 sm:text-left">
             © {new Date().getFullYear()} Füchse Berlin Frauen · Platzhalter-Impressum folgt
+            {" · "}
+            <Link href="/login" className="hover:text-white/80">
+              login
+            </Link>
           </p>
           <a
             href="https://www.alsco-hbf.de/"

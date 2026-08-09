@@ -13,7 +13,7 @@ export function Header() {
     <header className="sticky top-0 z-[210] overflow-visible">
       <div className="relative overflow-visible">
         {/* Green navigation bar — 56px / 64px */}
-        <div className="overflow-visible border-b border-white/10 bg-[var(--fb-green-950)] text-white">
+        <div className="fb-nav-pattern overflow-visible border-b border-white/10 text-white">
           <div className="flex h-14 w-full items-center gap-3 px-[var(--fb-gutter)] md:h-16 md:gap-4">
             {/* Logo left — hangs into white bar below; sizes unchanged */}
             <Link
