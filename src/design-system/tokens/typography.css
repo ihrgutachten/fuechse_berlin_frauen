@@ -2,6 +2,7 @@
 :root {
   --fb-font-display: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
   --fb-font-sans: var(--font-barlow), "Barlow", system-ui, sans-serif;
+  --fb-font-nav: var(--font-roboto-slab), "Roboto Slab", Georgia, serif;
 
   --fb-fw-regular: 400;
   --fb-fw-medium: 500;

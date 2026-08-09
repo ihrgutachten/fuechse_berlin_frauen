@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow, Barlow_Condensed } from "next/font/google";
+import { Barlow, Barlow_Condensed, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -12,6 +12,12 @@ const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
+});
+
+const robotoSlab = Roboto_Slab({
+  variable: "--font-roboto-slab",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${barlow.variable} ${barlowCondensed.variable} h-full`}>
+    <html lang="de" className={`${barlow.variable} ${barlowCondensed.variable} ${robotoSlab.variable} h-full`}>
       <body className="min-h-full antialiased">{children}</body>
     </html>
   );

@@ -17,6 +17,7 @@
   --color-fb-away-soft: var(--fb-away-soft);
   --font-sans: var(--fb-font-sans);
   --font-display: var(--fb-font-display);
+  --font-nav: var(--fb-font-nav);
 }
 
 @keyframes fade-up {

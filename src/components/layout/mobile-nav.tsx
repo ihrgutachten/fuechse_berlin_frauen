@@ -39,7 +39,7 @@ export function MobileNav() {
         aria-label="Navigation"
         aria-hidden={!open}
         className={cn(
-          "fixed inset-x-0 bottom-0 top-16 z-[200] overflow-y-auto overscroll-contain bg-[var(--fb-green-950)] px-[var(--fb-gutter)] pb-10 pt-2 text-white transition-opacity duration-200 md:top-[4.5rem] lg:hidden",
+          "fixed inset-x-0 bottom-0 top-[7.2rem] z-[200] overflow-y-auto overscroll-contain bg-[var(--fb-green-950)] px-[var(--fb-gutter)] pb-10 pt-2 text-white transition-opacity duration-200 md:top-[8.2rem] lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
       >
@@ -50,7 +50,7 @@ export function MobileNav() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "block border-b border-white/10 py-3.5 font-[family-name:var(--fb-font-display)] text-[1.65rem] uppercase leading-none tracking-wide text-white",
+                    "block border-b border-white/10 py-3.5 font-[family-name:var(--fb-font-nav)] text-[1.65rem] font-semibold uppercase leading-none tracking-wide text-white",
                     pathname === link.href && "text-[var(--fb-green-300)]",
                   )}
                 >
