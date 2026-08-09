@@ -14,9 +14,9 @@ type SponsorWallProps = {
 function gridClass(tier: SponsorTier): string {
   switch (tier) {
     case "platin":
-      return "grid-cols-1 sm:grid-cols-2 max-w-xl";
+      return "grid-cols-1 max-w-5xl";
     case "gold":
-      return "grid-cols-2 md:grid-cols-3";
+      return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3";
     case "silber":
     case "premium":
       return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4";
@@ -30,11 +30,35 @@ function gridClass(tier: SponsorTier): string {
 function cellClass(tier: SponsorTier): string {
   switch (tier) {
     case "platin":
-      return "min-h-28 p-6";
+      return "min-h-72 p-8 md:min-h-80 md:p-10";
     case "gold":
-      return "min-h-24 p-5";
+      return "min-h-40 p-6 md:min-h-48";
     default:
       return "min-h-20 p-4";
+  }
+}
+
+function logoClass(tier: SponsorTier): string {
+  switch (tier) {
+    case "platin":
+      // 400% of default max-h-16 / md:max-h-20
+      return "h-auto max-h-64 w-auto max-w-full object-contain md:max-h-80";
+    case "gold":
+      // 200% of default
+      return "h-auto max-h-32 w-auto max-w-full object-contain md:max-h-40";
+    default:
+      return "h-auto max-h-16 w-auto max-w-full object-contain md:max-h-20";
+  }
+}
+
+function logoSize(tier: SponsorTier): { width: number; height: number } {
+  switch (tier) {
+    case "platin":
+      return { width: 880, height: 480 };
+    case "gold":
+      return { width: 320, height: 180 };
+    default:
+      return { width: 160, height: 90 };
   }
 }
 
@@ -73,9 +97,9 @@ export function SponsorWall({ sponsors, className, tiers }: SponsorWallProps) {
                       <Image
                         src={sponsor.logo}
                         alt={`Logo ${sponsor.name}`}
-                        width={tier === "platin" ? 220 : 160}
-                        height={tier === "platin" ? 120 : 90}
-                        className="h-auto max-h-16 w-auto max-w-full object-contain md:max-h-20"
+                        width={logoSize(tier).width}
+                        height={logoSize(tier).height}
+                        className={logoClass(tier)}
                       />
                     </a>
                     {profileHref ? (
