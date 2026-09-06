@@ -42,7 +42,8 @@
     "startsAt": "2026-08-21T19:00:00+02:00",
     "homeScore": 32,
     "awayScore": 29,
-    "status": "finished"
+    "status": "finished",
+    "fmpMatchId": "90062"
   },
   {
     "id": "md01",
@@ -54,7 +55,8 @@
     "startsAt": "2026-08-30T16:00:00+02:00",
     "homeScore": 31,
     "awayScore": 36,
-    "status": "finished"
+    "status": "finished",
+    "fmpMatchId": "89825"
   },
   {
     "id": "md02",
@@ -66,7 +68,8 @@
     "startsAt": "2026-09-05T19:00:00+02:00",
     "homeScore": 29,
     "awayScore": 29,
-    "status": "finished"
+    "status": "finished",
+    "fmpMatchId": "89832"
   },
   {
     "id": "md03",
@@ -76,7 +79,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "rostocker-hc",
     "startsAt": "2026-09-12T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89840"
   },
   {
     "id": "md04",
@@ -86,7 +90,8 @@
     "homeSlug": "vfl-waiblingen",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-09-19T18:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89846"
   },
   {
     "id": "md05",
@@ -96,7 +101,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sg-nuertingen-zizishausen",
     "startsAt": "2026-10-10T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89856"
   },
   {
     "id": "md06",
@@ -106,7 +112,8 @@
     "homeSlug": "bayer-leverkusen",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-10-17T18:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89860"
   },
   {
     "id": "md07",
@@ -116,7 +123,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "mainz-05",
     "startsAt": "2026-10-31T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89872"
   },
   {
     "id": "md08",
@@ -126,7 +134,8 @@
     "homeSlug": "hsv-solingen-graefrath",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-11-07T18:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89874"
   },
   {
     "id": "md09",
@@ -136,7 +145,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "esv-regensburg",
     "startsAt": "2026-11-14T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89888"
   },
   {
     "id": "md10",
@@ -146,7 +156,8 @@
     "homeSlug": "tus-lintfort",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-11-21T19:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89896"
   },
   {
     "id": "md11",
@@ -156,7 +167,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "werder-bremen",
     "startsAt": "2026-12-19T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89904"
   },
   {
     "id": "md12",
@@ -166,7 +178,8 @@
     "homeSlug": "hc-roedertal",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-12-30T18:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89910"
   },
   {
     "id": "md13",
@@ -176,7 +189,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sg-kirchhof",
     "startsAt": "2027-01-02T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89920"
   },
   {
     "id": "md14",
@@ -186,7 +200,8 @@
     "homeSlug": "sv-todesfelde",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-01-09T20:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89924"
   },
   {
     "id": "md15",
@@ -196,7 +211,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hsg-freiburg",
     "startsAt": "2027-01-23T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89936"
   },
   {
     "id": "md16",
@@ -206,7 +222,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hl-buchholz-rosengarten",
     "startsAt": "2027-01-30T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89945"
   },
   {
     "id": "md17",
@@ -216,7 +233,8 @@
     "homeSlug": "bergischer-hc",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-02-06T18:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89952"
   },
   {
     "id": "md18",
@@ -226,7 +244,8 @@
     "homeSlug": "rostocker-hc",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-02-13T18:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89960"
   },
   {
     "id": "md19",
@@ -236,7 +255,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "vfl-waiblingen",
     "startsAt": "2027-02-20T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89966"
   },
   {
     "id": "md20",
@@ -246,7 +266,8 @@
     "homeSlug": "sg-nuertingen-zizishausen",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-02-27T19:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89976"
   },
   {
     "id": "md21",
@@ -256,7 +277,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "bayer-leverkusen",
     "startsAt": "2027-03-13T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89980"
   },
   {
     "id": "md22",
@@ -266,7 +288,8 @@
     "homeSlug": "mainz-05",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-03-20T19:30:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89992"
   },
   {
     "id": "md23",
@@ -276,7 +299,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hsv-solingen-graefrath",
     "startsAt": "2027-03-27T19:00:00+01:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "89994"
   },
   {
     "id": "md24",
@@ -286,7 +310,8 @@
     "homeSlug": "esv-regensburg",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-04-03T18:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90008"
   },
   {
     "id": "md25",
@@ -296,7 +321,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "tus-lintfort",
     "startsAt": "2027-04-17T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90016"
   },
   {
     "id": "md26",
@@ -306,7 +332,8 @@
     "homeSlug": "werder-bremen",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-04-24T18:30:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90024"
   },
   {
     "id": "md27",
@@ -316,7 +343,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "hc-roedertal",
     "startsAt": "2027-05-01T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90030"
   },
   {
     "id": "md28",
@@ -326,7 +354,8 @@
     "homeSlug": "sg-kirchhof",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-05-08T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90040"
   },
   {
     "id": "md29",
@@ -336,7 +365,8 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "sv-todesfelde",
     "startsAt": "2027-05-22T19:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90044"
   },
   {
     "id": "md30",
@@ -346,6 +376,7 @@
     "homeSlug": "hsg-freiburg",
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-05-29T18:00:00+02:00",
-    "status": "scheduled"
+    "status": "scheduled",
+    "fmpMatchId": "90056"
   }
 ]

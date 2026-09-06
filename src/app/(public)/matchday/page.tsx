@@ -1,8 +1,10 @@
 import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
+import { MatchdayModules } from "@/components/match/matchday-modules";
 import { Button } from "@/components/ui/button";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
-import { getNextMatch } from "@/lib/data";
+import { getLastMatchWithReport, getNextMatch } from "@/lib/data";
+import { fetchMatchReport, pressReportUrl } from "@/lib/fmp";
 import { formatMatchDate } from "@/lib/format";
 
 export const metadata = { title: "Matchday" };
@@ -10,15 +12,18 @@ export const metadata = { title: "Matchday" };
 /** Refresh next-match selection after kickoff without a full redeploy. */
 export const revalidate = 60;
 
-export default function MatchdayPage() {
+export default async function MatchdayPage() {
   const match = getNextMatch();
+  const reportMatch = getLastMatchWithReport();
+  const report = reportMatch?.fmpMatchId ? await fetchMatchReport(reportMatch.fmpMatchId) : null;
+  const pdfUrl = reportMatch?.fmpMatchId ? pressReportUrl(reportMatch.fmpMatchId) : null;
 
   return (
     <>
       <PageHero
         eyebrow="Live-Center"
         title="Matchday"
-        description="Countdown, Halle, Stream — der Treffpunkt vor dem Anpfiff."
+        description="Countdown, Halle, Stream: der Treffpunkt vor dem Anpfiff."
       />
       <div className="mx-auto max-w-[var(--fb-container)] space-y-8 px-[var(--fb-gutter)] py-10 md:py-14">
         {match ? (
@@ -115,7 +120,7 @@ export default function MatchdayPage() {
                     </p>
                   ) : (
                     <p className="mt-2 text-[var(--fb-text-muted)]">
-                      Adresse folgt — später automatisch von handball.net.
+                      Adresse folgt. Später automatisch von handball.net.
                     </p>
                   )}
 
@@ -148,21 +153,30 @@ export default function MatchdayPage() {
           </>
         ) : null}
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {["Liveticker", "Aufstellung", "Spielstatistik"].map((label) => (
-            <div
-              key={label}
-              className="min-h-40 rounded-[var(--fb-radius-lg)] border border-dashed border-[var(--fb-border)] bg-[var(--fb-soft)] p-5"
-            >
-              <h3 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
-                {label}
-              </h3>
-              <p className="mt-2 text-sm text-[var(--fb-text-muted)]">
-                Modul-Platzhalter — Anbindung in Phase 2.
-              </p>
-            </div>
-          ))}
-        </div>
+        {reportMatch && pdfUrl ? (
+          <MatchdayModules
+            nextMatchId={match?.id}
+            reportMatch={reportMatch}
+            report={report}
+            pdfUrl={pdfUrl}
+          />
+        ) : (
+          <div className="grid gap-4 md:grid-cols-3">
+            {["Liveticker", "Aufstellung", "Spielstatistik"].map((label) => (
+              <div
+                key={label}
+                className="min-h-40 rounded-[var(--fb-radius-lg)] border border-dashed border-[var(--fb-border)] bg-[var(--fb-soft)] p-5"
+              >
+                <h3 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
+                  {label}
+                </h3>
+                <p className="mt-2 text-sm text-[var(--fb-text-muted)]">
+                  Modul-Platzhalter. Anbindung in Phase 2.
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
 
         <PlaceholderNote>
           Hallenblock ist vorbereitet: später kommen Adresse und Route direkt aus handball.net.

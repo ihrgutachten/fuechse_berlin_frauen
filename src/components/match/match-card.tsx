@@ -10,6 +10,8 @@ type MatchCardProps = {
   match: Match;
   showCountdown?: boolean;
   showSpielplanLink?: boolean;
+  showReportLink?: boolean;
+  dimPast?: boolean;
   emphasis?: MatchEmphasis;
   className?: string;
 };
@@ -66,6 +68,8 @@ export function MatchCard({
   match,
   showCountdown = false,
   showSpielplanLink = true,
+  showReportLink = true,
+  dimPast = true,
   emphasis = "upcoming",
   className,
 }: MatchCardProps) {
@@ -79,7 +83,9 @@ export function MatchCard({
   const showTickets = Boolean(match.ticketUrl) && !past;
   const showMatchday = !isTournament && !past;
   const showStream = Boolean(match.streamUrl) && !past;
-  const showActions = showTickets || showMatchday || showStream || showSpielplanLink;
+  const showReport =
+    showReportLink && Boolean(match.fmpMatchId) && (past || match.status === "live");
+  const showActions = showTickets || showMatchday || showStream || showSpielplanLink || showReport;
 
   return (
     <article
@@ -89,7 +95,7 @@ export function MatchCard({
         home
           ? "border-[var(--fb-border)] border-l-[var(--fb-accent)]"
           : "border-[var(--fb-away-line)] border-l-[var(--fb-away)]",
-        past && "opacity-55",
+        past && dimPast && "opacity-55",
         next && "shadow-[0_18px_44px_rgba(4,20,12,0.16)] ring-2 ring-[var(--fb-accent)]",
         className,
       )}
@@ -196,6 +202,11 @@ export function MatchCard({
             {showStream && match.streamUrl ? (
               <Button href={match.streamUrl} variant="outline">
                 Stream
+              </Button>
+            ) : null}
+            {showReport ? (
+              <Button href={`/spielplan/${match.id}`} variant={showTickets || showMatchday ? "outline" : "solid"}>
+                Spielbericht
               </Button>
             ) : null}
             {showSpielplanLink ? (

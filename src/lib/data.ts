@@ -49,6 +49,7 @@ type MatchRecord = {
   city?: string;
   venueAddress?: string;
   mapsUrl?: string | null;
+  fmpMatchId?: string | null;
 };
 
 export type Match = {
@@ -70,6 +71,7 @@ export type Match = {
   homeScore?: number;
   awayScore?: number;
   status: "scheduled" | "live" | "finished";
+  fmpMatchId: string | null;
 };
 
 function mapsDirUrl(address: string): string {
@@ -279,7 +281,23 @@ function hydrateMatch(record: MatchRecord): Match {
     homeScore: record.homeScore,
     awayScore: record.awayScore,
     status: record.status,
+    fmpMatchId: record.fmpMatchId ?? null,
   };
+}
+
+export function getMatchById(id: string): Match | undefined {
+  return getMatches().find((match) => match.id === id);
+}
+
+/** Last finished or live Pflichtspiel that has an official FMP report id. */
+export function getLastMatchWithReport(): Match | undefined {
+  return getMatches()
+    .filter(
+      (match) =>
+        Boolean(match.fmpMatchId) &&
+        (match.status === "finished" || match.status === "live"),
+    )
+    .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt))[0];
 }
 
 export function getMatches(kind?: CompetitionKind | "all"): Match[] {
