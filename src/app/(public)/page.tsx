@@ -65,14 +65,14 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Nächstes Spiel"
           title="Countdown im Revier"
-          description="Mock-Daten — später live von handball.net."
+          description="Nächstes Pflichtspiel. Countdown bis zum Anpfiff."
           action={
             <Button href="/spielplan" variant="ghost">
               Alle Spiele
             </Button>
           }
         />
-        {nextMatch ? <MatchCard match={nextMatch} showCountdown /> : null}
+        {nextMatch ? <MatchCard match={nextMatch} showCountdown emphasis="next" /> : null}
       </section>
 
       <section className="bg-[var(--fb-soft)] py-12 md:py-16">
@@ -100,7 +100,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Tabelle"
               title="Platzierung"
-              description="Vorschau mit Mock-Standings."
+              description="Zwischenstand nach zwei Spieltagen."
             />
             <StandingsPreview rows={standings} />
           </div>

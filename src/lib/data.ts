@@ -287,16 +287,41 @@ export function getMatches(kind?: CompetitionKind | "all"): Match[] {
   return list.filter((m) => m.competitionKind === kind);
 }
 
+export type MatchEmphasis = "past" | "next" | "upcoming";
+
 /** Nächstes Pflichtspiel (Liga/Pokal); Turniere nur als Fallback. */
-export function getNextMatch(): Match | undefined {
-  const now = Date.now();
-  const upcoming = getMatches().filter(
+export function pickNextMatch(matches: Match[], now = Date.now()): Match | undefined {
+  const upcoming = matches.filter(
     (m) => m.status === "scheduled" && +new Date(m.startsAt) >= now,
   );
   return (
     upcoming.find((m) => m.competitionKind === "liga" || m.competitionKind === "pokal") ??
     upcoming[0]
   );
+}
+
+export function getNextMatch(): Match | undefined {
+  return pickNextMatch(getMatches());
+}
+
+export function getMatchEmphasis(
+  match: Match,
+  nextId: string | undefined,
+  now?: number,
+): MatchEmphasis {
+  if (nextId && match.id === nextId) return "next";
+  if (match.status === "finished" || match.status === "live") return "past";
+  if (now != null && +new Date(match.startsAt) < now) return "past";
+  return "upcoming";
+}
+
+export function fuechseResult(match: Match): "win" | "loss" | "draw" | null {
+  if (match.homeScore == null || match.awayScore == null) return null;
+  const ours = match.isHome ? match.homeScore : match.awayScore;
+  const theirs = match.isHome ? match.awayScore : match.homeScore;
+  if (ours > theirs) return "win";
+  if (ours < theirs) return "loss";
+  return "draw";
 }
 
 export function getStandings(): StandingRow[] {

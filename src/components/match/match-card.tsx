@@ -2,13 +2,15 @@ import Link from "next/link";
 import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
 import { Button } from "@/components/ui/button";
-import type { Match } from "@/lib/data";
-import { matchContextLabel } from "@/lib/data";
+import type { Match, MatchEmphasis } from "@/lib/data";
+import { fuechseResult, matchContextLabel } from "@/lib/data";
 import { cn, formatMatchDate } from "@/lib/format";
 
 type MatchCardProps = {
   match: Match;
   showCountdown?: boolean;
+  showSpielplanLink?: boolean;
+  emphasis?: MatchEmphasis;
   className?: string;
 };
 
@@ -17,6 +19,12 @@ const kindBadge: Record<Match["competitionKind"], string> = {
   pokal: "Pokal",
   turnier: "Test",
 };
+
+const resultLabel = {
+  win: "Sieg",
+  loss: "Niederlage",
+  draw: "Unentschieden",
+} as const;
 
 function TeamBlock({
   team,
@@ -54,10 +62,23 @@ function TeamBlock({
   );
 }
 
-export function MatchCard({ match, showCountdown = false, className }: MatchCardProps) {
-  const finished = match.status === "finished";
+export function MatchCard({
+  match,
+  showCountdown = false,
+  showSpielplanLink = true,
+  emphasis = "upcoming",
+  className,
+}: MatchCardProps) {
+  const hasScore = match.homeScore != null && match.awayScore != null;
+  const showScore = hasScore || match.status === "finished";
   const home = match.isHome;
   const isTournament = match.competitionKind === "turnier";
+  const past = emphasis === "past";
+  const next = emphasis === "next";
+  const result = showScore ? fuechseResult(match) : null;
+  const showMatchday = !isTournament && !past;
+  const showStream = Boolean(match.streamUrl) && !past;
+  const showActions = showMatchday || showStream || showSpielplanLink;
 
   return (
     <article
@@ -67,8 +88,11 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
         home
           ? "border-[var(--fb-border)] border-l-[var(--fb-accent)]"
           : "border-[var(--fb-away-line)] border-l-[var(--fb-away)]",
+        past && "opacity-55",
+        next && "shadow-[0_18px_44px_rgba(4,20,12,0.16)] ring-2 ring-[var(--fb-accent)]",
         className,
       )}
+      aria-current={next ? "true" : undefined}
     >
       <div
         className={cn(
@@ -79,6 +103,23 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
         )}
       >
         <span className="flex min-w-0 flex-wrap items-center gap-2 font-semibold">
+          {next ? (
+            <span className="rounded-[var(--fb-radius)] bg-[var(--fb-green-900)] px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--fb-green-300)]">
+              Nächstes Spiel
+            </span>
+          ) : null}
+          {result ? (
+            <span
+              className={cn(
+                "rounded-[var(--fb-radius)] px-1.5 py-0.5 text-[10px] font-bold tracking-wider",
+                result === "win" && "bg-[var(--fb-green-900)] text-[var(--fb-green-300)]",
+                result === "draw" && "bg-white/80 text-[var(--fb-text-muted)]",
+                result === "loss" && "bg-white/70 text-[var(--fb-text-muted)]",
+              )}
+            >
+              {resultLabel[result]}
+            </span>
+          ) : null}
           <span
             className={cn(
               "rounded-[var(--fb-radius)] px-1.5 py-0.5 text-[10px] font-bold tracking-wider",
@@ -115,9 +156,9 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
           <TeamBlock team={match.home} align="right" />
 
           <div className="min-w-[3.5rem] text-center md:min-w-[4.5rem]">
-            {finished ? (
+            {showScore ? (
               <p className="font-[family-name:var(--fb-font-display)] text-3xl font-extrabold tabular-nums">
-                {match.homeScore}:{match.awayScore}
+                {match.homeScore ?? "–"}:{match.awayScore ?? "–"}
               </p>
             ) : (
               <p className="font-[family-name:var(--fb-font-display)] text-lg font-bold text-[var(--fb-text-muted)]">
@@ -139,24 +180,28 @@ export function MatchCard({ match, showCountdown = false, className }: MatchCard
           </div>
         ) : null}
 
-        <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {!isTournament ? (
-            <Button href="/matchday" variant="solid">
-              Matchday-Center
-            </Button>
-          ) : null}
-          {match.streamUrl ? (
-            <Button href={match.streamUrl} variant="outline">
-              Stream
-            </Button>
-          ) : null}
-          <Link
-            href="/spielplan"
-            className="inline-flex items-center px-2 text-sm font-medium text-[var(--fb-accent)] hover:underline"
-          >
-            Spielplan
-          </Link>
-        </div>
+        {showActions ? (
+          <div className="mt-5 flex flex-wrap justify-center gap-2">
+            {showMatchday ? (
+              <Button href="/matchday" variant="solid">
+                Matchday-Center
+              </Button>
+            ) : null}
+            {showStream && match.streamUrl ? (
+              <Button href={match.streamUrl} variant="outline">
+                Stream
+              </Button>
+            ) : null}
+            {showSpielplanLink ? (
+              <Link
+                href="/spielplan"
+                className="inline-flex items-center px-2 text-sm font-medium text-[var(--fb-accent)] hover:underline"
+              >
+                Spielplan
+              </Link>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </article>
   );

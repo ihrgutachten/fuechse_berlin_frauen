@@ -1,17 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MatchCard } from "@/components/match/match-card";
 import type { CompetitionKind, Match } from "@/lib/data";
-import { competitionLabels } from "@/lib/data";
+import { competitionLabels, getMatchEmphasis } from "@/lib/data";
 import { cn } from "@/lib/format";
 
 type Filter = "all" | CompetitionKind;
 
 const filters: Filter[] = ["all", "liga", "pokal", "turnier"];
 
-export function SpielplanClient({ matches }: { matches: Match[] }) {
+export function SpielplanClient({
+  matches,
+  nextMatchId,
+}: {
+  matches: Match[];
+  nextMatchId?: string;
+}) {
   const [filter, setFilter] = useState<Filter>("liga");
+  const [now, setNow] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
 
   const visible = useMemo(
     () => (filter === "all" ? matches : matches.filter((m) => m.competitionKind === filter)),
@@ -57,9 +68,18 @@ export function SpielplanClient({ matches }: { matches: Match[] }) {
         </p>
       ) : (
         <div className="grid gap-5 lg:grid-cols-2">
-          {visible.map((match) => (
-            <MatchCard key={match.id} match={match} />
-          ))}
+          {visible.map((match) => {
+            const emphasis = getMatchEmphasis(match, nextMatchId, now);
+            return (
+              <MatchCard
+                key={match.id}
+                match={match}
+                emphasis={emphasis}
+                showSpielplanLink={false}
+                className={emphasis === "next" ? "lg:col-span-2" : undefined}
+              />
+            );
+          })}
         </div>
       )}
     </div>
