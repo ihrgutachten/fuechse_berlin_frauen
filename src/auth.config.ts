@@ -33,7 +33,7 @@ export const authConfig = {
         ...session.user,
         email: email ?? null,
         admin: Boolean(token.admin),
-        id: typeof token.sub === "string" ? token.sub : undefined,
+        id: typeof token.sub === "string" ? token.sub : "",
       };
       return session;
     },

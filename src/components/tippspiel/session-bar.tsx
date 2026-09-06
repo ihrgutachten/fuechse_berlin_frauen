@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { signOutTippspiel } from "@/lib/tippspiel-actions";
-import { TIPPSPIEL_LOGIN_HREF } from "@/lib/callback-path";
 
 type Props = {
   email?: string | null;
@@ -10,14 +9,7 @@ type Props = {
 
 export function SessionBar({ email, nickname, admin }: Props) {
   if (!email) {
-    return (
-      <Link
-        href={TIPPSPIEL_LOGIN_HREF}
-        className="inline-flex rounded-[var(--fb-radius)] bg-[var(--fb-green-500)] px-3 py-1.5 text-sm font-semibold uppercase text-[var(--fb-green-950)] transition hover:bg-[var(--fb-green-300)]"
-      >
-        Einloggen
-      </Link>
-    );
+    return null;
   }
 
   return (

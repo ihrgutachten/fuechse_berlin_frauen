@@ -23,7 +23,8 @@ export function TippspielMatchBanner({
   return (
     <div
       className={cn(
-        "bg-[var(--fb-green-950)] p-6 text-white md:p-8",
+        "bg-[var(--fb-green-950)] p-5 text-white md:p-8",
+        stacked && "border-t border-[var(--fb-home-line)]",
         !stacked &&
           "rounded-[var(--fb-radius-lg)] border border-[var(--fb-home-line)] shadow-[0_10px_28px_rgba(4,20,12,0.08)]",
       )}

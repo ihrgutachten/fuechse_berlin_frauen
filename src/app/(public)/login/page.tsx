@@ -28,6 +28,11 @@ export default async function LoginPage({ searchParams }: Props) {
     const requested = safeCallbackPath(String(formData.get("next") ?? ""));
     const redirectTo =
       requested ?? (isAdminEmail(email) ? "/admin" : "/tools/tippspiel");
+    const fail = (code: string) => {
+      const q = new URLSearchParams({ error: code });
+      if (requested) q.set("next", requested);
+      redirect(`/login?${q.toString()}`);
+    };
     try {
       await signIn("resend", {
         email,
@@ -35,7 +40,11 @@ export default async function LoginPage({ searchParams }: Props) {
       });
     } catch (err) {
       if (err instanceof AuthError) {
-        redirect("/login?error=Configuration");
+        const text = [
+          err.message,
+          err.cause instanceof Error ? err.cause.message : "",
+        ].join(" ");
+        fail(text.includes("Login-Mail") ? "EmailSend" : "Configuration");
       }
       throw err;
     }
@@ -47,12 +56,12 @@ export default async function LoginPage({ searchParams }: Props) {
         {fanFlow ? "Tippspiel" : "Konto"}
       </p>
       <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-3xl font-bold uppercase tracking-tight text-[var(--fb-ink)]">
-        Anmelden
+        {fanFlow ? "Zum Tippen" : "Anmelden"}
       </h1>
       <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
         {fanFlow
-          ? "Magic-Link per E-Mail. Kostenlos, kein Passwort, Tipp bis zum Anpfiff."
-          : "Magic-Link per E-Mail. Nach dem Klick bist du angemeldet."}
+          ? "Link per E-Mail. Kostenlos, kein Passwort. Danach Name wählen und Tipp speichern."
+          : "Link per E-Mail. Nach dem Klick bist du angemeldet."}
       </p>
 
       {params.error ? (
@@ -62,7 +71,9 @@ export default async function LoginPage({ searchParams }: Props) {
         >
           {params.error === "AccessDenied"
             ? "Anmeldung nicht möglich."
-            : "Anmeldung fehlgeschlagen. Bitte später erneut versuchen."}
+            : params.error === "EmailSend"
+              ? "Der Magic-Link konnte nicht gesendet werden. Anschauen geht ohne Login."
+              : "Anmeldung fehlgeschlagen. Bitte später erneut versuchen."}
         </p>
       ) : null}
 
@@ -89,7 +100,7 @@ export default async function LoginPage({ searchParams }: Props) {
           type="submit"
           className="inline-flex w-full items-center justify-center rounded-[var(--fb-radius)] bg-[var(--fb-accent)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--fb-accent-hover)]"
         >
-          Magic-Link senden
+          {fanFlow ? "Link zum Tippen senden" : "Magic-Link senden"}
         </button>
       </form>
     </div>

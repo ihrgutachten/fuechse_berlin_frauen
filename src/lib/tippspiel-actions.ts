@@ -56,9 +56,30 @@ export async function savePrediction(
   const userId = session?.user?.id;
   if (!userId) redirect("/login?next=/tools/tippspiel");
 
-  const profile = await getProfile(userId);
+  let profile = await getProfile(userId);
   if (!profile) {
-    return { ok: false, error: "Bitte zuerst einen Anzeigenamen setzen." };
+    const nickname = normalizeNickname(String(formData.get("nickname") ?? ""));
+    if (!nickname) {
+      return {
+        ok: false,
+        error: "Bitte einen Anzeigenamen setzen (3-20 Zeichen).",
+      };
+    }
+    const created = await upsertProfile({
+      userId,
+      nickname,
+      marketingOptIn: formData.get("marketing") === "on",
+    });
+    if (!created.ok) {
+      if (created.error === "taken") {
+        return { ok: false, error: "Dieser Name ist schon vergeben." };
+      }
+      return { ok: false, error: "Speichern fehlgeschlagen. Bitte später erneut versuchen." };
+    }
+    profile = await getProfile(userId);
+    if (!profile) {
+      return { ok: false, error: "Speichern fehlgeschlagen. Bitte später erneut versuchen." };
+    }
   }
 
   const matchId = String(formData.get("matchId") ?? "");

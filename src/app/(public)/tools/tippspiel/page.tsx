@@ -92,13 +92,19 @@ export default async function TippspielPage() {
         eyebrow="Fan-Tools"
         title="Spieltags-Tippspiel"
         titleNote="(Demoversion, aktuell kein echtes Gewinnspiel)"
-        description="Wöchentlich 2 Heimspiel-Tickets. Zur Saison ein von allen Spielerinnen unterschriebenes Trikot."
+        description={
+          session?.user
+            ? undefined
+            : "Wöchentlich 2 Heimspiel-Tickets. Zur Saison ein von allen Spielerinnen unterschriebenes Trikot."
+        }
         titleAction={
-          <SessionBar
-            email={session?.user?.email}
-            nickname={profile?.nickname}
-            admin={session?.user?.admin}
-          />
+          session?.user ? (
+            <SessionBar
+              email={session.user.email}
+              nickname={profile?.nickname}
+              admin={session.user.admin}
+            />
+          ) : undefined
         }
       />
 
@@ -112,8 +118,7 @@ export default async function TippspielPage() {
 
         {featured ? (
           <div className={`${tipCardClass} overflow-hidden`}>
-            <TippspielMatchBanner match={featured} phase={phase} stacked />
-            <section className="border-t border-[var(--fb-home-line)] bg-white p-5 md:p-8">
+            <section id="tipp" className="scroll-mt-24 bg-white p-5 md:p-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-bold uppercase">
                 {phase === "open" ? "Tipp abgeben" : "Dein Tipp"}
@@ -137,17 +142,10 @@ export default async function TippspielPage() {
               {!session?.user ? (
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-sm text-[var(--fb-text-muted)]">
-                    Mit E-Mail einloggen, Anzeigename wählen, Tipp speichern. Bis zum Anpfiff
-                    kannst du ihn noch ändern.
+                    Nur zum Tippen: Email angeben, Anzeigename wählen, Tipp speichern. Bis zum
+                    Anpfiff kannst du ihn noch ändern.
                   </p>
-                  <Button href={TIPPSPIEL_LOGIN_HREF}>Mit E-Mail einloggen</Button>
-                </div>
-              ) : !profile ? (
-                <div className="max-w-md">
-                  <p className="mb-4 text-sm text-[var(--fb-text-muted)]">
-                    Ein Anzeigename für die Rangliste, dann kannst du tippen.
-                  </p>
-                  <NicknameForm />
+                  <Button href={TIPPSPIEL_LOGIN_HREF}>Mit Email tippen</Button>
                 </div>
               ) : phase === "open" ? (
                 <PredictionForm
@@ -157,7 +155,15 @@ export default async function TippspielPage() {
                   awayLabel={featured.away.short}
                   initialHome={myTip?.homeScore ?? null}
                   initialAway={myTip?.awayScore ?? null}
+                  needsNickname={!profile}
                 />
+              ) : !profile ? (
+                <div className="max-w-md">
+                  <p className="mb-4 text-sm text-[var(--fb-text-muted)]">
+                    Ein Anzeigename für die Rangliste, dann kannst du beim nächsten Spiel tippen.
+                  </p>
+                  <NicknameForm />
+                </div>
               ) : myTip ? (
                 <div className="space-y-2">
                   <p className="font-[family-name:var(--fb-font-display)] text-4xl font-extrabold tabular-nums">
@@ -182,6 +188,7 @@ export default async function TippspielPage() {
               )}
             </div>
             </section>
+            <TippspielMatchBanner match={featured} phase={phase} stacked />
           </div>
         ) : (
           <p className="text-[var(--fb-text-muted)]">Aktuell kein Pflichtspiel im Tippspiel.</p>
