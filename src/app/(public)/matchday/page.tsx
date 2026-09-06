@@ -7,6 +7,9 @@ import { formatMatchDate } from "@/lib/format";
 
 export const metadata = { title: "Matchday" };
 
+/** Refresh next-match selection after kickoff without a full redeploy. */
+export const revalidate = 60;
+
 export default function MatchdayPage() {
   const match = getNextMatch();
 

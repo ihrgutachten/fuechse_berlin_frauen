@@ -9,6 +9,9 @@ import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getNews, getNextMatch, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
 
+/** Refresh next-match selection after kickoff without a full redeploy. */
+export const revalidate = 60;
+
 export default function HomePage() {
   const nextMatch = getNextMatch();
   const news = getNews().slice(0, 3);
