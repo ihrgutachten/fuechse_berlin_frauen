@@ -113,7 +113,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Fan-Tools"
               title="Mehr als Broschüre"
-              description="Tippspiel & Szenario-Rechner — Coming soon, Struktur steht."
+              description="Spieltags-Tippspiel ist live. Der Aufstiegs-Rechner folgt."
             />
             <div className="space-y-3">
               <Link
@@ -122,9 +122,9 @@ export default function HomePage() {
               >
                 <div>
                   <p className="font-semibold text-[var(--fb-ink)]">Spieltags-Tippspiel</p>
-                  <p className="text-sm text-[var(--fb-text-muted)]">Tippen, mitfiebern, Daten für Sponsoren.</p>
+                  <p className="text-sm text-[var(--fb-text-muted)]">Wöchentlich 2 Heimspiel-Tickets, zur Saison ein signiertes Trikot.</p>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--fb-accent)]">Soon</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--fb-accent)]">Tipp</span>
               </Link>
               <Link
                 href="/tools/szenario"

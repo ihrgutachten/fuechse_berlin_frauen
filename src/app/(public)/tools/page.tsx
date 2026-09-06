@@ -8,14 +8,15 @@ export default function ToolsPage() {
       <PageHero
         eyebrow="Engagement"
         title="Fan-Tools"
-        description="Interaktive Features — das Differenzierungsmerkmal gegenüber Broschüren-Seiten."
+        description="Interaktive Features. Das Differenzierungsmerkmal gegenüber Broschüren-Seiten."
       />
       <div className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-10 md:py-14">
         <div className="grid gap-5 md:grid-cols-2">
           <ToolTeaser
             href="/tools/tippspiel"
             title="Spieltags-Tippspiel"
-            description="Vor dem Anpfiff tippen, mit der Community mitfiebern, Sponsoring-Fläche nutzen."
+            description="Vor dem Anpfiff tippen. Wöchentlich 2 Heimspiel-Tickets, zur Saison ein signiertes Trikot."
+            comingSoon={false}
           />
           <ToolTeaser
             href="/tools/szenario"

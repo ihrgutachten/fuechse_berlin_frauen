@@ -1,6 +1,7 @@
 import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
 import { MatchdayModules } from "@/components/match/matchday-modules";
+import { TippspielMatchdayCta } from "@/components/tippspiel/matchday-cta";
 import { Button } from "@/components/ui/button";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
 import { getLastMatchWithReport, getNextMatch } from "@/lib/data";
@@ -91,6 +92,10 @@ export default async function MatchdayPage() {
                 </Button>
               </div>
             </div>
+
+            {match.competitionKind === "liga" || match.competitionKind === "pokal" ? (
+              <TippspielMatchdayCta match={match} />
+            ) : null}
 
             <section
               aria-labelledby="matchday-halle"

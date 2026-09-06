@@ -63,13 +63,13 @@ async function sendEmail(opts: {
 export async function sendLoginEmail(email: string, url: string): Promise<void> {
   const ok = await sendEmail({
     to: email,
-    subject: "Dein Login-Link — Füchse Berlin Frauen",
+    subject: "Dein Login-Link, Füchse Berlin Frauen",
     html: `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#04140c">
     <h1 style="font-size:20px;margin:0 0 16px">Dein Login-Link</h1>
     <p style="font-size:15px;line-height:1.5">
       Hallo,<br />
-      hier ist dein persönlicher Magic-Link für das Backend der Füchse Berlin Frauen.
+      hier ist dein persönlicher Magic-Link für die Website der Füchse Berlin Frauen.
     </p>
     <p style="margin:24px 0">
       <a href="${url}" style="display:inline-block;padding:12px 20px;background:#0a5c2e;color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Jetzt anmelden</a>

@@ -1,30 +1,37 @@
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
-import { signIn, auth } from "@/auth";
+import { signIn } from "@/auth";
 import { isAdminEmail } from "@/lib/admin";
+import { safeCallbackPath } from "@/lib/callback-path";
+import { getSession } from "@/lib/session";
 
 type Props = {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; next?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: Props) {
-  const session = await auth();
-  if (session?.user) redirect("/admin");
-
+  const session = await getSession();
   const params = await searchParams;
-  const error = params.error;
+  const next = safeCallbackPath(params.next);
+
+  if (session?.user) {
+    if (next) redirect(next);
+    redirect(session.user.admin ? "/admin" : "/tools/tippspiel");
+  }
+
+  const fanFlow = next === "/tools/tippspiel" || next === "/matchday";
 
   async function loginAction(formData: FormData) {
     "use server";
     const email = String(formData.get("email") ?? "").trim().toLowerCase();
     if (!email) return;
-    if (!isAdminEmail(email)) {
-      redirect("/login?error=AccessDenied");
-    }
+    const requested = safeCallbackPath(String(formData.get("next") ?? ""));
+    const redirectTo =
+      requested ?? (isAdminEmail(email) ? "/admin" : "/tools/tippspiel");
     try {
       await signIn("resend", {
         email,
-        redirectTo: "/admin",
+        redirectTo,
       });
     } catch (err) {
       if (err instanceof AuthError) {
@@ -37,27 +44,30 @@ export default async function LoginPage({ searchParams }: Props) {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-[var(--fb-gutter)] py-16">
       <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-muted)]">
-        Backend
+        {fanFlow ? "Tippspiel" : "Konto"}
       </p>
       <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-3xl font-bold uppercase tracking-tight text-[var(--fb-ink)]">
         Anmelden
       </h1>
       <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-        Magic-Link per E-Mail — nur freigeschaltete Adressen.
+        {fanFlow
+          ? "Magic-Link per E-Mail. Kostenlos, kein Passwort, Tipp bis zum Anpfiff."
+          : "Magic-Link per E-Mail. Nach dem Klick bist du angemeldet."}
       </p>
 
-      {error ? (
+      {params.error ? (
         <p
           className="mt-6 rounded-[var(--fb-radius)] border border-[var(--fb-away-line)] bg-[var(--fb-away-soft)] px-3 py-2 text-sm"
           role="alert"
         >
-          {error === "AccessDenied"
-            ? "Diese E-Mail ist nicht freigeschaltet."
+          {params.error === "AccessDenied"
+            ? "Anmeldung nicht möglich."
             : "Anmeldung fehlgeschlagen. Bitte später erneut versuchen."}
         </p>
       ) : null}
 
       <form action={loginAction} className="mt-8 space-y-4">
+        {next ? <input type="hidden" name="next" value={next} /> : null}
         <div>
           <label
             htmlFor="email"
