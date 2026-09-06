@@ -67,8 +67,13 @@ export default function MatchdayPage() {
                 <Countdown startsAt={match.startsAt} />
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
+                {match.ticketUrl ? (
+                  <Button href={match.ticketUrl} variant="on-dark">
+                    Tickets kaufen
+                  </Button>
+                ) : null}
                 {match.streamUrl ? (
-                  <Button href={match.streamUrl} variant="on-dark">
+                  <Button href={match.streamUrl} variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:text-white">
                     Stream öffnen
                   </Button>
                 ) : null}

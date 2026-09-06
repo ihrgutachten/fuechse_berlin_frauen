@@ -6,6 +6,7 @@ import players from "@/data/players.json";
 import sponsors from "@/data/sponsors.json";
 import sponsorOrthoPed from "@/data/sponsor-profiles/sponsor-ortho-ped.json";
 import sponsorMalermeisterRewolinski from "@/data/sponsor-profiles/sponsor-malermeister-rewolinski.json";
+import { TICKET_SHOP_URL } from "@/lib/tickets";
 
 export type CompetitionKind = "liga" | "pokal" | "turnier";
 
@@ -271,7 +272,10 @@ function hydrateMatch(record: MatchRecord): Match {
     mapsUrl,
     isHome,
     streamUrl,
-    ticketUrl: record.ticketUrl ?? null,
+    ticketUrl:
+      record.ticketUrl === null
+        ? null
+        : (record.ticketUrl ?? (isHome ? TICKET_SHOP_URL : null)),
     homeScore: record.homeScore,
     awayScore: record.awayScore,
     status: record.status,
@@ -302,6 +306,10 @@ export function pickNextMatch(matches: Match[], now = Date.now()): Match | undef
 
 export function getNextMatch(): Match | undefined {
   return pickNextMatch(getMatches());
+}
+
+export function getNextHomeMatch(): Match | undefined {
+  return pickNextMatch(getMatches().filter((m) => m.isHome));
 }
 
 export function getMatchEmphasis(

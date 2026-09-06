@@ -47,6 +47,11 @@ export default function HomePage() {
             Handball aus dem Revier. Tempo, Härte, Berliner Attitude — jetzt unter einem Namen mit den Herren.
           </p>
           <div className="animate-fade-up-delay-2 mt-8 flex flex-wrap gap-3">
+            {nextMatch?.ticketUrl ? (
+              <Button href={nextMatch.ticketUrl} variant="on-dark">
+                Tickets
+              </Button>
+            ) : null}
             <Button href="/matchday" variant="on-dark">
               Zum Matchday-Center
             </Button>

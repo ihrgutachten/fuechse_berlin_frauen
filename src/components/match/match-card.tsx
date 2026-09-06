@@ -76,9 +76,10 @@ export function MatchCard({
   const past = emphasis === "past";
   const next = emphasis === "next";
   const result = showScore ? fuechseResult(match) : null;
+  const showTickets = Boolean(match.ticketUrl) && !past;
   const showMatchday = !isTournament && !past;
   const showStream = Boolean(match.streamUrl) && !past;
-  const showActions = showMatchday || showStream || showSpielplanLink;
+  const showActions = showTickets || showMatchday || showStream || showSpielplanLink;
 
   return (
     <article
@@ -182,8 +183,13 @@ export function MatchCard({
 
         {showActions ? (
           <div className="mt-5 flex flex-wrap justify-center gap-2">
+            {showTickets && match.ticketUrl ? (
+              <Button href={match.ticketUrl} variant="solid">
+                Tickets
+              </Button>
+            ) : null}
             {showMatchday ? (
-              <Button href="/matchday" variant="solid">
+              <Button href="/matchday" variant={showTickets ? "outline" : "solid"}>
                 Matchday-Center
               </Button>
             ) : null}

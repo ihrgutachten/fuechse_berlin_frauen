@@ -3,6 +3,7 @@ export const navLinks = [
   { href: "/tabelle", label: "Tabelle" },
   { href: "/team", label: "Team" },
   { href: "/matchday", label: "Matchday" },
+  { href: "/tickets", label: "Tickets" },
   { href: "/news", label: "News" },
   { href: "/shop", label: "Shop" },
   { href: "/tools", label: "Tools" },
