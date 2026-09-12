@@ -71,3 +71,40 @@ export async function syncOfficialResult(match: Match, now = Date.now()): Promis
   await saveOfficialResult(match.id, endstand.homeScore, endstand.awayScore);
   return applyOfficialResult(match, endstand);
 }
+
+export async function pollOfficialResults(now = Date.now()): Promise<{
+  skipped?: string;
+  checked: number;
+  scored: Array<{ matchId: string; homeScore: number; awayScore: number }>;
+}> {
+  if (!isDatabaseConfigured()) {
+    return { skipped: "no-db", checked: 0, scored: [] };
+  }
+
+  const stored = await getStoredMatchResults();
+  const matches = overlayTipMatches(getTippspielMatches(), stored);
+  const candidates = matches.filter((match) => {
+    if (getTipPhase(match, now) === "scored") return false;
+    if (!isTipLocked(match, now)) return false;
+    if (!match.fmpMatchId) return false;
+    return now >= Date.parse(match.startsAt) + REPORT_READY_AFTER_MS;
+  });
+
+  const scored: Array<{ matchId: string; homeScore: number; awayScore: number }> = [];
+  for (const match of candidates) {
+    const next = await syncOfficialResult(match, now);
+    if (
+      next.homeScore != null &&
+      next.awayScore != null &&
+      getTipPhase(next, now) === "scored"
+    ) {
+      scored.push({
+        matchId: next.id,
+        homeScore: next.homeScore,
+        awayScore: next.awayScore,
+      });
+    }
+  }
+
+  return { checked: candidates.length, scored };
+}
