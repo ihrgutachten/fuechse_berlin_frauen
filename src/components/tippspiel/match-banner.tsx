@@ -81,7 +81,7 @@ export function TippspielMatchBanner({
 
       {phase === "locked" ? (
         <p className="mt-6 text-sm text-white/70">
-          Tipps sind eingefroren. Nach dem Abpfiff zählen die Punkte.
+          Tipps sind eingefroren. Punkte gibt es erst nach dem offiziellen Endstand.
         </p>
       ) : null}
     </div>

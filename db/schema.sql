@@ -38,3 +38,13 @@ CREATE TABLE IF NOT EXISTS users (
   image TEXT,
   PRIMARY KEY (id)
 );
+
+-- Official tippspiel results (FMP Endstand). Scores stay null until the report is final.
+CREATE TABLE IF NOT EXISTS tippspiel_match_results (
+  match_id TEXT PRIMARY KEY,
+  home_score SMALLINT,
+  away_score SMALLINT,
+  source TEXT NOT NULL DEFAULT 'fmp',
+  checked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  fetched_at TIMESTAMPTZ
+);

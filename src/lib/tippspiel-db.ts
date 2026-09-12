@@ -1,6 +1,12 @@
 import { getMatchById } from "@/lib/data";
 import { getSql } from "@/lib/db";
-import { getFinishedTipMatches, nicknameKey, predictionPoints } from "@/lib/tippspiel";
+import {
+  getFinishedTipMatches,
+  getTippspielMatches,
+  nicknameKey,
+  overlayTipMatches,
+  predictionPoints,
+} from "@/lib/tippspiel";
 
 export type TipProfile = {
   userId: string;
@@ -74,6 +80,16 @@ async function ensureSchema() {
         )
       `;
       await sql`CREATE INDEX IF NOT EXISTS tippspiel_predictions_match_id ON tippspiel_predictions (match_id)`;
+      await sql`
+        CREATE TABLE IF NOT EXISTS tippspiel_match_results (
+          match_id TEXT PRIMARY KEY,
+          home_score SMALLINT,
+          away_score SMALLINT,
+          source TEXT NOT NULL DEFAULT 'fmp',
+          checked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+          fetched_at TIMESTAMPTZ
+        )
+      `;
     })().catch((err: unknown) => {
       schemaReady = null;
       throw err;
@@ -227,7 +243,11 @@ export async function getMatchLeaderboard(
   const sql = getSql();
   if (!sql) return [];
   await ensureSchema();
-  const match = getMatchById(matchId);
+  const jsonMatch = getMatchById(matchId);
+  const stored = await getStoredMatchResults();
+  const match = jsonMatch
+    ? overlayTipMatches([jsonMatch], stored)[0]
+    : undefined;
   const rows = (await sql`
     SELECT p.user_id, p.home_score, p.away_score, p.updated_at, pr.nickname
     FROM tippspiel_predictions p
@@ -279,7 +299,8 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
   const sql = getSql();
   if (!sql) return [];
   await ensureSchema();
-  const finished = getFinishedTipMatches();
+  const stored = await getStoredMatchResults();
+  const finished = getFinishedTipMatches(overlayTipMatches(getTippspielMatches(), stored));
   if (!finished.length) return [];
 
   const rows = (await sql`
@@ -357,6 +378,81 @@ export async function getTippspielStats(): Promise<{
     profiles: profileRows[0]?.count ?? 0,
     predictions: predictionRows[0]?.count ?? 0,
   };
+}
+
+export type OfficialMatchResult = {
+  matchId: string;
+  homeScore: number;
+  awayScore: number;
+};
+
+export async function getStoredMatchResults(): Promise<Map<string, { homeScore: number; awayScore: number }>> {
+  const sql = getSql();
+  const out = new Map<string, { homeScore: number; awayScore: number }>();
+  if (!sql) return out;
+  await ensureSchema();
+  const rows = (await sql`
+    SELECT match_id, home_score, away_score
+    FROM tippspiel_match_results
+    WHERE home_score IS NOT NULL AND away_score IS NOT NULL
+  `) as Array<{ match_id: string; home_score: number; away_score: number }>;
+  for (const row of rows) {
+    out.set(row.match_id, { homeScore: row.home_score, awayScore: row.away_score });
+  }
+  return out;
+}
+
+export async function getResultCheck(
+  matchId: string,
+): Promise<{ checkedAt: number; hasResult: boolean } | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  await ensureSchema();
+  const rows = (await sql`
+    SELECT home_score, away_score, checked_at
+    FROM tippspiel_match_results
+    WHERE match_id = ${matchId}
+    LIMIT 1
+  `) as Array<{ home_score: number | null; away_score: number | null; checked_at: string }>;
+  const row = rows[0];
+  if (!row) return null;
+  return {
+    checkedAt: +new Date(row.checked_at),
+    hasResult: row.home_score != null && row.away_score != null,
+  };
+}
+
+export async function markResultChecked(matchId: string): Promise<void> {
+  const sql = getSql();
+  if (!sql) return;
+  await ensureSchema();
+  await sql`
+    INSERT INTO tippspiel_match_results (match_id, checked_at)
+    VALUES (${matchId}, NOW())
+    ON CONFLICT (match_id) DO UPDATE SET
+      checked_at = NOW()
+    WHERE tippspiel_match_results.home_score IS NULL
+  `;
+}
+
+export async function saveOfficialResult(
+  matchId: string,
+  homeScore: number,
+  awayScore: number,
+): Promise<void> {
+  const sql = getSql();
+  if (!sql) return;
+  await ensureSchema();
+  await sql`
+    INSERT INTO tippspiel_match_results (match_id, home_score, away_score, source, checked_at, fetched_at)
+    VALUES (${matchId}, ${homeScore}, ${awayScore}, 'fmp', NOW(), NOW())
+    ON CONFLICT (match_id) DO UPDATE SET
+      home_score = EXCLUDED.home_score,
+      away_score = EXCLUDED.away_score,
+      source = EXCLUDED.source,
+      checked_at = NOW(),
+      fetched_at = NOW()
+  `;
 }
 
 function mapPrediction(row: {

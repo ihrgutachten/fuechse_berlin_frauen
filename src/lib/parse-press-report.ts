@@ -222,6 +222,23 @@ function enrich(
   };
 }
 
+/** Official full-time line only. Halftime in parentheses. Live PDFs without this are ignored. */
+export function parseEndstand(
+  rawText: string,
+): { homeScore: number; awayScore: number; homeHalftime: number; awayHalftime: number } | null {
+  const text = rawText.replace(/\u0000/g, "");
+  const score = text.match(
+    /Endstand:\s*(\d{1,3})\s*:\s*(\d{1,3})\s*\((\d{1,3})\s*:\s*(\d{1,3})\)/,
+  );
+  if (!score) return null;
+  return {
+    homeScore: Number(score[1]),
+    awayScore: Number(score[2]),
+    homeHalftime: Number(score[3]),
+    awayHalftime: Number(score[4]),
+  };
+}
+
 export function parsePressReport(rawText: string, roster: RosterLookup[] = []): MatchReport | null {
   const text = rawText.replace(/\u0000/g, "").replace(/\r\n/g, "\n");
   const lines = text
@@ -229,9 +246,7 @@ export function parsePressReport(rawText: string, roster: RosterLookup[] = []): 
     .map((line) => line.trim())
     .filter(Boolean);
 
-  const score = text.match(
-    /Endstand:\s*(\d{1,3})\s*:\s*(\d{1,3})\s*\((\d{1,3})\s*:\s*(\d{1,3})\)/,
-  );
+  const score = parseEndstand(text);
   const crowd = text.match(/Zuschauer:\s*(\d{1,5})/);
 
   const teams: RosterTeam[] = [];
@@ -253,10 +268,10 @@ export function parsePressReport(rawText: string, roster: RosterLookup[] = []): 
 
   return {
     attendance: crowd ? Number(crowd[1]) : null,
-    homeScore: score ? Number(score[1]) : null,
-    awayScore: score ? Number(score[2]) : null,
-    homeHalftime: score ? Number(score[3]) : null,
-    awayHalftime: score ? Number(score[4]) : null,
+    homeScore: score?.homeScore ?? null,
+    awayScore: score?.awayScore ?? null,
+    homeHalftime: score?.homeHalftime ?? null,
+    awayHalftime: score?.awayHalftime ?? null,
     home,
     away,
     ourTeam: home.isUs ? home : away,

@@ -7,7 +7,7 @@ import { getMatchById } from "@/lib/data";
 import { isDatabaseConfigured } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { getProfile, upsertPrediction, upsertProfile } from "@/lib/tippspiel-db";
-import { getTipPhase, isTipLocked, normalizeNickname, parseScore } from "@/lib/tippspiel";
+import { getTipPhase, isTipLocked, NICKNAME_ERROR, normalizeNickname, parseScore } from "@/lib/tippspiel";
 
 export type ActionState = { ok: true; message: string } | { ok: false; error: string } | null;
 
@@ -27,7 +27,7 @@ export async function saveNickname(
   if (!nickname) {
     return {
       ok: false,
-      error: "3-20 Zeichen: Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich.",
+      error: NICKNAME_ERROR,
     };
   }
 
@@ -62,7 +62,7 @@ export async function savePrediction(
     if (!nickname) {
       return {
         ok: false,
-        error: "Bitte einen Anzeigenamen setzen (3-20 Zeichen).",
+        error: NICKNAME_ERROR,
       };
     }
     const created = await upsertProfile({

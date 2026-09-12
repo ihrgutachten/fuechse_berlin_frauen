@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { savePrediction, type ActionState } from "@/lib/tippspiel-actions";
+import { NicknameField } from "@/components/tippspiel/nickname-field";
 import { TIPPSPIEL_MAX_GOALS } from "@/lib/tippspiel";
 import { cn } from "@/lib/format";
 
@@ -36,28 +37,7 @@ export function PredictionForm({
       <input type="hidden" name="awayScore" value={away} />
 
       {needsNickname ? (
-        <div className="max-w-md">
-          <label
-            htmlFor="nickname"
-            className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-muted)]"
-          >
-            Anzeigename
-          </label>
-          <input
-            id="nickname"
-            name="nickname"
-            type="text"
-            required
-            minLength={3}
-            maxLength={20}
-            autoComplete="nickname"
-            placeholder="z. B. RevierFuchs"
-            className="mt-1.5 w-full rounded-[var(--fb-radius)] border border-[var(--fb-border)] bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--fb-accent)] focus:ring-2 focus:ring-[var(--fb-green-100)]"
-          />
-          <p className="mt-1.5 text-xs text-[var(--fb-text-faint)]">
-            3-20 Zeichen, steht in der Rangliste. Danach gleich den Tipp speichern.
-          </p>
-        </div>
+        <NicknameField error={state?.ok === false ? state.error : null} />
       ) : null}
 
       <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-8">
@@ -69,7 +49,7 @@ export function PredictionForm({
           </p>
           <ScoreStepper label={awayLabel} value={away} onChange={setAway} />
         </div>
-        {state?.ok === false ? (
+        {state?.ok === false && !needsNickname ? (
           <p className="mt-3 text-sm text-[var(--fb-away)]" role="alert">
             {state.error}
           </p>

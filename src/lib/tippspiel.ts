@@ -43,34 +43,63 @@ export function getTipPhase(match: Match, now = Date.now()): TipPhase {
   return "open";
 }
 
-/** Live or next scheduled Pflichtspiel; otherwise last finished. */
-export function getTippspielFeaturedMatch(now = Date.now()): Match | undefined {
-  const matches = getTippspielMatches();
-  const live = matches.find((match) => match.status === "live");
-  if (live) return live;
-  const next = pickNextMatch(matches, now);
-  if (next) return next;
-  return getLastFinishedTipMatch();
+export function applyOfficialResult(
+  match: Match,
+  result: { homeScore: number; awayScore: number },
+): Match {
+  return {
+    ...match,
+    homeScore: result.homeScore,
+    awayScore: result.awayScore,
+    status: "finished",
+  };
 }
 
-export function getLastFinishedTipMatch(): Match | undefined {
-  return getTippspielMatches()
-    .filter((match) => match.status === "finished" && hasResult(match))
+export function overlayTipMatches(
+  matches: Match[],
+  results: Map<string, { homeScore: number; awayScore: number }>,
+): Match[] {
+  return matches.map((match) => {
+    const result = results.get(match.id);
+    return result ? applyOfficialResult(match, result) : match;
+  });
+}
+
+/** Live, currently locked (kickoff done, no official score yet), next scheduled, else last scored. */
+export function getTippspielFeaturedMatch(
+  matches = getTippspielMatches(),
+  now = Date.now(),
+): Match | undefined {
+  const live = matches.find((match) => match.status === "live");
+  if (live) return live;
+  const inPlay = matches
+    .filter((match) => isTipLocked(match, now) && getTipPhase(match, now) !== "scored")
     .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt))[0];
+  if (inPlay) return inPlay;
+  const next = pickNextMatch(matches, now);
+  if (next) return next;
+  return getLastFinishedTipMatch(matches);
+}
+
+export function getLastFinishedTipMatch(matches = getTippspielMatches()): Match | undefined {
+  return getFinishedTipMatches(matches).at(-1);
+}
+
+export function getFinishedTipMatches(matches = getTippspielMatches()): Match[] {
+  return matches
+    .filter((match) => getTipPhase(match) === "scored")
+    .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
 }
 
 /** Next home Pflichtspiel after this kickoff. Weekly ticket prize points there. */
-export function getNextHomeMatchAfter(startsAt: string): Match | undefined {
+export function getNextHomeMatchAfter(
+  startsAt: string,
+  matches = getTippspielMatches(),
+): Match | undefined {
   const after = Date.parse(startsAt);
-  return getTippspielMatches()
+  return matches
     .filter((match) => match.isHome && Date.parse(match.startsAt) > after)
     .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt))[0];
-}
-
-export function getFinishedTipMatches(): Match[] {
-  return getTippspielMatches()
-    .filter((match) => match.status === "finished" && hasResult(match))
-    .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
 }
 
 export function predictionPoints(
@@ -108,6 +137,13 @@ export function parseScore(value: FormDataEntryValue | null): number | null {
 }
 
 const NICKNAME_RE = /^[a-zA-Z0-9äöüÄÖÜß._-]{3,20}$/;
+
+/** HTML `pattern` (ohne Anker). Muss zu NICKNAME_RE passen. */
+export const NICKNAME_PATTERN = "[A-Za-z0-9äöüÄÖÜß._\\-]{3,20}";
+export const NICKNAME_HINT =
+  "Ein Wort ohne Leerzeichen, 3-20 Zeichen. Erlaubt sind Buchstaben, Zahlen, Punkt, Unterstrich und Bindestrich. Beispiel: RevierFuchs";
+export const NICKNAME_ERROR =
+  "Bitte ein Wort ohne Leerzeichen. 3-20 Zeichen: Buchstaben, Zahlen, Punkt, Unterstrich oder Bindestrich.";
 
 export function normalizeNickname(raw: string): string | null {
   const nickname = raw.trim().replace(/\s+/g, " ");

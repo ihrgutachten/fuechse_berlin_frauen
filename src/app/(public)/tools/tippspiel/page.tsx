@@ -21,11 +21,10 @@ import {
   getSeasonLeaderboard,
 } from "@/lib/tippspiel-db";
 import {
-  getLastFinishedTipMatch,
   getTipPhase,
-  getTippspielFeaturedMatch,
   predictionPoints,
 } from "@/lib/tippspiel";
+import { hydrateTippspiel } from "@/lib/tippspiel-results";
 
 export const metadata = { title: "Tippspiel" };
 
@@ -34,8 +33,7 @@ export const dynamic = "force-dynamic";
 export default async function TippspielPage() {
   const session = await getSession();
   const userId = session?.user?.id;
-  const featured = getTippspielFeaturedMatch();
-  const lastFinished = getLastFinishedTipMatch();
+  const { featured, lastFinished } = await hydrateTippspiel();
   const dbUp = isDatabaseConfigured();
 
   let dbError = false;
@@ -177,7 +175,7 @@ export default async function TippspielPage() {
                     </p>
                   ) : (
                     <p className="text-sm text-[var(--fb-text-muted)]">
-                      Eingefroren bis zum Abpfiff.
+                      Eingefroren. Punkte kommen nach dem offiziellen Endstand.
                     </p>
                   )}
                 </div>
@@ -226,7 +224,7 @@ export default async function TippspielPage() {
               {showScores
                 ? showPoints
                   ? "Punkte nach dem offiziellen Endstand."
-                  : "Tipps sind sichtbar, Punkte kommen nach dem Abpfiff."
+                  : "Tipps sind sichtbar, Punkte kommen nach dem offiziellen Endstand."
                 : "Die einzelnen Stände bleiben bis zum Anpfiff verborgen."}
             </p>
             <MatchLeaderboard

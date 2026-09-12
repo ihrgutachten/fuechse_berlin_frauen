@@ -3,16 +3,15 @@ import { SeasonPodium, WeeklyWinnerCard } from "@/components/tippspiel/highlight
 import { Button } from "@/components/ui/button";
 import { isDatabaseConfigured } from "@/lib/db";
 import { matchContextLabel, type Match } from "@/lib/data";
-import {
-  getLastFinishedTipMatch,
-  getTipPhase,
-} from "@/lib/tippspiel";
+import { getTipPhase } from "@/lib/tippspiel";
 import { getMatchLeaderboard, getSeasonLeaderboard } from "@/lib/tippspiel-db";
+import { hydrateTippspiel } from "@/lib/tippspiel-results";
 
 export async function TippspielMatchdayCta({ match }: { match: Match }) {
-  const phase = getTipPhase(match);
-  const weekly = weeklyPrizeText(match);
-  const lastFinished = getLastFinishedTipMatch();
+  const { matches, lastFinished } = await hydrateTippspiel();
+  const current = matches.find((item) => item.id === match.id) ?? match;
+  const phase = getTipPhase(current);
+  const weekly = weeklyPrizeText(current);
 
   let winner = null;
   let seasonTop: Awaited<ReturnType<typeof getSeasonLeaderboard>> = [];
@@ -34,14 +33,14 @@ export async function TippspielMatchdayCta({ match }: { match: Match }) {
       ? {
           eyebrow: "Tippspiel",
           title: "Tipp abgeben",
-          text: `${matchContextLabel(match)}. Diese Woche zu gewinnen: ${weekly}.`,
+          text: `${matchContextLabel(current)}. Diese Woche zu gewinnen: ${weekly}.`,
           label: "Jetzt tippen",
         }
       : phase === "locked"
         ? {
             eyebrow: "Tippspiel",
             title: "Tippschluss",
-            text: `Dein Tipp ist eingefroren. Nach dem Abpfiff geht es um ${weekly}.`,
+            text: `Dein Tipp ist eingefroren. Nach dem offiziellen Endstand geht es um ${weekly}.`,
             label: "Zur Rangliste",
           }
         : {
