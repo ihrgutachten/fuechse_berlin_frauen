@@ -1,0 +1,28 @@
+{
+  "slug": "der-hollaender",
+  "sponsorId": "der-hollaender",
+  "headline": "Der Holländer",
+  "tagline": "Premium Partner der Füchse Berlin Frauen",
+  "intro": "Der Holländer ist Premium Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Der Holländer ist ein Pflanzencenter in Berlin. Gartenwelt, Pflanzen und Beratung, mit Standort an der Trakehner Allee."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Pflanzen",
+    "Gartenwelt"
+  ],
+  "locations": [
+    {
+      "name": "Der Holländer",
+      "address": "Trakehner Allee 1a, 14053 Berlin",
+      "phone": "030 30090740",
+      "email": "info@der-hollaender.de"
+    }
+  ],
+  "website": "https://www.der-hollaender.de/de-de",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

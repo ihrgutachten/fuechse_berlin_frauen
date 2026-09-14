@@ -1,0 +1,26 @@
+{
+  "slug": "servisa",
+  "sponsorId": "servisa",
+  "headline": "Servisa",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "Servisa ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Die SERVISA Gruppe arbeitet in Baumanagement und Log Services und stellt sich als Unternehmensgruppe mit Projekten in Berlin vor."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Baumanagement",
+    "Logistikservices"
+  ],
+  "locations": [
+    {
+      "name": "Servisa",
+      "phone": "+49 30 56555560"
+    }
+  ],
+  "website": "https://www.servisa-gruppe.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

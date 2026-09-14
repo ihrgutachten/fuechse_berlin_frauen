@@ -1,0 +1,28 @@
+{
+  "slug": "flash-security",
+  "sponsorId": "flash-security",
+  "headline": "Flash Security",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "Flash Security ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "flash-security ist Sicherheitsdienst in Berlin und wirbt mit integrierten Sicherheitslösungen für die Stadt."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Sicherheitsdienst",
+    "Objektschutz"
+  ],
+  "locations": [
+    {
+      "name": "Flash Security",
+      "address": "Regattastraße 189, 12527 Berlin",
+      "phone": "+49 30 3229521558",
+      "email": "office@flash-security.de"
+    }
+  ],
+  "website": "https://flash-security.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

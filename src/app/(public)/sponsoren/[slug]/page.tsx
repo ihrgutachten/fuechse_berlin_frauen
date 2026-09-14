@@ -80,6 +80,10 @@ export default async function SponsorProfilePage({ params }: Props) {
                 </ul>
               </div>
             ) : null}
+
+            {profile.sourceNote ? (
+              <p className="mt-8 text-xs text-[var(--fb-text-faint)]">{profile.sourceNote}</p>
+            ) : null}
           </div>
 
           <aside className="space-y-6">
@@ -130,32 +134,42 @@ export default async function SponsorProfilePage({ params }: Props) {
               <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--fb-text-faint)]">
                 Kontakt & Standorte
               </h2>
-              <ul className="mt-4 space-y-4">
-                {profile.locations.map((loc) => (
-                  <li key={loc.name} className="text-sm">
-                    <p className="font-semibold text-[var(--fb-ink)]">{loc.name}</p>
-                    <p className="mt-1 text-[var(--fb-text-muted)]">{loc.address}</p>
-                    {loc.phone ? (
-                      <p className="mt-1">
-                        <a
-                          href={`tel:${loc.phone.replace(/\s|\//g, "")}`}
-                          className="text-[var(--fb-accent)] hover:underline"
-                        >
-                          {loc.phone}
-                        </a>
-                      </p>
-                    ) : null}
-                    <p>
-                      <a
-                        href={`mailto:${loc.email}`}
-                        className="text-[var(--fb-accent)] hover:underline"
-                      >
-                        {loc.email}
-                      </a>
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {profile.locations.length ? (
+                <ul className="mt-4 space-y-4">
+                  {profile.locations.map((loc) => (
+                    <li key={loc.name} className="text-sm">
+                      <p className="font-semibold text-[var(--fb-ink)]">{loc.name}</p>
+                      {loc.address ? (
+                        <p className="mt-1 text-[var(--fb-text-muted)]">{loc.address}</p>
+                      ) : null}
+                      {loc.phone ? (
+                        <p className="mt-1">
+                          <a
+                            href={`tel:${loc.phone.replace(/\s|\//g, "")}`}
+                            className="text-[var(--fb-accent)] hover:underline"
+                          >
+                            {loc.phone}
+                          </a>
+                        </p>
+                      ) : null}
+                      {loc.email ? (
+                        <p>
+                          <a
+                            href={`mailto:${loc.email}`}
+                            className="text-[var(--fb-accent)] hover:underline"
+                          >
+                            {loc.email}
+                          </a>
+                        </p>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm text-[var(--fb-text-muted)]">
+                  Kontakt über die Website des Partners.
+                </p>
+              )}
               <div className="mt-5 flex flex-wrap gap-3">
                 <Button href={profile.website} variant="solid">
                   Zur Website

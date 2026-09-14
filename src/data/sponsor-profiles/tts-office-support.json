@@ -1,0 +1,29 @@
+{
+  "slug": "tts-office-support",
+  "sponsorId": "tts-office-support",
+  "headline": "TTS Office Support",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "TTS Office Support ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "TTS Office Support ist Büroservice in Berlin: virtuelle Assistenz, Telefonservice und Backoffice."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Virtuelle Assistenz",
+    "Telefonservice",
+    "Büroservice"
+  ],
+  "locations": [
+    {
+      "name": "TTS Office Support",
+      "address": "Goerzallee 299, 14167 Berlin",
+      "phone": "030 8599460",
+      "email": "berlin@tts-office-support.de"
+    }
+  ],
+  "website": "https://www.tts-office-support.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

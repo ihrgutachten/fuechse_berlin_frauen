@@ -1,0 +1,28 @@
+{
+  "slug": "gh-payment",
+  "sponsorId": "gh-payment",
+  "headline": "GH Payment",
+  "tagline": "Gold Partner der Füchse Berlin Frauen",
+  "intro": "GH Payment ist Gold Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "GH Payment ist regionaler Anbieter für POS-Terminals, E-Commerce-Zahlungen und Kassensysteme, mit Vertrieb unter anderem in Berlin."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Kartenterminals",
+    "E-Payment",
+    "Kassensysteme"
+  ],
+  "locations": [
+    {
+      "name": "GH Payment",
+      "phone": "+49 30 340603270",
+      "email": "info@gh-payment.de"
+    }
+  ],
+  "website": "https://gh-payment.de",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

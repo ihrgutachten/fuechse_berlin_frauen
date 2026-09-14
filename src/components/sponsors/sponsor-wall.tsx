@@ -107,7 +107,7 @@ export function SponsorWall({ sponsors, className, tiers }: SponsorWallProps) {
                         href={profileHref}
                         className="text-center text-xs font-semibold uppercase tracking-[0.12em] text-[var(--fb-text-muted)] transition hover:text-[var(--fb-accent)]"
                       >
-                        Weiter / Portrait
+                        Zum Partner
                       </Link>
                     ) : null}
                   </li>

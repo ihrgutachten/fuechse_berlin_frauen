@@ -1,0 +1,27 @@
+{
+  "slug": "hanebutt",
+  "sponsorId": "hanebutt",
+  "headline": "Hanebutt",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "Hanebutt ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Hanebutt ist Dachdeckerbetrieb mit mehreren Standorten. Das Unternehmen betont Handwerk, Familie und soziales Engagement."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Dachdecker",
+    "Dachsanierung"
+  ],
+  "locations": [
+    {
+      "name": "Hanebutt",
+      "phone": "+49 5032 952140",
+      "email": "info@hanebutt.de"
+    }
+  ],
+  "website": "https://www.hanebutt.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "techno-care",
+  "sponsorId": "techno-care",
+  "headline": "Techno Care",
+  "tagline": "Silber Partner der Füchse Berlin Frauen",
+  "intro": "Techno Care ist Silber Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Technocare übersetzt Gebäude in Technik: Haustechnik und technische Systeme, die im Hintergrund funktionieren sollen."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Haustechnik",
+    "Technische Gebäudeausrüstung"
+  ],
+  "locations": [
+    {
+      "name": "Techno Care",
+      "email": "kontakt@technocare.de"
+    }
+  ],
+  "website": "http://www.technocare.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "youth-globe",
+  "sponsorId": "youth-globe",
+  "headline": "Youth Globe",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "Youth Globe ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Youth Globe bietet Seminare, Events und Clubs zur persönlichen Entwicklung, beruflich und privat."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Seminare",
+    "Events"
+  ],
+  "locations": [
+    {
+      "name": "Youth Globe",
+      "email": "tobias.haufe@youth-globe.com"
+    }
+  ],
+  "website": "https://www.youth-globe.com/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

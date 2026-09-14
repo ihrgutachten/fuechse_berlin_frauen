@@ -1,0 +1,27 @@
+{
+  "slug": "bett1",
+  "sponsorId": "bett1",
+  "headline": "bett1",
+  "tagline": "Silber Partner der Füchse Berlin Frauen",
+  "intro": "bett1 ist Silber Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "bett1 verkauft Matratzen und Bettwaren. Der Shop nennt einen Standort in der Tauentzienstraße 11 in Berlin."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Matratzen",
+    "Bettwaren"
+  ],
+  "locations": [
+    {
+      "name": "bett1",
+      "address": "Tauentzienstr. 11, 10789 Berlin",
+      "phone": "+49 30 767317272"
+    }
+  ],
+  "website": "https://www.bett1.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

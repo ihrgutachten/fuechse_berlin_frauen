@@ -1,0 +1,26 @@
+{
+  "slug": "ndc",
+  "sponsorId": "ndc",
+  "headline": "NDC",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "NDC ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Die Nippon Development Corporation (NDC) entwickelt und baut in Berlin und Potsdam, mit Fokus auf Hotels, Büro, Verwaltung und Wohnimmobilien."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Projektentwicklung",
+    "Bauträger"
+  ],
+  "locations": [
+    {
+      "name": "NDC",
+      "phone": "030 32301540"
+    }
+  ],
+  "website": "https://www.n-d-c.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

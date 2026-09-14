@@ -5,7 +5,8 @@
     "tier": "platin",
     "tierLabel": "Platin Partner",
     "url": "https://www.kieback-peter.com/de/",
-    "logo": "/sponsors/kieback-peter.jpg"
+    "logo": "/sponsors/kieback-peter.jpg",
+    "profileSlug": "kieback-peter"
   },
   {
     "id": "my-jump",
@@ -13,7 +14,8 @@
     "tier": "gold",
     "tierLabel": "Gold Partner",
     "url": "https://myjump.de/",
-    "logo": "/sponsors/my-jump.jpg"
+    "logo": "/sponsors/my-jump.jpg",
+    "profileSlug": "my-jump"
   },
   {
     "id": "spielbank-berlin",
@@ -21,7 +23,8 @@
     "tier": "gold",
     "tierLabel": "Gold Partner",
     "url": "https://www.spielbank-berlin.de/",
-    "logo": "/sponsors/spielbank-berlin.jpg"
+    "logo": "/sponsors/spielbank-berlin.jpg",
+    "profileSlug": "spielbank-berlin"
   },
   {
     "id": "gh-payment",
@@ -29,7 +32,8 @@
     "tier": "gold",
     "tierLabel": "Gold Partner",
     "url": "https://gh-payment.de",
-    "logo": "/sponsors/gh-payment.jpg"
+    "logo": "/sponsors/gh-payment.jpg",
+    "profileSlug": "gh-payment"
   },
   {
     "id": "bett1",
@@ -37,7 +41,8 @@
     "tier": "silber",
     "tierLabel": "Silber Partner",
     "url": "https://www.bett1.de/",
-    "logo": "/sponsors/bett1.jpg"
+    "logo": "/sponsors/bett1.jpg",
+    "profileSlug": "bett1"
   },
   {
     "id": "rdi",
@@ -45,7 +50,8 @@
     "tier": "silber",
     "tierLabel": "Silber Partner",
     "url": "https://www.rdi-ing.de/",
-    "logo": "/sponsors/rdi.jpg"
+    "logo": "/sponsors/rdi.jpg",
+    "profileSlug": "rdi"
   },
   {
     "id": "techno-care",
@@ -53,7 +59,8 @@
     "tier": "silber",
     "tierLabel": "Silber Partner",
     "url": "http://www.technocare.de/",
-    "logo": "/sponsors/techno-care.jpg"
+    "logo": "/sponsors/techno-care.jpg",
+    "profileSlug": "techno-care"
   },
   {
     "id": "auto-koch",
@@ -61,7 +68,8 @@
     "tier": "silber",
     "tierLabel": "Silber Partner",
     "url": "https://autoskauftmanbeikoch.de",
-    "logo": "/sponsors/auto-koch.jpg"
+    "logo": "/sponsors/auto-koch.jpg",
+    "profileSlug": "auto-koch"
   },
   {
     "id": "enwego",
@@ -69,7 +77,8 @@
     "tier": "silber",
     "tierLabel": "Silber Partner",
     "url": "https://www.enwego.de/",
-    "logo": "/sponsors/enwego.jpg"
+    "logo": "/sponsors/enwego.jpg",
+    "profileSlug": "enwego"
   },
   {
     "id": "der-hollaender",
@@ -77,7 +86,8 @@
     "tier": "premium",
     "tierLabel": "Premium Partner",
     "url": "https://www.der-hollaender.de/de-de",
-    "logo": "/sponsors/der-hollaender.jpg"
+    "logo": "/sponsors/der-hollaender.jpg",
+    "profileSlug": "der-hollaender"
   },
   {
     "id": "urban-clean",
@@ -85,7 +95,8 @@
     "tier": "premium",
     "tierLabel": "Premium Partner",
     "url": "https://urban-clean.de",
-    "logo": "/sponsors/urban-clean.jpg"
+    "logo": "/sponsors/urban-clean.jpg",
+    "profileSlug": "urban-clean"
   },
   {
     "id": "novus-print",
@@ -93,7 +104,8 @@
     "tier": "premium",
     "tierLabel": "Premium Partner",
     "url": "https://www.novus-print.de/",
-    "logo": "/sponsors/novus-print.jpg"
+    "logo": "/sponsors/novus-print.jpg",
+    "profileSlug": "novus-print"
   },
   {
     "id": "cosy-wasch",
@@ -101,7 +113,8 @@
     "tier": "premium",
     "tierLabel": "Premium Partner",
     "url": "https://www.cosy-wasch.de/",
-    "logo": "/sponsors/cosy-wasch.jpg"
+    "logo": "/sponsors/cosy-wasch.jpg",
+    "profileSlug": "cosy-wasch"
   },
   {
     "id": "bootsliegeplaetze-strauss-mette",
@@ -109,7 +122,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.google.com/maps/place/Bootsliegepl%C3%A4tze+Strau%C3%9F%2FMette/@52.5067216,13.2129865,17z",
-    "logo": "/sponsors/bootsliegeplaetze-strauss-mette.jpg"
+    "logo": "/sponsors/bootsliegeplaetze-strauss-mette.jpg",
+    "profileSlug": "bootsliegeplaetze-strauss-mette"
   },
   {
     "id": "brandschutzzeichenservice",
@@ -117,7 +131,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.brandschutzzeichenservice.de/",
-    "logo": "/sponsors/brandschutzzeichenservice.jpg"
+    "logo": "/sponsors/brandschutzzeichenservice.jpg",
+    "profileSlug": "brandschutzzeichenservice"
   },
   {
     "id": "grupe-immobilien",
@@ -125,7 +140,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.grupeimmobilien.de/",
-    "logo": "/sponsors/grupe-immobilien.jpg"
+    "logo": "/sponsors/grupe-immobilien.jpg",
+    "profileSlug": "grupe-immobilien"
   },
   {
     "id": "ndc",
@@ -133,7 +149,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.n-d-c.de/",
-    "logo": "/sponsors/ndc.jpg"
+    "logo": "/sponsors/ndc.jpg",
+    "profileSlug": "ndc"
   },
   {
     "id": "dau-transporte",
@@ -141,7 +158,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.dau-transporte.de/",
-    "logo": "/sponsors/dau-transporte.jpg"
+    "logo": "/sponsors/dau-transporte.jpg",
+    "profileSlug": "dau-transporte"
   },
   {
     "id": "park-plaza-berlin",
@@ -149,7 +167,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://parkplazaberlin.com/?lang=de",
-    "logo": "/sponsors/park-plaza-berlin.jpg"
+    "logo": "/sponsors/park-plaza-berlin.jpg",
+    "profileSlug": "park-plaza-berlin"
   },
   {
     "id": "flash-security",
@@ -157,7 +176,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://flash-security.de/",
-    "logo": "/sponsors/flash-security.jpg"
+    "logo": "/sponsors/flash-security.jpg",
+    "profileSlug": "flash-security"
   },
   {
     "id": "boehnke-hr-consulting",
@@ -165,7 +185,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.boehnke-hr-consult.com/",
-    "logo": "/sponsors/boehnke-hr-consulting.jpg"
+    "logo": "/sponsors/boehnke-hr-consulting.jpg",
+    "profileSlug": "boehnke-hr-consulting"
   },
   {
     "id": "malermeister-rewolinski",
@@ -182,7 +203,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://vitaminwell.de/",
-    "logo": "/sponsors/vitamin-well.jpg"
+    "logo": "/sponsors/vitamin-well.jpg",
+    "profileSlug": "vitamin-well"
   },
   {
     "id": "pink-frauenfitness",
@@ -190,7 +212,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.pinkfrauenfitness.de/",
-    "logo": "/sponsors/pink-frauenfitness.jpg"
+    "logo": "/sponsors/pink-frauenfitness.jpg",
+    "profileSlug": "pink-frauenfitness"
   },
   {
     "id": "stahlhandel-peters",
@@ -198,7 +221,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.stahlhandel-peters.de/",
-    "logo": "/sponsors/stahlhandel-peters.jpg"
+    "logo": "/sponsors/stahlhandel-peters.jpg",
+    "profileSlug": "stahlhandel-peters"
   },
   {
     "id": "servisa",
@@ -206,7 +230,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.servisa-gruppe.de/",
-    "logo": "/sponsors/servisa.jpg"
+    "logo": "/sponsors/servisa.jpg",
+    "profileSlug": "servisa"
   },
   {
     "id": "rudolph-parkett",
@@ -214,7 +239,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://rudolphparkett.de/",
-    "logo": "/sponsors/rudolph-parkett.jpg"
+    "logo": "/sponsors/rudolph-parkett.jpg",
+    "profileSlug": "rudolph-parkett"
   },
   {
     "id": "hanebutt",
@@ -222,7 +248,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.hanebutt.de/",
-    "logo": "/sponsors/hanebutt.jpg"
+    "logo": "/sponsors/hanebutt.jpg",
+    "profileSlug": "hanebutt"
   },
   {
     "id": "curry-36",
@@ -230,7 +257,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://curry36.de/de/",
-    "logo": "/sponsors/curry-36.jpg"
+    "logo": "/sponsors/curry-36.jpg",
+    "profileSlug": "curry-36"
   },
   {
     "id": "youth-globe",
@@ -238,7 +266,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.youth-globe.com/",
-    "logo": "/sponsors/youth-globe.jpg"
+    "logo": "/sponsors/youth-globe.jpg",
+    "profileSlug": "youth-globe"
   },
   {
     "id": "stanhope",
@@ -246,7 +275,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://thenextstanhope.de/",
-    "logo": "/sponsors/stanhope.jpg"
+    "logo": "/sponsors/stanhope.jpg",
+    "profileSlug": "stanhope"
   },
   {
     "id": "fcm-it",
@@ -254,7 +284,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://fcm-it.de/",
-    "logo": "/sponsors/fcm-it.jpg"
+    "logo": "/sponsors/fcm-it.jpg",
+    "profileSlug": "fcm-it"
   },
   {
     "id": "frank-huepperling",
@@ -262,7 +293,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://frank-huepperling.de/",
-    "logo": "/sponsors/frank-huepperling.jpg"
+    "logo": "/sponsors/frank-huepperling.jpg",
+    "profileSlug": "frank-huepperling"
   },
   {
     "id": "huepperling-erlebnisse",
@@ -270,7 +302,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://huepperling-erlebnisse.de/",
-    "logo": "/sponsors/huepperling-erlebnisse.jpg"
+    "logo": "/sponsors/huepperling-erlebnisse.jpg",
+    "profileSlug": "huepperling-erlebnisse"
   },
   {
     "id": "darauf-einen-huepperling",
@@ -278,7 +311,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://darauf-einen-huepperling.de/",
-    "logo": "/sponsors/darauf-einen-huepperling.jpg"
+    "logo": "/sponsors/darauf-einen-huepperling.jpg",
+    "profileSlug": "darauf-einen-huepperling"
   },
   {
     "id": "huepperling-books",
@@ -286,7 +320,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://huepperling-books.de/",
-    "logo": "/sponsors/huepperling-books.jpg"
+    "logo": "/sponsors/huepperling-books.jpg",
+    "profileSlug": "huepperling-books"
   },
   {
     "id": "baugrund-ing",
@@ -294,7 +329,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.baugrund-ing.de/",
-    "logo": "/sponsors/baugrund-ing.jpg"
+    "logo": "/sponsors/baugrund-ing.jpg",
+    "profileSlug": "baugrund-ing"
   },
   {
     "id": "ihr-gutachten",
@@ -302,7 +338,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://ihr-gutachten.com/",
-    "logo": "/sponsors/ihr-gutachten.jpg"
+    "logo": "/sponsors/ihr-gutachten.jpg",
+    "profileSlug": "ihr-gutachten"
   },
   {
     "id": "apotheke-heiligensee",
@@ -310,7 +347,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.apotheke-heiligensee.de/",
-    "logo": "/sponsors/apotheke-heiligensee.jpg"
+    "logo": "/sponsors/apotheke-heiligensee.jpg",
+    "profileSlug": "apotheke-heiligensee"
   },
   {
     "id": "schilkin",
@@ -318,7 +356,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.schilkin.de/",
-    "logo": "/sponsors/schilkin.jpg"
+    "logo": "/sponsors/schilkin.jpg",
+    "profileSlug": "schilkin"
   },
   {
     "id": "tts-office-support",
@@ -326,7 +365,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.tts-office-support.de/",
-    "logo": "/sponsors/tts-office-support.jpg"
+    "logo": "/sponsors/tts-office-support.jpg",
+    "profileSlug": "tts-office-support"
   },
   {
     "id": "technikhaus-guendel",
@@ -334,7 +374,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.technikhaus-guendel.de/",
-    "logo": "/sponsors/technikhaus-guendel.jpg"
+    "logo": "/sponsors/technikhaus-guendel.jpg",
+    "profileSlug": "technikhaus-guendel"
   },
   {
     "id": "reisebuero-globus",
@@ -342,7 +383,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.reisebuero-globus.de/pauschalreisen-individualreisen.html",
-    "logo": "/sponsors/reisebuero-globus.jpg"
+    "logo": "/sponsors/reisebuero-globus.jpg",
+    "profileSlug": "reisebuero-globus"
   },
   {
     "id": "koha",
@@ -350,7 +392,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "https://www.koha.ag/",
-    "logo": "/sponsors/koha.jpg"
+    "logo": "/sponsors/koha.jpg",
+    "profileSlug": "koha"
   },
   {
     "id": "busybee-catering",
@@ -358,7 +401,8 @@
     "tier": "partner",
     "tierLabel": "Partner",
     "url": "http://www.busybee-catering.de/",
-    "logo": "/sponsors/busybee-catering.jpg"
+    "logo": "/sponsors/busybee-catering.jpg",
+    "profileSlug": "busybee-catering"
   },
   {
     "id": "adidas",
@@ -366,7 +410,8 @@
     "tier": "ausruestung",
     "tierLabel": "Ausrüstungspartner",
     "url": "https://www.adidas.de",
-    "logo": "/sponsors/adidas.jpg"
+    "logo": "/sponsors/adidas.jpg",
+    "profileSlug": "adidas"
   },
   {
     "id": "ortho-ped",
@@ -383,7 +428,8 @@
     "tier": "gesundheit",
     "tierLabel": "Gesundheitspartner",
     "url": "https://proximed-physio.de/",
-    "logo": "/sponsors/proximed-physio.jpg"
+    "logo": "/sponsors/proximed-physio.jpg",
+    "profileSlug": "proximed-physio"
   },
   {
     "id": "omnibus-schroeder",
@@ -391,7 +437,8 @@
     "tier": "mobil",
     "tierLabel": "Mobilpartner",
     "url": "https://omnibus-schroeder.de/de/",
-    "logo": "/sponsors/omnibus-schroeder.jpg"
+    "logo": "/sponsors/omnibus-schroeder.jpg",
+    "profileSlug": "omnibus-schroeder"
   },
   {
     "id": "spreeradio",
@@ -399,7 +446,8 @@
     "tier": "medien",
     "tierLabel": "Medienpartner",
     "url": "https://www.spreeradio.de/",
-    "logo": "/sponsors/spreeradio.jpg"
+    "logo": "/sponsors/spreeradio.jpg",
+    "profileSlug": "spreeradio"
   },
   {
     "id": "goerix",
@@ -407,7 +455,8 @@
     "tier": "versicherung",
     "tierLabel": "Versicherungspartner",
     "url": "https://www.goerix.de/",
-    "logo": "/sponsors/goerix.jpg"
+    "logo": "/sponsors/goerix.jpg",
+    "profileSlug": "goerix"
   },
   {
     "id": "derbystar",
@@ -415,7 +464,8 @@
     "tier": "hbf",
     "tierLabel": "HBF-Partner",
     "url": "https://www.derbystar.de/pages/handballe",
-    "logo": "/sponsors/derbystar.jpg"
+    "logo": "/sponsors/derbystar.jpg",
+    "profileSlug": "derbystar"
   },
   {
     "id": "alsco",
@@ -423,6 +473,7 @@
     "tier": "hbf",
     "tierLabel": "HBF-Partner",
     "url": "https://www.alsco.de/",
-    "logo": "/sponsors/alsco.jpg"
+    "logo": "/sponsors/alsco.jpg",
+    "profileSlug": "alsco"
   }
 ]

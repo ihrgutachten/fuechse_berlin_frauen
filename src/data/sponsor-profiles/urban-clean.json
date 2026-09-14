@@ -1,0 +1,28 @@
+{
+  "slug": "urban-clean",
+  "sponsorId": "urban-clean",
+  "headline": "Urban Clean",
+  "tagline": "Premium Partner der Füchse Berlin Frauen",
+  "intro": "Urban Clean ist Premium Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Urban Clean ist Partner für gewerbliche Reinigung in Berlin, von Unterhalt und Glas bis Fassade, Bau- und Industriereinigung."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Gebäudereinigung",
+    "Glasreinigung",
+    "Unterhaltsreinigung"
+  ],
+  "locations": [
+    {
+      "name": "Urban Clean",
+      "phone": "+49 30 75439973",
+      "email": "info@urban-clean.de"
+    }
+  ],
+  "website": "https://urban-clean.de",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

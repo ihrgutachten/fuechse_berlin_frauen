@@ -1,0 +1,27 @@
+{
+  "slug": "fcm-it",
+  "sponsorId": "fcm-it",
+  "headline": "FCM IT",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "FCM IT ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "FCM IT liefert IT-Lösungen aus einer Hand, mit Fokus auf Medizin, Industrie und Mittelstand."
+    }
+  ],
+  "images": [],
+  "services": [
+    "IT-Betreuung",
+    "IT-Sicherheit"
+  ],
+  "locations": [
+    {
+      "name": "FCM IT",
+      "phone": "+49 30 86320780",
+      "email": "info@fcm-it.de"
+    }
+  ],
+  "website": "https://fcm-it.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

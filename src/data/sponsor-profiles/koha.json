@@ -1,0 +1,27 @@
+{
+  "slug": "koha",
+  "sponsorId": "koha",
+  "headline": "KOHA",
+  "tagline": "Partner der Füchse Berlin Frauen",
+  "intro": "KOHA ist Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "KoHa Bauausführungen und Immobilien GmbH arbeitet in Bauausführung, Projektentwicklung und Verwaltung."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Bauausführung",
+    "Projektentwicklung",
+    "Immobilienverwaltung"
+  ],
+  "locations": [
+    {
+      "name": "KOHA",
+      "email": "info@koha.ag"
+    }
+  ],
+  "website": "https://www.koha.ag/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

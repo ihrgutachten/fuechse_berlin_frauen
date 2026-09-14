@@ -1,0 +1,27 @@
+{
+  "slug": "spielbank-berlin",
+  "sponsorId": "spielbank-berlin",
+  "headline": "Spielbank Berlin",
+  "tagline": "Gold Partner der Füchse Berlin Frauen",
+  "intro": "Spielbank Berlin ist Gold Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "Die Spielbank Berlin betreibt Casinos in der Stadt, unter anderem am Potsdamer Platz, am Fernsehturm, am Ku'damm und in der Ellipse Spandau."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Casino",
+    "Entertainment"
+  ],
+  "locations": [
+    {
+      "name": "Spielbank Berlin",
+      "phone": "+49 30 255990",
+      "email": "info@spielbank-berlin.de"
+    }
+  ],
+  "website": "https://www.spielbank-berlin.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}

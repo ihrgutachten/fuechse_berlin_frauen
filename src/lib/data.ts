@@ -4,8 +4,7 @@ import standings from "@/data/standings.json";
 import news from "@/data/news.json";
 import players from "@/data/players.json";
 import sponsors from "@/data/sponsors.json";
-import sponsorOrthoPed from "@/data/sponsor-profiles/sponsor-ortho-ped.json";
-import sponsorMalermeisterRewolinski from "@/data/sponsor-profiles/sponsor-malermeister-rewolinski.json";
+import { allSponsorProfiles } from "@/data/sponsor-profile-list";
 import playerStatsFallback from "@/data/player-stats.json";
 import { TICKET_SHOP_URL } from "@/lib/tickets";
 import { getStoredStandings, type StandingRecord } from "@/lib/standings-sync";
@@ -170,9 +169,9 @@ export type SponsorProfileSection = {
 
 export type SponsorProfileLocation = {
   name: string;
-  address: string;
+  address?: string;
   phone?: string;
-  email: string;
+  email?: string;
 };
 
 export type SponsorProfileImage = {
@@ -434,10 +433,7 @@ export function getSponsorById(id: string): Sponsor | undefined {
   return getSponsors().find((s) => s.id === id);
 }
 
-const sponsorProfiles: SponsorProfile[] = [
-  sponsorOrthoPed as SponsorProfile,
-  sponsorMalermeisterRewolinski as SponsorProfile,
-];
+const sponsorProfiles = allSponsorProfiles as SponsorProfile[];
 
 export function getSponsorProfiles(): SponsorProfile[] {
   return sponsorProfiles;

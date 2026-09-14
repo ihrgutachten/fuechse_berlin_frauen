@@ -1,0 +1,27 @@
+{
+  "slug": "enwego",
+  "sponsorId": "enwego",
+  "headline": "Enwego",
+  "tagline": "Silber Partner der Füchse Berlin Frauen",
+  "intro": "Enwego ist Silber Partner der Füchse Berlin Frauen.",
+  "sections": [
+    {
+      "title": "Wer seid ihr?",
+      "body": "enwego plant und baut Energielösungen für Häuser: Solaranlagen, Stromspeicher, Heizungen und Elektroinstallation."
+    }
+  ],
+  "images": [],
+  "services": [
+    "Photovoltaik",
+    "Stromspeicher",
+    "Heizung"
+  ],
+  "locations": [
+    {
+      "name": "Enwego",
+      "phone": "0351 89881544"
+    }
+  ],
+  "website": "https://www.enwego.de/",
+  "sourceNote": "Kurzprofil anhand der öffentlichen Website, Stand September 2026. Kein Interview."
+}
