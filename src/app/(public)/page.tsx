@@ -12,10 +12,10 @@ import { getNews, getNextMatch, getSponsors, getStandings, homepageSponsorTiers 
 /** Refresh next-match selection after kickoff without a full redeploy. */
 export const revalidate = 60;
 
-export default function HomePage() {
+export default async function HomePage() {
   const nextMatch = getNextMatch();
   const news = getNews().slice(0, 3);
-  const standings = getStandings();
+  const standings = await getStandings();
   const sponsors = getSponsors();
 
   return (
@@ -105,7 +105,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Tabelle"
               title="Platzierung"
-              description="Zwischenstand nach zwei Spieltagen."
+              description="Zwischenstand nach drei Spieltagen."
             />
             <StandingsPreview rows={standings} />
           </div>

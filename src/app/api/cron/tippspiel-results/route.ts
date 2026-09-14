@@ -1,4 +1,5 @@
 import { pollOfficialResults } from "@/lib/tippspiel-results";
+import { syncStandingsIfInWindow } from "@/lib/standings-sync";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -15,5 +16,6 @@ export async function GET(request: Request) {
   }
 
   const result = await pollOfficialResults();
-  return Response.json({ ok: true, ...result });
+  const standings = await syncStandingsIfInWindow();
+  return Response.json({ ok: true, ...result, standings });
 }

@@ -7,6 +7,7 @@ import sponsors from "@/data/sponsors.json";
 import sponsorOrthoPed from "@/data/sponsor-profiles/sponsor-ortho-ped.json";
 import sponsorMalermeisterRewolinski from "@/data/sponsor-profiles/sponsor-malermeister-rewolinski.json";
 import { TICKET_SHOP_URL } from "@/lib/tickets";
+import { getStoredStandings, type StandingRecord } from "@/lib/standings-sync";
 
 export type CompetitionKind = "liga" | "pokal" | "turnier";
 
@@ -350,10 +351,10 @@ export function fuechseResult(match: Match): "win" | "loss" | "draw" | null {
   return "draw";
 }
 
-export function getStandings(): StandingRow[] {
-  return (
-    standings as Array<Omit<StandingRow, "team" | "short" | "isUs" | "hasLogo" | "logo">>
-  ).map((row) => {
+function hydrateStandingRows(
+  rows: Array<Omit<StandingRow, "team" | "short" | "isUs" | "hasLogo" | "logo">>,
+): StandingRow[] {
+  return rows.map((row) => {
     const club = getClubBySlug(row.teamSlug);
     return {
       ...row,
@@ -364,6 +365,12 @@ export function getStandings(): StandingRow[] {
       logo: club?.logo ?? "",
     };
   });
+}
+
+export async function getStandings(): Promise<StandingRow[]> {
+  const live = await getStoredStandings();
+  const rows = live ?? (standings as StandingRecord[]);
+  return hydrateStandingRows(rows);
 }
 
 export function getNews(): NewsItem[] {
