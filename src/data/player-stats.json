@@ -1,0 +1,15 @@
+{
+  "source": "hbf",
+  "fetchedAt": "2026-09-13T21:47:09.000Z",
+  "scorers": [
+    { "rank": 1, "name": "Anouk Nieuwenweg", "firstName": "Anouk", "lastName": "Nieuwenweg", "position": "right_back", "value": 20, "games": 3, "average": 6.7, "sevenMeterGoals": 4 },
+    { "rank": 2, "name": "Leoni Baßiner", "firstName": "Leoni", "lastName": "Baßiner", "position": "centre_back", "value": 19, "games": 3, "average": 6.3, "sevenMeterGoals": 5 },
+    { "rank": 3, "name": "Anais Gouveia", "firstName": "Anais", "lastName": "Gouveia", "position": "right_winger", "value": 16, "games": 3, "average": 5.3, "sevenMeterGoals": 0 },
+    { "rank": 4, "name": "Naomi Conze", "firstName": "Naomi", "lastName": "Conze", "position": "left_back", "value": 14, "games": 3, "average": 4.7, "sevenMeterGoals": 0 },
+    { "rank": 5, "name": "Michelle Stefes", "firstName": "Michelle", "lastName": "Stefes", "position": "left_winger", "value": 8, "games": 3, "average": 2.7, "sevenMeterGoals": 0 }
+  ],
+  "keepers": [
+    { "rank": 1, "name": "Danique Trooster", "firstName": "Danique", "lastName": "Trooster", "position": "goalkeeper", "value": 11, "games": 3, "average": 3.7, "sevenMeterGoals": 0 },
+    { "rank": 2, "name": "Mercy Hacker", "firstName": "Mercy", "lastName": "Hacker", "position": "goalkeeper", "value": 11, "games": 3, "average": 3.7, "sevenMeterGoals": 0 }
+  ]
+}

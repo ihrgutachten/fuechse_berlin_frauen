@@ -6,8 +6,15 @@ import players from "@/data/players.json";
 import sponsors from "@/data/sponsors.json";
 import sponsorOrthoPed from "@/data/sponsor-profiles/sponsor-ortho-ped.json";
 import sponsorMalermeisterRewolinski from "@/data/sponsor-profiles/sponsor-malermeister-rewolinski.json";
+import playerStatsFallback from "@/data/player-stats.json";
 import { TICKET_SHOP_URL } from "@/lib/tickets";
 import { getStoredStandings, type StandingRecord } from "@/lib/standings-sync";
+import {
+  getPlayerStatsSnapshot,
+  hydrateTopPlayers,
+  type HydratedTopPlayer,
+  type PlayerStatsSnapshot,
+} from "@/lib/player-stats-sync";
 
 export type CompetitionKind = "liga" | "pokal" | "turnier";
 
@@ -371,6 +378,28 @@ export async function getStandings(): Promise<StandingRow[]> {
   const live = await getStoredStandings();
   const rows = live ?? (standings as StandingRecord[]);
   return hydrateStandingRows(rows);
+}
+
+export type TopPlayers = {
+  scorers: HydratedTopPlayer[];
+  keepers: HydratedTopPlayer[];
+  fetchedAt: string;
+  source: string;
+};
+
+export async function getTopPlayers(): Promise<TopPlayers> {
+  const live = await getPlayerStatsSnapshot();
+  const snapshot = (live ?? playerStatsFallback) as PlayerStatsSnapshot;
+  return hydrateTopPlayers(
+    snapshot,
+    getTeamMembers().map((player) => ({
+      slug: player.slug,
+      name: player.name,
+      photo: player.photo,
+      positionLabel: player.positionLabel,
+      role: player.role,
+    })),
+  );
 }
 
 export function getNews(): NewsItem[] {
