@@ -1,4 +1,4 @@
-import { getSession } from "@/lib/session";
+import { getSession, tipIdentityFromSession } from "@/lib/session";
 import { MatchLeaderboard, SeasonLeaderboard } from "@/components/tippspiel/leaderboard";
 import { TippspielMatchBanner } from "@/components/tippspiel/match-banner";
 import { NicknameForm } from "@/components/tippspiel/nickname-form";
@@ -17,7 +17,7 @@ import {
   getCommunityTip,
   getMatchLeaderboard,
   getPrediction,
-  getProfile,
+  getProfileForSession,
   getSeasonLeaderboard,
 } from "@/lib/tippspiel-db";
 import {
@@ -32,7 +32,7 @@ export const dynamic = "force-dynamic";
 
 export default async function TippspielPage() {
   const session = await getSession();
-  const userId = session?.user?.id;
+  const identity = tipIdentityFromSession(session);
   const { featured, lastFinished } = await hydrateTippspiel();
   const dbUp = isDatabaseConfigured();
 
@@ -47,19 +47,20 @@ export default async function TippspielPage() {
 
   if (dbUp) {
     try {
-      if (userId) profile = await getProfile(userId);
+      if (identity) profile = await getProfileForSession(identity);
+      const accountId = profile?.userId ?? identity?.userId;
       if (featured) {
         community = await getCommunityTip(featured.id);
-        matchBoard = await getMatchLeaderboard(featured.id, userId);
-        if (userId) myTip = await getPrediction(userId, featured.id);
+        matchBoard = await getMatchLeaderboard(featured.id, accountId);
+        if (accountId) myTip = await getPrediction(accountId, featured.id);
       }
       if (lastFinished) {
-        lastWeekBoard = await getMatchLeaderboard(lastFinished.id, userId);
-        if (userId && lastFinished.id !== featured?.id) {
-          lastTip = await getPrediction(userId, lastFinished.id);
+        lastWeekBoard = await getMatchLeaderboard(lastFinished.id, accountId);
+        if (accountId && lastFinished.id !== featured?.id) {
+          lastTip = await getPrediction(accountId, lastFinished.id);
         }
       }
-      seasonBoard = await getSeasonLeaderboard(userId);
+      seasonBoard = await getSeasonLeaderboard(accountId);
     } catch (err) {
       console.error("[tippspiel] page load", err);
       dbError = true;

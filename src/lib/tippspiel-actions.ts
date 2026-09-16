@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { signOut } from "@/auth";
 import { getMatchById } from "@/lib/data";
 import { isDatabaseConfigured } from "@/lib/db";
-import { getSession } from "@/lib/session";
-import { getProfile, upsertPrediction, upsertProfile } from "@/lib/tippspiel-db";
+import { getSession, tipIdentityFromSession } from "@/lib/session";
+import { getProfileForSession, upsertPrediction, upsertProfile } from "@/lib/tippspiel-db";
 import { getTipPhase, isTipLocked, NICKNAME_ERROR, normalizeNickname, parseScore } from "@/lib/tippspiel";
 
 export type ActionState = { ok: true; message: string } | { ok: false; error: string } | null;
@@ -19,9 +19,8 @@ export async function saveNickname(
     return { ok: false, error: "Tippspiel ist gerade nicht erreichbar." };
   }
 
-  const session = await getSession();
-  const userId = session?.user?.id;
-  if (!userId) redirect("/login?next=/tools/tippspiel");
+  const identity = tipIdentityFromSession(await getSession());
+  if (!identity) redirect("/login?next=/tools/tippspiel");
 
   const nickname = normalizeNickname(String(formData.get("nickname") ?? ""));
   if (!nickname) {
@@ -32,7 +31,12 @@ export async function saveNickname(
   }
 
   const marketingOptIn = formData.get("marketing") === "on";
-  const result = await upsertProfile({ userId, nickname, marketingOptIn });
+  const result = await upsertProfile({
+    userId: identity.userId,
+    email: identity.email,
+    nickname,
+    marketingOptIn,
+  });
   if (!result.ok) {
     if (result.error === "taken") {
       return { ok: false, error: "Dieser Name ist schon vergeben." };
@@ -52,11 +56,10 @@ export async function savePrediction(
     return { ok: false, error: "Tippspiel ist gerade nicht erreichbar." };
   }
 
-  const session = await getSession();
-  const userId = session?.user?.id;
-  if (!userId) redirect("/login?next=/tools/tippspiel");
+  const identity = tipIdentityFromSession(await getSession());
+  if (!identity) redirect("/login?next=/tools/tippspiel");
 
-  let profile = await getProfile(userId);
+  let profile = await getProfileForSession(identity);
   if (!profile) {
     const nickname = normalizeNickname(String(formData.get("nickname") ?? ""));
     if (!nickname) {
@@ -66,7 +69,8 @@ export async function savePrediction(
       };
     }
     const created = await upsertProfile({
-      userId,
+      userId: identity.userId,
+      email: identity.email,
       nickname,
       marketingOptIn: formData.get("marketing") === "on",
     });
@@ -76,7 +80,7 @@ export async function savePrediction(
       }
       return { ok: false, error: "Speichern fehlgeschlagen. Bitte später erneut versuchen." };
     }
-    profile = await getProfile(userId);
+    profile = await getProfileForSession(identity);
     if (!profile) {
       return { ok: false, error: "Speichern fehlgeschlagen. Bitte später erneut versuchen." };
     }
@@ -100,7 +104,12 @@ export async function savePrediction(
     return { ok: false, error: "Bitte zwei gültige Tore (0-60) angeben." };
   }
 
-  const result = await upsertPrediction({ userId, matchId, homeScore, awayScore });
+  const result = await upsertPrediction({
+    userId: profile.userId,
+    matchId,
+    homeScore,
+    awayScore,
+  });
   if (!result.ok) {
     return { ok: false, error: "Tipp konnte nicht gespeichert werden." };
   }

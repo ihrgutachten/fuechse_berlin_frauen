@@ -154,3 +154,9 @@ export function normalizeNickname(raw: string): string | null {
 export function nicknameKey(nickname: string): string {
   return nickname.trim().toLocaleLowerCase("de-DE");
 }
+
+export function normalizeEmail(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const email = raw.trim().toLowerCase();
+  return email.includes("@") ? email : null;
+}

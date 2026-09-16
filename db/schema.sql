@@ -39,6 +39,19 @@ CREATE TABLE IF NOT EXISTS users (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS tippspiel_profiles (
+  user_id TEXT PRIMARY KEY,
+  nickname TEXT NOT NULL,
+  nickname_normalized TEXT NOT NULL UNIQUE,
+  email TEXT,
+  marketing_opt_in BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS tippspiel_profiles_email_key
+  ON tippspiel_profiles (email)
+  WHERE email IS NOT NULL;
+
 -- Official tippspiel results (FMP Endstand). Scores stay null until the report is final.
 CREATE TABLE IF NOT EXISTS tippspiel_match_results (
   match_id TEXT PRIMARY KEY,

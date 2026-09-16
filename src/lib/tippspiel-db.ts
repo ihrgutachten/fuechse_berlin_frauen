@@ -4,6 +4,7 @@ import {
   getFinishedTipMatches,
   getTippspielMatches,
   nicknameKey,
+  normalizeEmail,
   overlayTipMatches,
   predictionPoints,
 } from "@/lib/tippspiel";
@@ -11,6 +12,7 @@ import {
 export type TipProfile = {
   userId: string;
   nickname: string;
+  email: string | null;
   marketingOptIn: boolean;
 };
 
@@ -62,10 +64,25 @@ async function ensureSchema() {
           user_id TEXT PRIMARY KEY,
           nickname TEXT NOT NULL,
           nickname_normalized TEXT NOT NULL UNIQUE,
+          email TEXT,
           marketing_opt_in BOOLEAN NOT NULL DEFAULT FALSE,
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
+      `;
+      await sql`ALTER TABLE tippspiel_profiles ADD COLUMN IF NOT EXISTS email TEXT`;
+      await sql`
+        UPDATE tippspiel_profiles AS p
+        SET email = lower(trim(u.email))
+        FROM users AS u
+        WHERE p.user_id = u.id::text
+          AND p.email IS NULL
+          AND u.email IS NOT NULL
+      `;
+      await sql`
+        CREATE UNIQUE INDEX IF NOT EXISTS tippspiel_profiles_email_key
+        ON tippspiel_profiles (email)
+        WHERE email IS NOT NULL
       `;
       await sql`
         CREATE TABLE IF NOT EXISTS tippspiel_predictions (
@@ -111,43 +128,123 @@ function isUniqueViolation(err: unknown): boolean {
   return /duplicate key|unique constraint|23505/i.test(message);
 }
 
-export async function getProfile(userId: string): Promise<TipProfile | null> {
-  const sql = getSql();
-  if (!sql) return null;
-  await ensureSchema();
-  const rows = (await sql`
-    SELECT user_id, nickname, marketing_opt_in
-    FROM tippspiel_profiles
-    WHERE user_id = ${userId}
-    LIMIT 1
-  `) as Array<{ user_id: string; nickname: string; marketing_opt_in: boolean }>;
-  const row = rows[0];
-  if (!row) return null;
+type ProfileRow = {
+  user_id: string;
+  nickname: string;
+  email: string | null;
+  marketing_opt_in: boolean;
+};
+
+function mapProfile(row: ProfileRow): TipProfile {
   return {
     userId: row.user_id,
     nickname: row.nickname,
+    email: row.email,
     marketingOptIn: row.marketing_opt_in,
   };
 }
 
+async function findProfileRow(
+  userId: string,
+  email: string | null,
+): Promise<ProfileRow | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const byId = (await sql`
+    SELECT user_id, nickname, email, marketing_opt_in
+    FROM tippspiel_profiles
+    WHERE user_id = ${userId}
+    LIMIT 1
+  `) as ProfileRow[];
+  if (byId[0]) return byId[0];
+  if (!email) return null;
+  const byEmail = (await sql`
+    SELECT user_id, nickname, email, marketing_opt_in
+    FROM tippspiel_profiles
+    WHERE email = ${email}
+    LIMIT 1
+  `) as ProfileRow[];
+  return byEmail[0] ?? null;
+}
+
+export async function getProfileForSession(identity: {
+  userId: string;
+  email?: string | null;
+}): Promise<TipProfile | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  await ensureSchema();
+  const email = normalizeEmail(identity.email);
+  const row = await findProfileRow(identity.userId, email);
+  if (!row) return null;
+  if (email && !row.email) {
+    try {
+      await sql`
+        UPDATE tippspiel_profiles
+        SET email = ${email}, updated_at = NOW()
+        WHERE user_id = ${row.user_id} AND email IS NULL
+      `;
+      row.email = email;
+    } catch (err) {
+      if (!isUniqueViolation(err)) {
+        console.error("[tippspiel] attach email", err);
+      }
+    }
+  }
+  return mapProfile(row);
+}
+
+export async function getProfile(
+  userId: string,
+  email?: string | null,
+): Promise<TipProfile | null> {
+  return getProfileForSession({ userId, email });
+}
+
 export async function upsertProfile(input: {
   userId: string;
+  email?: string | null;
   nickname: string;
   marketingOptIn: boolean;
 }): Promise<{ ok: true } | { ok: false; error: "taken" | "db" }> {
   const sql = getSql();
   if (!sql) return { ok: false, error: "db" };
   await ensureSchema();
+  const email = normalizeEmail(input.email);
   const normalized = nicknameKey(input.nickname);
+  const existing = await findProfileRow(input.userId, email);
+
+  if (existing) {
+    const clash = (await sql`
+      SELECT user_id
+      FROM tippspiel_profiles
+      WHERE nickname_normalized = ${normalized} AND user_id <> ${existing.user_id}
+      LIMIT 1
+    `) as Array<{ user_id: string }>;
+    if (clash[0]) return { ok: false, error: "taken" };
+    try {
+      await sql`
+        UPDATE tippspiel_profiles
+        SET
+          nickname = ${input.nickname},
+          nickname_normalized = ${normalized},
+          email = COALESCE(${email}, email),
+          marketing_opt_in = ${input.marketingOptIn},
+          updated_at = NOW()
+        WHERE user_id = ${existing.user_id}
+      `;
+      return { ok: true };
+    } catch (err) {
+      if (isUniqueViolation(err)) return { ok: false, error: "taken" };
+      console.error("[tippspiel] upsertProfile", err);
+      return { ok: false, error: "db" };
+    }
+  }
+
   try {
     await sql`
-      INSERT INTO tippspiel_profiles (user_id, nickname, nickname_normalized, marketing_opt_in)
-      VALUES (${input.userId}, ${input.nickname}, ${normalized}, ${input.marketingOptIn})
-      ON CONFLICT (user_id) DO UPDATE SET
-        nickname = EXCLUDED.nickname,
-        nickname_normalized = EXCLUDED.nickname_normalized,
-        marketing_opt_in = EXCLUDED.marketing_opt_in,
-        updated_at = NOW()
+      INSERT INTO tippspiel_profiles (user_id, nickname, nickname_normalized, email, marketing_opt_in)
+      VALUES (${input.userId}, ${input.nickname}, ${normalized}, ${email}, ${input.marketingOptIn})
     `;
     return { ok: true };
   } catch (err) {

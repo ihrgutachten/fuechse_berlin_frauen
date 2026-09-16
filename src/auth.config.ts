@@ -23,12 +23,20 @@ export const authConfig = {
     authorized({ auth }) {
       return Boolean(auth?.user);
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
+      if (user?.id != null) token.sub = String(user.id);
+      const rawEmail =
+        typeof user?.email === "string"
+          ? user.email
+          : typeof token.email === "string"
+            ? token.email
+            : null;
+      if (rawEmail) token.email = rawEmail.trim().toLowerCase();
       token.admin = isAdminEmail(typeof token.email === "string" ? token.email : null);
       return token;
     },
     async session({ session, token }) {
-      const email = typeof token.email === "string" ? token.email : session.user?.email;
+      const email = typeof token.email === "string" ? token.email.trim().toLowerCase() : session.user?.email;
       session.user = {
         ...session.user,
         email: email ?? null,
