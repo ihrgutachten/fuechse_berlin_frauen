@@ -89,3 +89,38 @@
   background-size: auto;
   background-position: 0 0;
 }
+
+@keyframes sponsor-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.sponsor-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: sponsor-marquee 70s linear infinite;
+}
+
+.sponsor-marquee-track-fast {
+  display: flex;
+  width: max-content;
+  animation: sponsor-marquee 36s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-marquee-track,
+  .sponsor-marquee-track-fast {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .sponsor-marquee-clone {
+    display: none;
+  }
+}

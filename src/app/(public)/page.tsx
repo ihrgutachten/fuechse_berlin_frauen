@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MatchCard } from "@/components/match/match-card";
 import { StandingsPreview } from "@/components/match/standings-preview";
 import { NewsCard } from "@/components/news/news-card";
+import { SponsorMarquee } from "@/components/sponsors/sponsor-marquee";
 import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
 import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
@@ -65,6 +66,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <SponsorMarquee sponsors={sponsors} />
 
       <section className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-12 md:py-16">
         <SectionHeading
