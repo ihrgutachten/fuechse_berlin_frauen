@@ -76,7 +76,7 @@ function MarqueeTrack({
 
 export function SponsorMarquee({
   sponsors,
-  tiers = homepageSponsorTiers,
+  tiers = [...homepageSponsorTiers, "ausruestung"],
 }: SponsorMarqueeProps) {
   const primary = sponsors.filter((sponsor) => tiers.includes(sponsor.tier));
   const secondary = sponsors.filter((sponsor) => !tiers.includes(sponsor.tier));
