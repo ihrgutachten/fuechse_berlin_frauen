@@ -52,6 +52,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS tippspiel_profiles_email_key
   ON tippspiel_profiles (email)
   WHERE email IS NOT NULL;
 
+CREATE TABLE IF NOT EXISTS tippspiel_profile_emails (
+  email TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS tippspiel_profile_emails_user_id ON tippspiel_profile_emails (user_id);
+
 -- Official tippspiel results (FMP Endstand). Scores stay null until the report is final.
 CREATE TABLE IF NOT EXISTS tippspiel_match_results (
   match_id TEXT PRIMARY KEY,

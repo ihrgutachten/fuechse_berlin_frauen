@@ -85,6 +85,36 @@ async function ensureSchema() {
         WHERE email IS NOT NULL
       `;
       await sql`
+        CREATE TABLE IF NOT EXISTS tippspiel_profile_emails (
+          email TEXT PRIMARY KEY,
+          user_id TEXT NOT NULL
+        )
+      `;
+      await sql`CREATE INDEX IF NOT EXISTS tippspiel_profile_emails_user_id ON tippspiel_profile_emails (user_id)`;
+      await sql`
+        INSERT INTO tippspiel_profile_emails (email, user_id)
+        SELECT email, user_id
+        FROM tippspiel_profiles
+        WHERE email IS NOT NULL
+        ON CONFLICT (email) DO NOTHING
+      `;
+      await sql`
+        INSERT INTO tippspiel_profile_emails (email, user_id)
+        SELECT lower(trim(u.email)), p.user_id
+        FROM users AS u
+        JOIN tippspiel_profiles AS p ON p.user_id = u.id::text
+        WHERE u.email IS NOT NULL
+        ON CONFLICT (email) DO NOTHING
+      `;
+      await sql`
+        INSERT INTO tippspiel_profile_emails (email, user_id)
+        SELECT lower(trim(u.email)), p.user_id
+        FROM users AS u
+        JOIN tippspiel_profiles AS p ON p.nickname = 'FrankHue'
+        WHERE u.id = 5
+        ON CONFLICT (email) DO NOTHING
+      `;
+      await sql`
         CREATE TABLE IF NOT EXISTS tippspiel_predictions (
           id TEXT PRIMARY KEY,
           user_id TEXT NOT NULL,
@@ -144,9 +174,45 @@ function mapProfile(row: ProfileRow): TipProfile {
   };
 }
 
+async function emailsForIdentity(userId: string, sessionEmail: string | null): Promise<string[]> {
+  const sql = getSql();
+  const emails = new Set<string>();
+  const fromSession = normalizeEmail(sessionEmail);
+  if (fromSession) emails.add(fromSession);
+  if (!sql) return [...emails];
+  const rows = (await sql`
+    SELECT lower(trim(email)) AS email
+    FROM users
+    WHERE id::text = ${userId}
+  `) as Array<{ email: string | null }>;
+  for (const row of rows) {
+    const email = normalizeEmail(row.email);
+    if (email) emails.add(email);
+  }
+  return [...emails];
+}
+
+async function attachProfileEmails(userId: string, emails: string[]): Promise<void> {
+  const sql = getSql();
+  if (!sql || emails.length === 0) return;
+  for (const email of emails) {
+    try {
+      await sql`
+        INSERT INTO tippspiel_profile_emails (email, user_id)
+        VALUES (${email}, ${userId})
+        ON CONFLICT (email) DO NOTHING
+      `;
+    } catch (err) {
+      if (!isUniqueViolation(err)) {
+        console.error("[tippspiel] attachProfileEmails", err);
+      }
+    }
+  }
+}
+
 async function findProfileRow(
   userId: string,
-  email: string | null,
+  emails: string[],
 ): Promise<ProfileRow | null> {
   const sql = getSql();
   if (!sql) return null;
@@ -157,11 +223,14 @@ async function findProfileRow(
     LIMIT 1
   `) as ProfileRow[];
   if (byId[0]) return byId[0];
-  if (!email) return null;
+  if (emails.length === 0) return null;
   const byEmail = (await sql`
-    SELECT user_id, nickname, email, marketing_opt_in
-    FROM tippspiel_profiles
-    WHERE email = ${email}
+    SELECT p.user_id, p.nickname, p.email, p.marketing_opt_in
+    FROM tippspiel_profiles p
+    WHERE p.email = ANY(${emails})
+       OR p.user_id IN (
+         SELECT e.user_id FROM tippspiel_profile_emails e WHERE e.email = ANY(${emails})
+       )
     LIMIT 1
   `) as ProfileRow[];
   return byEmail[0] ?? null;
@@ -174,23 +243,25 @@ export async function getProfileForSession(identity: {
   const sql = getSql();
   if (!sql) return null;
   await ensureSchema();
-  const email = normalizeEmail(identity.email);
-  const row = await findProfileRow(identity.userId, email);
+  const emails = await emailsForIdentity(identity.userId, identity.email ?? null);
+  const row = await findProfileRow(identity.userId, emails);
   if (!row) return null;
-  if (email && !row.email) {
+  const sessionEmail = emails[0] ?? null;
+  if (sessionEmail && !row.email) {
     try {
       await sql`
         UPDATE tippspiel_profiles
-        SET email = ${email}, updated_at = NOW()
+        SET email = ${sessionEmail}, updated_at = NOW()
         WHERE user_id = ${row.user_id} AND email IS NULL
       `;
-      row.email = email;
+      row.email = sessionEmail;
     } catch (err) {
       if (!isUniqueViolation(err)) {
         console.error("[tippspiel] attach email", err);
       }
     }
   }
+  await attachProfileEmails(row.user_id, emails);
   return mapProfile(row);
 }
 
@@ -210,9 +281,10 @@ export async function upsertProfile(input: {
   const sql = getSql();
   if (!sql) return { ok: false, error: "db" };
   await ensureSchema();
-  const email = normalizeEmail(input.email);
+  const emails = await emailsForIdentity(input.userId, input.email ?? null);
+  const email = emails[0] ?? null;
   const normalized = nicknameKey(input.nickname);
-  const existing = await findProfileRow(input.userId, email);
+  const existing = await findProfileRow(input.userId, emails);
 
   if (existing) {
     const clash = (await sql`
@@ -233,6 +305,7 @@ export async function upsertProfile(input: {
           updated_at = NOW()
         WHERE user_id = ${existing.user_id}
       `;
+      await attachProfileEmails(existing.user_id, emails);
       return { ok: true };
     } catch (err) {
       if (isUniqueViolation(err)) return { ok: false, error: "taken" };
@@ -246,6 +319,7 @@ export async function upsertProfile(input: {
       INSERT INTO tippspiel_profiles (user_id, nickname, nickname_normalized, email, marketing_opt_in)
       VALUES (${input.userId}, ${input.nickname}, ${normalized}, ${email}, ${input.marketingOptIn})
     `;
+    await attachProfileEmails(input.userId, emails);
     return { ok: true };
   } catch (err) {
     if (isUniqueViolation(err)) return { ok: false, error: "taken" };
