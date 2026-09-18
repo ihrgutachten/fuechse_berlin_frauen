@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signOut } from "@/auth";
-import { getMatchById } from "@/lib/data";
+import { getLiveMatchById } from "@/lib/data";
 import { isDatabaseConfigured } from "@/lib/db";
 import { getSession, tipIdentityFromSession } from "@/lib/session";
 import { getProfileForSession, upsertPrediction, upsertProfile } from "@/lib/tippspiel-db";
@@ -87,7 +87,7 @@ export async function savePrediction(
   }
 
   const matchId = String(formData.get("matchId") ?? "");
-  const match = getMatchById(matchId);
+  const match = await getLiveMatchById(matchId);
   if (!match) {
     return { ok: false, error: "Spiel nicht gefunden." };
   }

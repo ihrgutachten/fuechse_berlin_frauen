@@ -21,7 +21,8 @@ export default function ToolsPage() {
           <ToolTeaser
             href="/tools/szenario"
             title="Aufstiegs-Rechner"
-            description="Szenarien durchspielen: Was braucht's für Platz X? Thematisch stark nach knappen Entscheidungen."
+            description="Szenarien durchspielen: Was braucht's für Platz X? Tippe offene Spiele, die Tabelle reagiert."
+            comingSoon={false}
           />
         </div>
       </div>

@@ -6,11 +6,12 @@ type ClubLogoProps = {
   short: string;
   logo: string;
   hasLogo: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 };
 
 const sizes = {
+  xs: "h-7 w-7",
   sm: "h-8 w-8",
   md: "h-10 w-10 md:h-12 md:w-12",
   lg: "h-14 w-14",

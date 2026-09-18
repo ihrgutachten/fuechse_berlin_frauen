@@ -4,7 +4,7 @@ import { MatchLineup } from "@/components/match/match-lineup";
 import { MatchReportStats } from "@/components/match/match-report-stats";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
-import { getMatchById, getMatches } from "@/lib/data";
+import { getLiveMatchById, getStaticMatches } from "@/lib/data";
 import { fetchMatchReport, pressReportUrl } from "@/lib/fmp";
 
 type Props = { params: Promise<{ id: string }> };
@@ -12,21 +12,21 @@ type Props = { params: Promise<{ id: string }> };
 export const revalidate = 1800;
 
 export async function generateStaticParams() {
-  return getMatches()
+  return getStaticMatches()
     .filter((match) => match.fmpMatchId && match.status !== "scheduled")
     .map((match) => ({ id: match.id }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { id } = await params;
-  const match = getMatchById(id);
+  const match = (await getLiveMatchById(id)) ?? getStaticMatches().find((item) => item.id === id);
   if (!match) return { title: "Spielbericht" };
   return { title: `${match.home.short} vs ${match.away.short}` };
 }
 
 export default async function MatchReportPage({ params }: Props) {
   const { id } = await params;
-  const match = getMatchById(id);
+  const match = await getLiveMatchById(id);
   if (!match) notFound();
 
   const report = match.fmpMatchId ? await fetchMatchReport(match.fmpMatchId) : null;
@@ -54,16 +54,16 @@ export default async function MatchReportPage({ params }: Props) {
           dimPast={false}
         />
 
-        {pdfUrl ? (
-          <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
+          {pdfUrl && match.status !== "scheduled" ? (
             <Button href={pdfUrl} variant="solid">
               Spielbericht als PDF
             </Button>
-            <Button href="/spielplan" variant="outline">
-              Zum Spielplan
-            </Button>
-          </div>
-        ) : null}
+          ) : null}
+          <Button href="/spielplan" variant="outline">
+            Zum Spielplan
+          </Button>
+        </div>
 
         {report ? (
           <>

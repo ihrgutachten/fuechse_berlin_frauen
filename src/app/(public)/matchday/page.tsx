@@ -4,7 +4,7 @@ import { MatchdayModules } from "@/components/match/matchday-modules";
 import { TippspielMatchdayCta } from "@/components/tippspiel/matchday-cta";
 import { Button } from "@/components/ui/button";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
-import { getLastMatchWithReport, getNextMatch } from "@/lib/data";
+import { getClubBySlug, getLastMatchWithReport, getLiveMatches, getNextMatch } from "@/lib/data";
 import { fetchMatchReport, pressReportUrl } from "@/lib/fmp";
 import { formatMatchDate } from "@/lib/format";
 
@@ -14,8 +14,10 @@ export const metadata = { title: "Matchday" };
 export const revalidate = 60;
 
 export default async function MatchdayPage() {
-  const match = getNextMatch();
-  const reportMatch = getLastMatchWithReport();
+  const matches = await getLiveMatches();
+  const match = getNextMatch(matches);
+  const hostWebsite = match && !match.isHome ? getClubBySlug(match.home.slug)?.website : undefined;
+  const reportMatch = getLastMatchWithReport(matches);
   const report = reportMatch?.fmpMatchId ? await fetchMatchReport(reportMatch.fmpMatchId) : null;
   const pdfUrl = reportMatch?.fmpMatchId ? pressReportUrl(reportMatch.fmpMatchId) : null;
 
@@ -133,6 +135,11 @@ export default async function MatchdayPage() {
                     {match.mapsUrl ? (
                       <Button href={match.mapsUrl} variant="solid">
                         Route planen
+                      </Button>
+                    ) : null}
+                    {hostWebsite ? (
+                      <Button href={hostWebsite} variant="outline">
+                        Website Gastgeber
                       </Button>
                     ) : null}
                     {match.isHome ? (

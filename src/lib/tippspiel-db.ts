@@ -1,4 +1,4 @@
-import { getMatchById } from "@/lib/data";
+import { getLiveMatchById, getLiveMatches } from "@/lib/data";
 import { getSql } from "@/lib/db";
 import {
   getFinishedTipMatches,
@@ -414,7 +414,7 @@ export async function getMatchLeaderboard(
   const sql = getSql();
   if (!sql) return [];
   await ensureSchema();
-  const jsonMatch = getMatchById(matchId);
+  const jsonMatch = await getLiveMatchById(matchId);
   const stored = await getStoredMatchResults();
   const match = jsonMatch
     ? overlayTipMatches([jsonMatch], stored)[0]
@@ -471,7 +471,9 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
   if (!sql) return [];
   await ensureSchema();
   const stored = await getStoredMatchResults();
-  const finished = getFinishedTipMatches(overlayTipMatches(getTippspielMatches(), stored));
+  const finished = getFinishedTipMatches(
+    overlayTipMatches(getTippspielMatches(await getLiveMatches()), stored),
+  );
   if (!finished.length) return [];
 
   const rows = (await sql`
@@ -616,7 +618,7 @@ export async function saveOfficialResult(
   await ensureSchema();
   await sql`
     INSERT INTO tippspiel_match_results (match_id, home_score, away_score, source, checked_at, fetched_at)
-    VALUES (${matchId}, ${homeScore}, ${awayScore}, 'fmp', NOW(), NOW())
+    VALUES (${matchId}, ${homeScore}, ${awayScore}, 'hbf', NOW(), NOW())
     ON CONFLICT (match_id) DO UPDATE SET
       home_score = EXCLUDED.home_score,
       away_score = EXCLUDED.away_score,

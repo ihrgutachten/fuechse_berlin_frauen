@@ -42,8 +42,23 @@
     "startsAt": "2026-08-21T19:00:00+02:00",
     "homeScore": 32,
     "awayScore": 29,
+    "homeHalftime": 15,
+    "awayHalftime": 14,
+    "attendance": 139,
     "status": "finished",
     "fmpMatchId": "90062"
+  },
+  {
+    "id": "pokal-r2-roedertal",
+    "competitionKind": "pokal",
+    "competitionLabel": "DHB-Pokal Frauen",
+    "round": "Achtelfinale",
+    "matchday": null,
+    "homeSlug": "hc-roedertal",
+    "awaySlug": "fuechse-berlin",
+    "startsAt": "2026-10-03T18:30:00+02:00",
+    "status": "scheduled",
+    "fmpMatchId": "90101"
   },
   {
     "id": "md01",
@@ -55,6 +70,9 @@
     "startsAt": "2026-08-30T16:00:00+02:00",
     "homeScore": 31,
     "awayScore": 36,
+    "homeHalftime": 17,
+    "awayHalftime": 16,
+    "attendance": 400,
     "status": "finished",
     "fmpMatchId": "89825"
   },
@@ -68,6 +86,9 @@
     "startsAt": "2026-09-05T19:00:00+02:00",
     "homeScore": 29,
     "awayScore": 29,
+    "homeHalftime": 13,
+    "awayHalftime": 12,
+    "attendance": 417,
     "status": "finished",
     "fmpMatchId": "89832"
   },
@@ -79,7 +100,12 @@
     "homeSlug": "fuechse-berlin",
     "awaySlug": "rostocker-hc",
     "startsAt": "2026-09-12T19:00:00+02:00",
-    "status": "scheduled",
+    "homeScore": 40,
+    "awayScore": 20,
+    "homeHalftime": 25,
+    "awayHalftime": 14,
+    "attendance": 219,
+    "status": "finished",
     "fmpMatchId": "89840"
   },
   {

@@ -19,3 +19,21 @@ export function formatNewsDate(iso: string) {
     year: "numeric",
   }).format(new Date(iso));
 }
+
+export function formatScenarioDay(iso: string) {
+  const parts = berlinDateParts(iso);
+  return `${parts.day}.${parts.month}.${parts.year}`;
+}
+
+export function formatScenarioTime(iso: string) {
+  const parts = berlinDateParts(iso);
+  return `${parts.hour}:${parts.minute}`;
+}
+
+function berlinDateParts(iso: string) {
+  const stamp = new Date(iso).toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
+  const [datePart, timePart = "00:00:00"] = stamp.split(" ");
+  const [year, month, day] = datePart.split("-");
+  const [hour, minute] = timePart.split(":");
+  return { year, month, day, hour, minute };
+}

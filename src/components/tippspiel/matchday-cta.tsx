@@ -11,7 +11,7 @@ export async function TippspielMatchdayCta({ match }: { match: Match }) {
   const { matches, lastFinished } = await hydrateTippspiel();
   const current = matches.find((item) => item.id === match.id) ?? match;
   const phase = getTipPhase(current);
-  const weekly = weeklyPrizeText(current);
+  const weekly = weeklyPrizeText(current, matches);
 
   let winner = null;
   let seasonTop: Awaited<ReturnType<typeof getSeasonLeaderboard>> = [];

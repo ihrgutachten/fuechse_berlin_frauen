@@ -1,9 +1,12 @@
 import { pollOfficialResults } from "@/lib/tippspiel-results";
-import { syncStandingsIfInWindow } from "@/lib/standings-sync";
+import { fetchHbfSnapshot, involvesFuechse } from "@/lib/hbf";
+import { saveHbfSnapshot } from "@/lib/hbf-sync";
+import { syncStandingsFromHbf } from "@/lib/standings-sync";
 import { syncPlayerStatsIfInWindow } from "@/lib/player-stats-sync";
+import { isDatabaseConfigured } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 function isCronAuthorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
@@ -16,8 +19,20 @@ export async function GET(request: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const result = await pollOfficialResults();
-  const standings = await syncStandingsIfInWindow();
-  const playerStats = await syncPlayerStatsIfInWindow();
-  return Response.json({ ok: true, ...result, standings, playerStats });
+  const snapshot = await fetchHbfSnapshot({ noStore: true });
+  if (isDatabaseConfigured()) {
+    await saveHbfSnapshot(snapshot);
+  }
+
+  const fuechse = snapshot.matches.filter(involvesFuechse);
+  const result = await pollOfficialResults(Date.now(), snapshot.matches);
+  const standings = await syncStandingsFromHbf(snapshot.matches);
+  const playerStats = await syncPlayerStatsIfInWindow(Date.now(), fuechse);
+  return Response.json({
+    ok: true,
+    hbf: snapshot.matches.length,
+    ...result,
+    standings,
+    playerStats,
+  });
 }

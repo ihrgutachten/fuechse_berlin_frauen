@@ -1,11 +1,12 @@
 import { extractText, getDocumentProxy } from "unpdf";
 import { getTeamMembers } from "@/lib/data";
+import { fetchMatchDetailsReport, pressReportPdfUrl } from "@/lib/hbf";
 import { parseEndstand, parsePressReport, type MatchReport } from "@/lib/parse-press-report";
 
 export type { MatchReport } from "@/lib/parse-press-report";
 
 export function pressReportUrl(fmpMatchId: string): string {
-  return `https://dhbdata.fmp.sportradar.com/match/${fmpMatchId}/pressReport.pdf`;
+  return pressReportPdfUrl(fmpMatchId);
 }
 
 function rosterLookup() {
@@ -20,6 +21,8 @@ function rosterLookup() {
 }
 
 export async function fetchMatchReport(fmpMatchId: string): Promise<MatchReport | null> {
+  const fromFeed = await fetchMatchDetailsReport(fmpMatchId, rosterLookup(), 1800);
+  if (fromFeed) return fromFeed;
   const text = await pressReportText(fmpMatchId, 1800);
   if (!text) return null;
   return parsePressReport(text, rosterLookup());
@@ -40,11 +43,15 @@ async function pressReportText(
   return Array.isArray(text) ? text.join("\n") : text;
 }
 
-/** Official full-time score from the DHB press report. Null while the match is still running. */
+/** Official full-time score from match-details, with press-report fallback. */
 export async function fetchOfficialEndstand(
   fmpMatchId: string,
 ): Promise<{ homeScore: number; awayScore: number } | null> {
   try {
+    const report = await fetchMatchDetailsReport(fmpMatchId, [], 120);
+    if (report?.homeScore != null && report?.awayScore != null) {
+      return { homeScore: report.homeScore, awayScore: report.awayScore };
+    }
     const text = await pressReportText(fmpMatchId, 120);
     if (!text) return null;
     const endstand = parseEndstand(text);

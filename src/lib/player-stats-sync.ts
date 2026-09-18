@@ -1,5 +1,4 @@
 import { getSql, isDatabaseConfigured } from "@/lib/db";
-import { standingsWindowAt } from "@/lib/standings-sync";
 
 export const PLAYER_STATS_SOURCE_URL =
   "https://hbf-cms.deinsportplatz.de/data/players/players_1739.json";
@@ -251,14 +250,30 @@ async function savePlayerStats(snapshot: Omit<PlayerStatsSnapshot, "fetchedAt">)
   `;
 }
 
-export async function syncPlayerStatsIfInWindow(now = Date.now()): Promise<PlayerStatsSyncResult> {
-  if (!isDatabaseConfigured()) return { skipped: "no-db" };
-  const window = standingsWindowAt(now);
-  if (!window) return { skipped: "outside-window" };
+const PLAYER_STATS_WINDOW_MS = 6 * 60 * 60 * 1000;
 
+export function playerStatsWindowAt(
+  now: number,
+  matches: Array<{ startsAt: string; status: string }>,
+): boolean {
+  return matches.some((match) => {
+    if (match.status !== "finished" && match.status !== "live") return false;
+    const kickoff = Date.parse(match.startsAt);
+    return now >= kickoff && now <= kickoff + PLAYER_STATS_WINDOW_MS;
+  });
+}
+
+export async function syncPlayerStatsIfInWindow(
+  now = Date.now(),
+  matches: Array<{ startsAt: string; status: string }> = [],
+): Promise<PlayerStatsSyncResult> {
+  if (!isDatabaseConfigured()) return { skipped: "no-db" };
   const previous = await getPlayerStatsSnapshot();
+  const inWindow = playerStatsWindowAt(now, matches);
+  if (!inWindow && previous) return { skipped: "outside-window" };
+
   if (previous && now - Date.parse(previous.fetchedAt) < RECHECK_AFTER_MS) {
-    return { skipped: "recent", window: window.label };
+    return { skipped: "recent" };
   }
 
   const res = await fetch(PLAYER_STATS_SOURCE_URL, {
@@ -271,18 +286,17 @@ export async function syncPlayerStatsIfInWindow(now = Date.now()): Promise<Playe
   });
   if (!res.ok) {
     console.error("[player-stats] fetch", res.status);
-    return { skipped: `http-${res.status}`, window: window.label };
+    return { skipped: `http-${res.status}` };
   }
 
   const parsed = parseHbfPlayerStats(await res.json());
   if (parsed.scorers.length === 0) {
     console.error("[player-stats] parse empty");
-    return { skipped: "parse", window: window.label };
+    return { skipped: "parse" };
   }
 
   await savePlayerStats({ ...parsed, source: "hbf" });
   return {
     saved: { scorers: parsed.scorers.length, keepers: parsed.keepers.length },
-    window: window.label,
   };
 }

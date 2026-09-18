@@ -10,7 +10,7 @@ export default async function TabellePage() {
   const [standings, snapshot] = await Promise.all([getStandings(), getStandingsSnapshot()]);
   const liveNote = snapshot
     ? `Live-Stand von ${new Date(snapshot.fetchedAt).toLocaleString("de-DE", { timeZone: "Europe/Berlin" })}.`
-    : "Aktueller Stand nach drei Spieltagen.";
+    : "Ergebnisse aus den offiziellen HBF-Feeds.";
 
   return (
     <>
@@ -31,7 +31,7 @@ export default async function TabellePage() {
           >
             ALSCO HBF, 2. Bundesliga
           </a>
-          {snapshot ? ". Live-Test am Spielwochenende liest sport.de in den Ergebnis-Fenstern." : null}
+          {". Ergebnisse aus den offiziellen HBF-Feeds."}
         </p>
       </div>
     </>

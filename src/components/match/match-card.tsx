@@ -28,6 +28,17 @@ const resultLabel = {
   draw: "Unentschieden",
 } as const;
 
+function pastMetaLine(match: Match): string | null {
+  if (match.status !== "finished") return null;
+  const halftime =
+    match.homeHalftime != null && match.awayHalftime != null
+      ? `Halbzeit ${match.homeHalftime}:${match.awayHalftime}`
+      : null;
+  const crowd = match.attendance != null ? `${match.attendance} Zuschauer` : null;
+  if (!halftime && !crowd) return null;
+  return [halftime, crowd].filter(Boolean).join(" · ");
+}
+
 function TeamBlock({
   team,
   align,
@@ -86,6 +97,7 @@ export function MatchCard({
   const showReport =
     showReportLink && Boolean(match.fmpMatchId) && (past || match.status === "live");
   const showActions = showTickets || showMatchday || showStream || showSpielplanLink || showReport;
+  const meta = past ? pastMetaLine(match) : null;
 
   return (
     <article
@@ -177,7 +189,11 @@ export function MatchCard({
           <TeamBlock team={match.away} align="left" />
         </div>
 
-        <p className="mt-4 text-center text-sm text-[var(--fb-text-muted)]">
+        {meta ? (
+          <p className="mt-2 text-center text-sm text-[var(--fb-text-muted)]">{meta}</p>
+        ) : null}
+
+        <p className={cn("text-center text-sm text-[var(--fb-text-muted)]", meta ? "mt-2" : "mt-4")}>
           {match.venue}, {match.city}
         </p>
 

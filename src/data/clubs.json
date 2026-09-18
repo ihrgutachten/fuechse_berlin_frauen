@@ -6,6 +6,7 @@
     "city": "Berlin",
     "venue": "Sporthalle Charlottenburg",
     "venueAddress": "Sömmeringstraße 29, 10589 Berlin",
+    "website": "https://www.fuechse.berlin",
     "isUs": true,
     "hasLogo": true,
     "logo": "/clubs/fuechse-berlin.png"
@@ -17,6 +18,7 @@
     "city": "Buchholz",
     "venue": "Nordheidehalle",
     "venueAddress": "Holzweg 4, 21244 Buchholz",
+    "website": "https://www.luchse-handball.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/hl-buchholz-rosengarten.png"
@@ -26,6 +28,7 @@
     "name": "Bergischer HC",
     "short": "BHC",
     "city": "Wuppertal",
+    "website": "https://www.bergischerhc.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/bergischer-hc.png"
@@ -35,6 +38,7 @@
     "name": "Rostocker Handball Club",
     "short": "Rostock",
     "city": "Rostock",
+    "website": "https://www.rostocker-handballclub.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/rostocker-hc.png"
@@ -44,6 +48,7 @@
     "name": "VfL Waiblingen",
     "short": "Waiblingen",
     "city": "Waiblingen",
+    "website": "https://waiblingen-tigers.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/vfl-waiblingen.png"
@@ -53,6 +58,7 @@
     "name": "SG Nürtingen-Zizishausen",
     "short": "Nürtingen",
     "city": "Nürtingen",
+    "website": "https://ntzhandball.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/sg-nuertingen-zizishausen.png"
@@ -62,6 +68,7 @@
     "name": "TSV Bayer 04 Leverkusen",
     "short": "Leverkusen",
     "city": "Leverkusen",
+    "website": "https://www.werkselfen.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/bayer-leverkusen.png"
@@ -71,6 +78,7 @@
     "name": "1. FSV Mainz 05",
     "short": "Mainz",
     "city": "Mainz",
+    "website": "https://www.mainz05.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/mainz-05.png"
@@ -80,6 +88,7 @@
     "name": "HSV Solingen-Gräfrath 76",
     "short": "Solingen",
     "city": "Solingen",
+    "website": "https://www.hsv-solingen-graefrath.com/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/hsv-solingen-graefrath.png"
@@ -89,6 +98,7 @@
     "name": "ESV 1927 Regensburg",
     "short": "Regensburg",
     "city": "Regensburg",
+    "website": "https://handball-esv1927.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/esv-regensburg.png"
@@ -98,6 +108,7 @@
     "name": "TuS Lintfort",
     "short": "Lintfort",
     "city": "Kamp-Lintfort",
+    "website": "https://tus-lintfort.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/tus-lintfort.png"
@@ -107,6 +118,7 @@
     "name": "SV Werder Bremen",
     "short": "Bremen",
     "city": "Bremen",
+    "website": "https://www.werder.de/handball/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/werder-bremen.png"
@@ -116,6 +128,7 @@
     "name": "HC Rödertal",
     "short": "Rödertal",
     "city": "Großröhrsdorf",
+    "website": "https://roedertalbienen.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/hc-roedertal.png"
@@ -125,6 +138,7 @@
     "name": "SG 09 Kirchhof",
     "short": "Kirchhof",
     "city": "Kirchhof",
+    "website": "https://www.sg09-kirchhof.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/sg-kirchhof.png"
@@ -134,6 +148,7 @@
     "name": "SV Todesfelde",
     "short": "Todesfelde",
     "city": "Todesfelde",
+    "website": "https://svtodesfelde-handball.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/sv-todesfelde.png"
@@ -143,6 +158,7 @@
     "name": "HSG Freiburg",
     "short": "Freiburg",
     "city": "Freiburg",
+    "website": "https://hsg-freiburg.de/",
     "isUs": false,
     "hasLogo": true,
     "logo": "/clubs/hsg-freiburg.png"
@@ -152,6 +168,7 @@
     "name": "TuS Metzingen",
     "short": "Metzingen",
     "city": "Metzingen",
+    "website": "https://www.tusmetzingen.de/",
     "isUs": false,
     "hasLogo": false,
     "logo": "/clubs/tus-metzingen.png"
@@ -161,6 +178,7 @@
     "name": "HSG Bensheim/Auerbach",
     "short": "Flames",
     "city": "Bensheim",
+    "website": "https://www.hsg-ba.de/",
     "isUs": false,
     "hasLogo": false,
     "logo": "/clubs/hsg-bensheim-auerbach.png"

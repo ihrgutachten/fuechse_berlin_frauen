@@ -8,13 +8,14 @@ import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
 import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getNews, getNextMatch, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
+import { getNews, getLiveMatches, getNextMatch, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
 
 /** Refresh next-match selection after kickoff without a full redeploy. */
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const nextMatch = getNextMatch();
+  const matches = await getLiveMatches();
+  const nextMatch = getNextMatch(matches);
   const news = getNews().slice(0, 3);
   const standings = await getStandings();
   const sponsors = getSponsors();
@@ -108,7 +109,7 @@ export default async function HomePage() {
             <SectionHeading
               eyebrow="Tabelle"
               title="Platzierung"
-              description="Zwischenstand nach drei Spieltagen."
+              description="Aktueller Zwischenstand der 2. Bundesliga Frauen."
             />
             <StandingsPreview rows={standings} />
           </div>
@@ -116,7 +117,7 @@ export default async function HomePage() {
             <SectionHeading
               eyebrow="Fan-Tools"
               title="Mehr als Broschüre"
-              description="Spieltags-Tippspiel ist live. Der Aufstiegs-Rechner folgt."
+              description="Spieltags-Tippspiel und Aufstiegs-Rechner."
             />
             <div className="space-y-3">
               <Link
@@ -137,7 +138,7 @@ export default async function HomePage() {
                   <p className="font-semibold text-[var(--fb-ink)]">Aufstiegs-Rechner</p>
                   <p className="text-sm text-[var(--fb-text-muted)]">Was muss passieren? Szenarien durchspielen.</p>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--fb-accent)]">Soon</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--fb-accent)]">Rechner</span>
               </Link>
               <Button href="/tools" className="w-full sm:w-auto">
                 Alle Tools

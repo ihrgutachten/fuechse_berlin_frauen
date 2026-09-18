@@ -1,6 +1,7 @@
 import type { Match } from "@/lib/data";
+import { getLiveMatches } from "@/lib/data";
 import { isDatabaseConfigured } from "@/lib/db";
-import { fetchOfficialEndstand } from "@/lib/fmp";
+import { officialEndstand, type HbfOverlayMatch } from "@/lib/hbf";
 import {
   applyOfficialResult,
   getLastFinishedTipMatch,
@@ -17,8 +18,6 @@ import {
   saveOfficialResult,
 } from "@/lib/tippspiel-db";
 
-/** Press reports do not exist during the match. Scoring still waits for Endstand, not this clock. */
-const REPORT_READY_AFTER_MS = 70 * 60 * 1000;
 const RECHECK_AFTER_MS = 2 * 60 * 1000;
 
 export type HydratedTippspiel = {
@@ -29,7 +28,8 @@ export type HydratedTippspiel = {
 
 export async function hydrateTippspiel(now = Date.now()): Promise<HydratedTippspiel> {
   const stored = isDatabaseConfigured() ? await getStoredMatchResults() : new Map();
-  let matches = overlayTipMatches(getTippspielMatches(), stored);
+  const catalog = await getLiveMatches();
+  let matches = overlayTipMatches(getTippspielMatches(catalog), stored);
   let featured = getTippspielFeaturedMatch(matches, now);
 
   if (featured && getTipPhase(featured, now) === "locked") {
@@ -39,7 +39,7 @@ export async function hydrateTippspiel(now = Date.now()): Promise<HydratedTippsp
         homeScore: featured.homeScore,
         awayScore: featured.awayScore,
       });
-      matches = overlayTipMatches(getTippspielMatches(), stored);
+      matches = overlayTipMatches(getTippspielMatches(catalog), stored);
     }
   }
 
@@ -50,11 +50,20 @@ export async function hydrateTippspiel(now = Date.now()): Promise<HydratedTippsp
   };
 }
 
-export async function syncOfficialResult(match: Match, now = Date.now()): Promise<Match> {
+function resultFromMatch(match: Match): { homeScore: number; awayScore: number } | null {
+  if (match.status !== "finished") return null;
+  if (match.homeScore == null || match.awayScore == null) return null;
+  return { homeScore: match.homeScore, awayScore: match.awayScore };
+}
+
+export async function syncOfficialResult(
+  match: Match,
+  now = Date.now(),
+  overlay?: HbfOverlayMatch,
+): Promise<Match> {
   if (getTipPhase(match, now) === "scored") return match;
   if (!isTipLocked(match, now)) return match;
   if (!match.fmpMatchId || !isDatabaseConfigured()) return match;
-  if (now < Date.parse(match.startsAt) + REPORT_READY_AFTER_MS) return match;
 
   const check = await getResultCheck(match.id);
   if (check?.hasResult) {
@@ -64,15 +73,20 @@ export async function syncOfficialResult(match: Match, now = Date.now()): Promis
   }
   if (check && now - check.checkedAt < RECHECK_AFTER_MS) return match;
 
-  await markResultChecked(match.id);
-  const endstand = await fetchOfficialEndstand(match.fmpMatchId);
-  if (!endstand) return match;
+  const endstand = officialEndstand(overlay) ?? resultFromMatch(match);
+  if (!endstand) {
+    await markResultChecked(match.id);
+    return match;
+  }
 
   await saveOfficialResult(match.id, endstand.homeScore, endstand.awayScore);
   return applyOfficialResult(match, endstand);
 }
 
-export async function pollOfficialResults(now = Date.now()): Promise<{
+export async function pollOfficialResults(
+  now = Date.now(),
+  overlay: HbfOverlayMatch[] = [],
+): Promise<{
   skipped?: string;
   checked: number;
   scored: Array<{ matchId: string; homeScore: number; awayScore: number }>;
@@ -82,17 +96,22 @@ export async function pollOfficialResults(now = Date.now()): Promise<{
   }
 
   const stored = await getStoredMatchResults();
-  const matches = overlayTipMatches(getTippspielMatches(), stored);
+  const catalog = await getLiveMatches();
+  const byFmp = new Map(overlay.map((match) => [match.fmpMatchId, match]));
+  const matches = overlayTipMatches(getTippspielMatches(catalog), stored);
   const candidates = matches.filter((match) => {
     if (getTipPhase(match, now) === "scored") return false;
     if (!isTipLocked(match, now)) return false;
-    if (!match.fmpMatchId) return false;
-    return now >= Date.parse(match.startsAt) + REPORT_READY_AFTER_MS;
+    return Boolean(match.fmpMatchId);
   });
 
   const scored: Array<{ matchId: string; homeScore: number; awayScore: number }> = [];
   for (const match of candidates) {
-    const next = await syncOfficialResult(match, now);
+    const next = await syncOfficialResult(
+      match,
+      now,
+      match.fmpMatchId ? byFmp.get(match.fmpMatchId) : undefined,
+    );
     if (
       next.homeScore != null &&
       next.awayScore != null &&

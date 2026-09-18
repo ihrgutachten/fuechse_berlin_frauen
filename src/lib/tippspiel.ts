@@ -22,8 +22,8 @@ function isPflichtspiel(match: Match): boolean {
   return match.competitionKind === "liga" || match.competitionKind === "pokal";
 }
 
-export function getTippspielMatches(): Match[] {
-  return getMatches().filter(isPflichtspiel);
+export function getTippspielMatches(all = getMatches()): Match[] {
+  return all.filter(isPflichtspiel);
 }
 
 export function isTipLocked(match: Match, now = Date.now()): boolean {

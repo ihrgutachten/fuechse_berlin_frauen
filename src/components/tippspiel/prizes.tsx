@@ -7,16 +7,16 @@ export const WEEKLY_PRIZE = "2 Tickets für das nächste Heimspiel";
 export const SEASON_PRIZE =
   "ein von allen Spielerinnen unterschriebenes Heimtrikot der aktuellen Saison";
 
-export function weeklyPrizeText(match?: Match): string {
+export function weeklyPrizeText(match?: Match, matches?: Match[]): string {
   if (!match) return WEEKLY_PRIZE;
-  const nextHome = getNextHomeMatchAfter(match.startsAt);
+  const nextHome = getNextHomeMatchAfter(match.startsAt, matches);
   if (!nextHome) return WEEKLY_PRIZE;
   const opponent = nextHome.isHome ? nextHome.away.short : nextHome.home.short;
   return `2 Tickets fürs Heimspiel gegen ${opponent} (${formatMatchDate(nextHome.startsAt)})`;
 }
 
-export function TippspielPrizes({ match }: { match?: Match }) {
-  const weekly = weeklyPrizeText(match);
+export function TippspielPrizes({ match, matches }: { match?: Match; matches?: Match[] }) {
+  const weekly = weeklyPrizeText(match, matches);
 
   return (
     <section className="grid gap-4 md:grid-cols-2">

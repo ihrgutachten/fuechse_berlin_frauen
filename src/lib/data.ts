@@ -7,6 +7,17 @@ import sponsors from "@/data/sponsors.json";
 import { allSponsorProfiles } from "@/data/sponsor-profile-list";
 import playerStatsFallback from "@/data/player-stats.json";
 import { TICKET_SHOP_URL } from "@/lib/tickets";
+import {
+  computeStandings,
+  HBF_PHASE_LIGA,
+  HBF_PHASE_POKAL,
+  involvesFuechse,
+  teamSlug,
+  type HbfOverlayMatch,
+} from "@/lib/hbf";
+import { formatScenarioDay, formatScenarioTime } from "@/lib/format";
+import { getHbfOverlayMatches } from "@/lib/hbf-sync";
+import type { ScenarioFixture, ScenarioTeamCard } from "@/lib/scenario";
 import { getStoredStandings, type StandingRecord } from "@/lib/standings-sync";
 import {
   getPlayerStatsSnapshot,
@@ -24,6 +35,7 @@ export type Club = {
   city: string;
   venue?: string;
   venueAddress?: string;
+  website?: string;
   isUs: boolean;
   hasLogo: boolean;
   logo: string;
@@ -46,11 +58,16 @@ type MatchRecord = {
   round?: string | null;
   homeSlug: string;
   awaySlug: string;
+  homeName?: string;
+  awayName?: string;
   startsAt: string;
   streamUrl?: string | null;
   ticketUrl?: string | null;
   homeScore?: number;
   awayScore?: number;
+  homeHalftime?: number;
+  awayHalftime?: number;
+  attendance?: number;
   status: "scheduled" | "live" | "finished";
   venue?: string;
   city?: string;
@@ -77,6 +94,9 @@ export type Match = {
   ticketUrl?: string | null;
   homeScore?: number;
   awayScore?: number;
+  homeHalftime?: number;
+  awayHalftime?: number;
+  attendance?: number;
   status: "scheduled" | "live" | "finished";
   fmpMatchId: string | null;
 };
@@ -109,6 +129,9 @@ export type NewsItem = {
   publishedAt: string;
   category: string;
   coverLabel: string;
+  cover?: string;
+  coverCredit?: string;
+  body: string[];
 };
 
 export type TeamRole = "spielerin" | "coach" | "staff";
@@ -241,12 +264,108 @@ function toTeamSide(club: Club): TeamSide {
   };
 }
 
-function hydrateMatch(record: MatchRecord): Match {
-  const home = getClubBySlug(record.homeSlug);
-  const away = getClubBySlug(record.awaySlug);
-  if (!home || !away) {
-    throw new Error(`Unknown club in match ${record.id}`);
+function fallbackClub(slug: string, name: string, isUs: boolean): Club {
+  return {
+    slug,
+    name,
+    short: name,
+    city: "",
+    isUs,
+    hasLogo: false,
+    logo: `/clubs/${slug}.png`,
+  };
+}
+
+function resolveClub(slug: string, name: string, isUs: boolean): Club {
+  return getClubBySlug(slug) ?? fallbackClub(slug, name, isUs);
+}
+
+function currentStatus(overlay: HbfOverlayMatch): HbfOverlayMatch["status"] {
+  if (overlay.status === "finished") return "finished";
+  if (overlay.status === "live") return "live";
+  if (Date.now() >= Date.parse(overlay.startsAt)) return "live";
+  return "scheduled";
+}
+
+function overlayRecord(record: MatchRecord, overlay: HbfOverlayMatch): MatchRecord {
+  return {
+    ...record,
+    startsAt: overlay.startsAt,
+    status: currentStatus(overlay),
+    homeScore: overlay.homeScore ?? record.homeScore,
+    awayScore: overlay.awayScore ?? record.awayScore,
+    homeHalftime: overlay.homeHalftime ?? record.homeHalftime,
+    awayHalftime: overlay.awayHalftime ?? record.awayHalftime,
+    attendance: overlay.attendance ?? record.attendance,
+    venue: overlay.venue ?? record.venue,
+    city: overlay.city ?? record.city,
+    venueAddress: overlay.venueAddress ?? record.venueAddress,
+    streamUrl: overlay.livestreamlink ?? record.streamUrl,
+    ticketUrl: overlay.ticketShop ?? record.ticketUrl,
+    matchday: overlay.matchday ?? record.matchday,
+    round: overlay.round ?? record.round,
+    homeName: overlay.homeName,
+    awayName: overlay.awayName,
+  };
+}
+
+function recordFromOverlay(overlay: HbfOverlayMatch): MatchRecord {
+  const kind: CompetitionKind = overlay.phaseId === HBF_PHASE_POKAL ? "pokal" : "liga";
+  return {
+    id: `hbf-${overlay.fmpMatchId}`,
+    competitionKind: kind,
+    competitionLabel: kind === "pokal" ? "DHB-Pokal Frauen" : "2. Bundesliga Frauen",
+    matchday: overlay.matchday,
+    round: overlay.round,
+    homeSlug: teamSlug(overlay.homeTeamId, overlay.homeName),
+    awaySlug: teamSlug(overlay.awayTeamId, overlay.awayName),
+    homeName: overlay.homeName,
+    awayName: overlay.awayName,
+    startsAt: overlay.startsAt,
+    status: currentStatus(overlay),
+    homeScore: overlay.homeScore ?? undefined,
+    awayScore: overlay.awayScore ?? undefined,
+    homeHalftime: overlay.homeHalftime ?? undefined,
+    awayHalftime: overlay.awayHalftime ?? undefined,
+    attendance: overlay.attendance ?? undefined,
+    venue: overlay.venue ?? undefined,
+    city: overlay.city ?? undefined,
+    venueAddress: overlay.venueAddress ?? undefined,
+    streamUrl: overlay.livestreamlink,
+    ticketUrl: overlay.ticketShop,
+    fmpMatchId: overlay.fmpMatchId,
+  };
+}
+
+function mergeMatchRecords(overlay: HbfOverlayMatch[]): MatchRecord[] {
+  const byFmp = new Map(overlay.map((match) => [match.fmpMatchId, match]));
+  const used = new Set<string>();
+  const merged = (matches as MatchRecord[]).map((record) => {
+    const fmpId = record.fmpMatchId ?? "";
+    const live = fmpId ? byFmp.get(fmpId) : undefined;
+    if (live) used.add(live.fmpMatchId);
+    return live ? overlayRecord(record, live) : record;
+  });
+  for (const live of overlay) {
+    if (used.has(live.fmpMatchId)) continue;
+    if (!involvesFuechse(live)) continue;
+    if (live.phaseId !== HBF_PHASE_LIGA && live.phaseId !== HBF_PHASE_POKAL) continue;
+    merged.push(recordFromOverlay(live));
   }
+  return merged;
+}
+
+function hydrateMatch(record: MatchRecord): Match {
+  const home = resolveClub(
+    record.homeSlug,
+    record.homeName ?? record.homeSlug,
+    record.homeSlug === "fuechse-berlin",
+  );
+  const away = resolveClub(
+    record.awaySlug,
+    record.awayName ?? record.awaySlug,
+    record.awaySlug === "fuechse-berlin",
+  );
 
   const isHome = home.isUs;
   const host = home;
@@ -287,18 +406,39 @@ function hydrateMatch(record: MatchRecord): Match {
         : (record.ticketUrl ?? (isHome ? TICKET_SHOP_URL : null)),
     homeScore: record.homeScore,
     awayScore: record.awayScore,
+    homeHalftime: record.homeHalftime,
+    awayHalftime: record.awayHalftime,
+    attendance: record.attendance,
     status: record.status,
     fmpMatchId: record.fmpMatchId ?? null,
   };
 }
 
+function sortMatches(list: Match[]): Match[] {
+  return [...list].sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
+}
+
+function matchesFromRecords(records: MatchRecord[], kind?: CompetitionKind | "all"): Match[] {
+  const list = sortMatches(records.map(hydrateMatch));
+  if (!kind || kind === "all") return list;
+  return list.filter((m) => m.competitionKind === kind);
+}
+
+export function getStaticMatches(kind?: CompetitionKind | "all"): Match[] {
+  return matchesFromRecords(matches as MatchRecord[], kind);
+}
+
 export function getMatchById(id: string): Match | undefined {
-  return getMatches().find((match) => match.id === id);
+  return getStaticMatches().find((match) => match.id === id);
+}
+
+export async function getLiveMatchById(id: string): Promise<Match | undefined> {
+  return (await getLiveMatches()).find((match) => match.id === id);
 }
 
 /** Last finished or live Pflichtspiel that has an official FMP report id. */
-export function getLastMatchWithReport(): Match | undefined {
-  return getMatches()
+export function getLastMatchWithReport(list?: Match[]): Match | undefined {
+  return (list ?? getStaticMatches())
     .filter(
       (match) =>
         Boolean(match.fmpMatchId) &&
@@ -308,12 +448,18 @@ export function getLastMatchWithReport(): Match | undefined {
 }
 
 export function getMatches(kind?: CompetitionKind | "all"): Match[] {
-  const list = (matches as MatchRecord[])
-    .map(hydrateMatch)
-    .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
+  return getStaticMatches(kind);
+}
 
-  if (!kind || kind === "all") return list;
-  return list.filter((m) => m.competitionKind === kind);
+export async function getLiveMatches(kind?: CompetitionKind | "all"): Promise<Match[]> {
+  try {
+    const overlay = await getHbfOverlayMatches();
+    if (overlay.length === 0) return getStaticMatches(kind);
+    return matchesFromRecords(mergeMatchRecords(overlay), kind);
+  } catch (err) {
+    console.error("[matches] overlay", err instanceof Error ? err.message : err);
+    return getStaticMatches(kind);
+  }
 }
 
 export type MatchEmphasis = "past" | "next" | "upcoming";
@@ -329,12 +475,12 @@ export function pickNextMatch(matches: Match[], now = Date.now()): Match | undef
   );
 }
 
-export function getNextMatch(): Match | undefined {
-  return pickNextMatch(getMatches());
+export function getNextMatch(list?: Match[]): Match | undefined {
+  return pickNextMatch(list ?? getStaticMatches());
 }
 
-export function getNextHomeMatch(): Match | undefined {
-  return pickNextMatch(getMatches().filter((m) => m.isHome));
+export function getNextHomeMatch(list?: Match[]): Match | undefined {
+  return pickNextMatch((list ?? getStaticMatches()).filter((m) => m.isHome));
 }
 
 export function getMatchEmphasis(
@@ -375,8 +521,81 @@ function hydrateStandingRows(
 
 export async function getStandings(): Promise<StandingRow[]> {
   const live = await getStoredStandings();
-  const rows = live ?? (standings as StandingRecord[]);
-  return hydrateStandingRows(rows);
+  if (live?.length) return hydrateStandingRows(live);
+  try {
+    const overlay = await getHbfOverlayMatches();
+    if (overlay.length) return hydrateStandingRows(computeStandings(overlay));
+  } catch (err) {
+    console.error("[standings] overlay", err instanceof Error ? err.message : err);
+  }
+  return hydrateStandingRows(standings as StandingRecord[]);
+}
+
+function toScenarioTeam(slug: string, fallbackName: string): ScenarioTeamCard {
+  const club = resolveClub(slug, fallbackName, slug === "fuechse-berlin");
+  return {
+    slug: club.slug,
+    name: club.name,
+    short: club.short,
+    hasLogo: club.hasLogo,
+    logo: club.logo,
+    isUs: club.isUs,
+  };
+}
+
+export async function getScenarioInput(): Promise<{
+  standings: StandingRow[];
+  fixtures: ScenarioFixture[];
+}> {
+  const standings = await getStandings();
+  let fixtures: ScenarioFixture[] = [];
+  try {
+    const overlay = await getHbfOverlayMatches();
+    fixtures = overlay
+      .filter((match) => match.phaseId === HBF_PHASE_LIGA && match.status !== "finished")
+      .map((match) => ({
+        id: match.fmpMatchId,
+        matchday: match.matchday ?? 0,
+        startsAt: match.startsAt,
+        dayLabel: formatScenarioDay(match.startsAt),
+        timeLabel: formatScenarioTime(match.startsAt),
+        home: toScenarioTeam(teamSlug(match.homeTeamId, match.homeName), match.homeName),
+        away: toScenarioTeam(teamSlug(match.awayTeamId, match.awayName), match.awayName),
+      }));
+  } catch (err) {
+    console.error("[scenario] overlay", err instanceof Error ? err.message : err);
+  }
+  if (fixtures.length === 0) {
+    fixtures = getStaticMatches("liga")
+      .filter((match) => match.status === "scheduled")
+      .map((match) => ({
+        id: match.id,
+        matchday: match.matchday ?? 0,
+        startsAt: match.startsAt,
+        dayLabel: formatScenarioDay(match.startsAt),
+        timeLabel: formatScenarioTime(match.startsAt),
+        home: {
+          slug: match.home.slug,
+          name: match.home.name,
+          short: match.home.short,
+          hasLogo: match.home.hasLogo,
+          logo: match.home.logo,
+          isUs: match.home.isUs,
+        },
+        away: {
+          slug: match.away.slug,
+          name: match.away.name,
+          short: match.away.short,
+          hasLogo: match.away.hasLogo,
+          logo: match.away.logo,
+          isUs: match.away.isUs,
+        },
+      }));
+  }
+  fixtures.sort(
+    (a, b) => a.matchday - b.matchday || +new Date(a.startsAt) - +new Date(b.startsAt),
+  );
+  return { standings, fixtures };
 }
 
 export type TopPlayers = {

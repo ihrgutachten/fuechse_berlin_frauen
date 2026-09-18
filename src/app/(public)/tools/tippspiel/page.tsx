@@ -33,7 +33,7 @@ export const dynamic = "force-dynamic";
 export default async function TippspielPage() {
   const session = await getSession();
   const identity = tipIdentityFromSession(session);
-  const { featured, lastFinished } = await hydrateTippspiel();
+  const { featured, lastFinished, matches } = await hydrateTippspiel();
   const dbUp = isDatabaseConfigured();
 
   let dbError = false;
@@ -193,7 +193,7 @@ export default async function TippspielPage() {
           <p className="text-[var(--fb-text-muted)]">Aktuell kein Pflichtspiel im Tippspiel.</p>
         )}
 
-        <TippspielPrizes match={featured} />
+        <TippspielPrizes match={featured} matches={matches} />
 
         {lastFinished || seasonBoard.length ? (
           <div className="grid gap-4 md:grid-cols-2">

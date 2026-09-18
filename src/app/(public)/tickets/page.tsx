@@ -1,7 +1,7 @@
 import { MatchCard } from "@/components/match/match-card";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
-import { getNextHomeMatch } from "@/lib/data";
+import { getLiveMatches, getNextHomeMatch } from "@/lib/data";
 import { TICKET_SHOP_URL, ticketPriceGroups } from "@/lib/tickets";
 
 export const metadata = {
@@ -12,8 +12,8 @@ export const metadata = {
 
 export const revalidate = 60;
 
-export default function TicketsPage() {
-  const nextHome = getNextHomeMatch();
+export default async function TicketsPage() {
+  const nextHome = getNextHomeMatch(await getLiveMatches());
 
   return (
     <>
