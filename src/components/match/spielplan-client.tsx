@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { MatchCard } from "@/components/match/match-card";
 import type { CompetitionKind, Match } from "@/lib/data";
-import { competitionLabels, getMatchEmphasis } from "@/lib/data";
+import { competitionLabels, getMatchEmphasis, pickFeaturedMatch } from "@/lib/data";
 import { cn } from "@/lib/format";
 
 type Filter = "all" | CompetitionKind;
@@ -23,6 +23,11 @@ export function SpielplanClient({
   useEffect(() => {
     setNow(Date.now());
   }, []);
+
+  const featuredId = useMemo(
+    () => (now != null ? pickFeaturedMatch(matches, now)?.id : nextMatchId),
+    [matches, nextMatchId, now],
+  );
 
   const visible = useMemo(
     () => (filter === "all" ? matches : matches.filter((m) => m.competitionKind === filter)),
@@ -69,14 +74,16 @@ export function SpielplanClient({
       ) : (
         <div className="grid gap-5 lg:grid-cols-2">
           {visible.map((match) => {
-            const emphasis = getMatchEmphasis(match, nextMatchId, now);
+            const emphasis = getMatchEmphasis(match, featuredId, now);
             return (
               <MatchCard
                 key={match.id}
                 match={match}
                 emphasis={emphasis}
                 showSpielplanLink={false}
-                className={emphasis === "next" ? "lg:col-span-2" : undefined}
+                className={
+                  emphasis === "next" || emphasis === "today" ? "lg:col-span-2" : undefined
+                }
               />
             );
           })}

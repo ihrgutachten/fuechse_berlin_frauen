@@ -30,6 +30,15 @@ export function formatScenarioTime(iso: string) {
   return `${parts.hour}:${parts.minute}`;
 }
 
+export function berlinDayKey(value: string | number | Date): string {
+  const stamp = new Date(value).toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
+  return stamp.split(" ")[0] ?? "";
+}
+
+export function isSameBerlinDay(iso: string, now = Date.now()): boolean {
+  return berlinDayKey(iso) === berlinDayKey(now);
+}
+
 function berlinDateParts(iso: string) {
   const stamp = new Date(iso).toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
   const [datePart, timePart = "00:00:00"] = stamp.split(" ");

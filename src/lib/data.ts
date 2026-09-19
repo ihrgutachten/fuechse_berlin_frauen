@@ -6,6 +6,7 @@ import players from "@/data/players.json";
 import sponsors from "@/data/sponsors.json";
 import { allSponsorProfiles } from "@/data/sponsor-profile-list";
 import playerStatsFallback from "@/data/player-stats.json";
+import { formatScenarioDay, formatScenarioTime, isSameBerlinDay } from "@/lib/format";
 import { TICKET_SHOP_URL } from "@/lib/tickets";
 import {
   computeStandings,
@@ -15,7 +16,6 @@ import {
   teamSlug,
   type HbfOverlayMatch,
 } from "@/lib/hbf";
-import { formatScenarioDay, formatScenarioTime } from "@/lib/format";
 import { getHbfOverlayMatches } from "@/lib/hbf-sync";
 import type { ScenarioFixture, ScenarioTeamCard } from "@/lib/scenario";
 import { getStoredStandings, type StandingRecord } from "@/lib/standings-sync";
@@ -462,7 +462,11 @@ export async function getLiveMatches(kind?: CompetitionKind | "all"): Promise<Ma
   }
 }
 
-export type MatchEmphasis = "past" | "next" | "upcoming";
+export type MatchEmphasis = "past" | "next" | "today" | "upcoming";
+
+function isPflichtspiel(match: Match): boolean {
+  return match.competitionKind === "liga" || match.competitionKind === "pokal";
+}
 
 /** Nächstes Pflichtspiel (Liga/Pokal); Turniere nur als Fallback. */
 export function pickNextMatch(matches: Match[], now = Date.now()): Match | undefined {
@@ -470,13 +474,38 @@ export function pickNextMatch(matches: Match[], now = Date.now()): Match | undef
     (m) => m.status === "scheduled" && +new Date(m.startsAt) >= now,
   );
   return (
-    upcoming.find((m) => m.competitionKind === "liga" || m.competitionKind === "pokal") ??
+    upcoming.find((m) => isPflichtspiel(m)) ??
     upcoming[0]
   );
 }
 
+/** Live or already started Pflichtspiel whose kickoff is still today in Berlin. */
+export function pickTodaysMatch(matches: Match[], now = Date.now()): Match | undefined {
+  const ofToday = matches.filter(
+    (match) => isPflichtspiel(match) && isSameBerlinDay(match.startsAt, now),
+  );
+  const live = ofToday.find((match) => match.status === "live");
+  if (live) return live;
+  const finished = ofToday
+    .filter((match) => match.status === "finished")
+    .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt))[0];
+  if (finished) return finished;
+  return ofToday
+    .filter((match) => +new Date(match.startsAt) <= now)
+    .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt))[0];
+}
+
+/** Today’s match until midnight Berlin, otherwise the next scheduled one. */
+export function pickFeaturedMatch(matches: Match[], now = Date.now()): Match | undefined {
+  return pickTodaysMatch(matches, now) ?? pickNextMatch(matches, now);
+}
+
 export function getNextMatch(list?: Match[]): Match | undefined {
   return pickNextMatch(list ?? getStaticMatches());
+}
+
+export function getFeaturedMatch(list?: Match[]): Match | undefined {
+  return pickFeaturedMatch(list ?? getStaticMatches());
 }
 
 export function getNextHomeMatch(list?: Match[]): Match | undefined {
@@ -485,12 +514,18 @@ export function getNextHomeMatch(list?: Match[]): Match | undefined {
 
 export function getMatchEmphasis(
   match: Match,
-  nextId: string | undefined,
+  featuredId: string | undefined,
   now?: number,
 ): MatchEmphasis {
-  if (nextId && match.id === nextId) return "next";
-  if (match.status === "finished" || match.status === "live") return "past";
-  if (now != null && +new Date(match.startsAt) < now) return "past";
+  const clock = now ?? Date.now();
+  if (featuredId && match.id === featuredId) {
+    if (match.status === "scheduled" && +new Date(match.startsAt) > clock) return "next";
+    if (match.status === "finished" && !isSameBerlinDay(match.startsAt, clock)) return "past";
+    return "today";
+  }
+  if (match.status === "live") return "today";
+  if (match.status === "finished") return "past";
+  if (+new Date(match.startsAt) < clock) return "past";
   return "upcoming";
 }
 

@@ -4,7 +4,7 @@ import { MatchdayModules } from "@/components/match/matchday-modules";
 import { TippspielMatchdayCta } from "@/components/tippspiel/matchday-cta";
 import { Button } from "@/components/ui/button";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
-import { getClubBySlug, getLastMatchWithReport, getLiveMatches, getNextMatch } from "@/lib/data";
+import { getClubBySlug, getFeaturedMatch, getLastMatchWithReport, getLiveMatches } from "@/lib/data";
 import { fetchMatchReport, pressReportUrl } from "@/lib/fmp";
 import { formatMatchDate } from "@/lib/format";
 
@@ -15,7 +15,11 @@ export const revalidate = 60;
 
 export default async function MatchdayPage() {
   const matches = await getLiveMatches();
-  const match = getNextMatch(matches);
+  const match = getFeaturedMatch(matches);
+  const isLive = match?.status === "live";
+  const isFinished = match?.status === "finished";
+  const hasScore = match?.homeScore != null && match?.awayScore != null;
+  const matchdayLabel = isLive ? "Live" : isFinished ? "Heute" : "Nächstes Spiel";
   const hostWebsite = match && !match.isHome ? getClubBySlug(match.home.slug)?.website : undefined;
   const reportMatch = getLastMatchWithReport(matches);
   const report = reportMatch?.fmpMatchId ? await fetchMatchReport(reportMatch.fmpMatchId) : null;
@@ -26,7 +30,7 @@ export default async function MatchdayPage() {
       <PageHero
         eyebrow="Live-Center"
         title="Matchday"
-        description="Countdown, Halle, Stream: der Treffpunkt vor dem Anpfiff."
+        description="Countdown oder Ergebnis, Halle, Stream: der Treffpunkt am Spieltag."
       />
       <div className="mx-auto max-w-[var(--fb-container)] space-y-8 px-[var(--fb-gutter)] py-10 md:py-14">
         {match ? (
@@ -35,7 +39,7 @@ export default async function MatchdayPage() {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                 <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--fb-green-300)]">
-                    Nächstes Spiel · {formatMatchDate(match.startsAt)}
+                    {matchdayLabel} · {formatMatchDate(match.startsAt)}
                   </p>
                   <h2 className="mt-3 font-[family-name:var(--fb-font-display)] text-3xl font-extrabold uppercase md:text-4xl">
                     {match.home.short} vs {match.away.short}
@@ -57,8 +61,14 @@ export default async function MatchdayPage() {
                     size="lg"
                     className="h-14 w-14 rounded-full bg-white/95 p-1.5 md:h-16 md:w-16"
                   />
-                  <span className="font-[family-name:var(--fb-font-display)] text-sm font-bold uppercase text-white/40 md:text-base">
-                    vs
+                  <span
+                    className={
+                      hasScore
+                        ? "font-[family-name:var(--fb-font-display)] text-2xl font-extrabold tabular-nums text-white md:text-3xl"
+                        : "font-[family-name:var(--fb-font-display)] text-sm font-bold uppercase text-white/40 md:text-base"
+                    }
+                  >
+                    {hasScore ? `${match.homeScore}:${match.awayScore}` : "vs"}
                   </span>
                   <ClubLogo
                     name={match.away.name}
@@ -71,13 +81,20 @@ export default async function MatchdayPage() {
                 </div>
               </div>
 
-              <div className="mt-6">
-                <Countdown startsAt={match.startsAt} />
-              </div>
+              {match.status === "scheduled" ? (
+                <div className="mt-6">
+                  <Countdown startsAt={match.startsAt} />
+                </div>
+              ) : null}
               <div className="mt-6 flex flex-wrap gap-3">
-                {match.ticketUrl ? (
+                {match.ticketUrl && !isFinished ? (
                   <Button href={match.ticketUrl} variant="on-dark">
                     Tickets kaufen
+                  </Button>
+                ) : null}
+                {isFinished && match.fmpMatchId ? (
+                  <Button href={`/spielplan/${match.id}`} variant="on-dark">
+                    Spielbericht
                   </Button>
                 ) : null}
                 {match.streamUrl ? (

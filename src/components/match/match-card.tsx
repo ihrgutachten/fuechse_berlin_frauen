@@ -90,14 +90,18 @@ export function MatchCard({
   const isTournament = match.competitionKind === "turnier";
   const past = emphasis === "past";
   const next = emphasis === "next";
+  const today = emphasis === "today";
+  const featured = next || today;
   const result = showScore ? fuechseResult(match) : null;
-  const showTickets = Boolean(match.ticketUrl) && !past;
+  const showTickets = Boolean(match.ticketUrl) && !past && match.status !== "finished";
   const showMatchday = !isTournament && !past;
   const showStream = Boolean(match.streamUrl) && !past;
   const showReport =
-    showReportLink && Boolean(match.fmpMatchId) && (past || match.status === "live");
+    showReportLink &&
+    Boolean(match.fmpMatchId) &&
+    (past || today || match.status === "live" || match.status === "finished");
   const showActions = showTickets || showMatchday || showStream || showSpielplanLink || showReport;
-  const meta = past ? pastMetaLine(match) : null;
+  const meta = match.status === "finished" ? pastMetaLine(match) : null;
 
   return (
     <article
@@ -108,10 +112,10 @@ export function MatchCard({
           ? "border-[var(--fb-border)] border-l-[var(--fb-accent)]"
           : "border-[var(--fb-away-line)] border-l-[var(--fb-away)]",
         past && dimPast && "opacity-55",
-        next && "shadow-[0_18px_44px_rgba(4,20,12,0.16)] ring-2 ring-[var(--fb-accent)]",
+        featured && "shadow-[0_18px_44px_rgba(4,20,12,0.16)] ring-2 ring-[var(--fb-accent)]",
         className,
       )}
-      aria-current={next ? "true" : undefined}
+      aria-current={featured ? "true" : undefined}
     >
       <div
         className={cn(
@@ -125,6 +129,11 @@ export function MatchCard({
           {next ? (
             <span className="rounded-[var(--fb-radius)] bg-[var(--fb-green-900)] px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--fb-green-300)]">
               Nächstes Spiel
+            </span>
+          ) : null}
+          {today ? (
+            <span className="rounded-[var(--fb-radius)] bg-[var(--fb-green-900)] px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-[var(--fb-green-300)]">
+              {match.status === "live" ? "Live" : "Heute"}
             </span>
           ) : null}
           {result ? (

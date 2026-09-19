@@ -8,14 +8,18 @@ import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
 import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getNews, getLiveMatches, getNextMatch, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
+import { getNews, getLiveMatches, getFeaturedMatch, getMatchEmphasis, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
 
 /** Refresh next-match selection after kickoff without a full redeploy. */
 export const revalidate = 60;
 
 export default async function HomePage() {
   const matches = await getLiveMatches();
-  const nextMatch = getNextMatch(matches);
+  const featuredMatch = getFeaturedMatch(matches);
+  const featuredEmphasis = featuredMatch
+    ? getMatchEmphasis(featuredMatch, featuredMatch.id)
+    : "next";
+  const isToday = featuredEmphasis === "today";
   const news = getNews().slice(0, 3);
   const standings = await getStandings();
   const sponsors = getSponsors();
@@ -49,8 +53,8 @@ export default async function HomePage() {
             Handball aus dem Revier. Tempo, Härte, Berliner Attitude — jetzt unter einem Namen mit den Herren.
           </p>
           <div className="animate-fade-up-delay-2 mt-8 flex flex-wrap gap-3">
-            {nextMatch?.ticketUrl ? (
-              <Button href={nextMatch.ticketUrl} variant="on-dark">
+            {featuredMatch?.ticketUrl && featuredMatch.status !== "finished" ? (
+              <Button href={featuredMatch.ticketUrl} variant="on-dark">
                 Tickets
               </Button>
             ) : null}
@@ -72,16 +76,22 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-12 md:py-16">
         <SectionHeading
-          eyebrow="Nächstes Spiel"
-          title="Countdown im Revier"
-          description="Nächstes Pflichtspiel. Countdown bis zum Anpfiff."
+          eyebrow={isToday ? "Spiel des Tages" : "Nächstes Spiel"}
+          title={isToday ? "Heute im Revier" : "Countdown im Revier"}
+          description={
+            isToday
+              ? "Das Pflichtspiel von heute bleibt bis Mitternacht aktuell."
+              : "Nächstes Pflichtspiel. Countdown bis zum Anpfiff."
+          }
           action={
             <Button href="/spielplan" variant="ghost">
               Alle Spiele
             </Button>
           }
         />
-        {nextMatch ? <MatchCard match={nextMatch} showCountdown emphasis="next" /> : null}
+        {featuredMatch ? (
+          <MatchCard match={featuredMatch} showCountdown emphasis={featuredEmphasis} />
+        ) : null}
       </section>
 
       <section className="bg-[var(--fb-soft)] py-12 md:py-16">

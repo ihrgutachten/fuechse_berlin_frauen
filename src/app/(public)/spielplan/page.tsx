@@ -1,16 +1,16 @@
 import { SpielplanClient } from "@/components/match/spielplan-client";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
-import { getLogoStatus, getLiveMatches, pickNextMatch } from "@/lib/data";
+import { getLogoStatus, getLiveMatches, pickFeaturedMatch } from "@/lib/data";
 
 export const metadata = { title: "Spielplan" };
 
-/** Keep next-match highlight current after kickoff. */
+/** Keep the match-of-the-day highlight current after kickoff. */
 export const revalidate = 60;
 
 export default async function SpielplanPage() {
   const matches = await getLiveMatches();
   const logos = getLogoStatus();
-  const nextMatchId = pickNextMatch(matches)?.id;
+  const nextMatchId = pickFeaturedMatch(matches)?.id;
 
   return (
     <>
