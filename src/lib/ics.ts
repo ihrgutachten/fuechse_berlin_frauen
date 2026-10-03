@@ -65,11 +65,28 @@ function matchContext(match: Match): string {
   return `${place} · ${match.competitionLabel}`;
 }
 
+/**
+ * Nur Stream-Links mit konkretem Pfad aufnehmen. Eine bloße Plattform-Startseite
+ * (z. B. sportdeutschland.tv ohne Pfad) ist im Kalender nutzlos und wird verworfen.
+ */
+function hasSpecificStream(url: string | null | undefined): boolean {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname.replace(/\/+$/, "").length > 0 || parsed.search.length > 0;
+  } catch {
+    return false;
+  }
+}
+
 function matchDescription(match: Match, origin?: string): string {
+  const upcoming = match.status !== "finished";
   const lines = [matchContext(match)];
-  if (match.streamUrl) lines.push(`Stream: ${match.streamUrl}`);
-  if (match.ticketUrl) lines.push(`Tickets: ${match.ticketUrl}`);
-  if (origin) lines.push(`${origin}/spielplan/${match.id}`);
+  if (upcoming && hasSpecificStream(match.streamUrl)) {
+    lines.push(`Stream: ${match.streamUrl}`);
+  }
+  if (upcoming && match.ticketUrl) lines.push(`Tickets: ${match.ticketUrl}`);
+  if (origin) lines.push(`Spielseite: ${origin}/spielplan/${match.id}`);
   return lines.join("\n");
 }
 
