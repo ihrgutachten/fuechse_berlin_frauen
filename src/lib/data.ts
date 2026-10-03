@@ -39,6 +39,8 @@ export type Club = {
   isUs: boolean;
   hasLogo: boolean;
   logo: string;
+  /** Maskottchen-Emoji für Kalender-Titel, optional. */
+  emoji?: string;
 };
 
 export type TeamSide = {
@@ -48,6 +50,7 @@ export type TeamSide = {
   isUs: boolean;
   hasLogo: boolean;
   logo: string;
+  emoji?: string;
 };
 
 type MatchRecord = {
@@ -261,6 +264,7 @@ function toTeamSide(club: Club): TeamSide {
     isUs: club.isUs,
     hasLogo: club.hasLogo,
     logo: club.logo,
+    emoji: club.emoji,
   };
 }
 

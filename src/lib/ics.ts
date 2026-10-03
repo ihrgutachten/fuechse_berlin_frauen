@@ -42,8 +42,13 @@ function foldLine(line: string): string {
   return chunks.join("\r\n");
 }
 
+function teamLabel(team: Match["home"]): string {
+  return team.emoji ? `${team.emoji} ${team.short}` : team.short;
+}
+
 function matchTitle(match: Match): string {
-  return `${match.home.name} vs ${match.away.name}`;
+  const side = match.isHome ? "HEIM" : "AUSWÄRTS";
+  return `${teamLabel(match.home)} vs ${teamLabel(match.away)} (${side})`;
 }
 
 function matchLocation(match: Match): string {
