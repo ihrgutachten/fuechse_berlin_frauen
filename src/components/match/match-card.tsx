@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AddToCalendar } from "@/components/match/add-to-calendar";
 import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
 import { Button } from "@/components/ui/button";
@@ -100,7 +101,9 @@ export function MatchCard({
     showReportLink &&
     Boolean(match.fmpMatchId) &&
     (past || today || match.status === "live" || match.status === "finished");
-  const showActions = showTickets || showMatchday || showStream || showSpielplanLink || showReport;
+  const showCalendar = !past && match.status === "scheduled";
+  const showActions =
+    showTickets || showMatchday || showStream || showSpielplanLink || showReport || showCalendar;
   const meta = match.status === "finished" ? pastMetaLine(match) : null;
 
   return (
@@ -229,6 +232,7 @@ export function MatchCard({
                 Stream
               </Button>
             ) : null}
+            {showCalendar ? <AddToCalendar match={match} /> : null}
             {showReport ? (
               <Button href={`/spielplan/${match.id}`} variant={showTickets || showMatchday ? "outline" : "solid"}>
                 Spielbericht

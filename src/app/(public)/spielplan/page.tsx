@@ -1,3 +1,4 @@
+import { CalendarSubscribe } from "@/components/match/calendar-subscribe";
 import { SpielplanClient } from "@/components/match/spielplan-client";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
 import { getLogoStatus, getLiveMatches, pickFeaturedMatch } from "@/lib/data";
@@ -23,6 +24,7 @@ export default async function SpielplanPage() {
         <PlaceholderNote>
           Club-Logos: {logos.ready}/{logos.total} bereit.
         </PlaceholderNote>
+        <CalendarSubscribe />
         <SpielplanClient matches={matches} nextMatchId={nextMatchId} />
       </div>
     </>
