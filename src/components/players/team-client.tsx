@@ -14,6 +14,19 @@ const filters: { key: Filter; label: string }[] = [
   { key: "staff", label: "Staff" },
 ];
 
+const positionGroups: { key: string; label: string; match: string[] }[] = [
+  { key: "tor", label: "Tor", match: ["TW"] },
+  { key: "rueckraum", label: "Rückraum", match: ["RL", "RM", "RR", "RM/RR"] },
+  { key: "aussen", label: "Außen", match: ["RA", "LA"] },
+  { key: "kreis", label: "Kreis", match: ["KM"] },
+];
+
+function positionGroupKey(position: string): string {
+  return positionGroups.find((g) => g.match.includes(position))?.key ?? "sonst";
+}
+
+const cardGridClass = "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4";
+
 export function TeamClient({ members }: { members: Player[] }) {
   const [filter, setFilter] = useState<Filter>("spielerin");
 
@@ -54,11 +67,35 @@ export function TeamClient({ members }: { members: Player[] }) {
         })}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {visible.map((member) => (
-          <PlayerCard key={member.slug} player={member} />
-        ))}
-      </div>
+      {filter === "spielerin" ? (
+        <div className="space-y-8">
+          {positionGroups.map((group) => {
+            const inGroup = visible.filter(
+              (m) => positionGroupKey(m.position) === group.key,
+            );
+            if (inGroup.length === 0) return null;
+            return (
+              <section key={group.key} className="space-y-3">
+                <h3 className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--fb-text-faint)]">
+                  {group.label}
+                  <span className="h-px flex-1 bg-[var(--fb-border)]" />
+                </h3>
+                <div className={cardGridClass}>
+                  {inGroup.map((member) => (
+                    <PlayerCard key={member.slug} player={member} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      ) : (
+        <div className={cardGridClass}>
+          {visible.map((member) => (
+            <PlayerCard key={member.slug} player={member} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
