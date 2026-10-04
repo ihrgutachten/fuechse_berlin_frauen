@@ -17,19 +17,18 @@
     "nationality": "NED"
   },
   {
-    "slug": "zoe-ludwig",
-    "name": "Zoe Ludwig",
-    "number": 12,
+    "slug": "mercy-hacker",
+    "name": "Mercy Hacker",
+    "number": 30,
     "role": "spielerin",
     "position": "TW",
     "positionLabel": "Tor",
-    "nickname": "Zö",
-    "birthPlace": "Oberkirch",
-    "joined": "2025",
-    "height": "1,78 m",
-    "previousClubs": "SG Kappelwindeck/Steinbach, HSG Freiburg, HL Buchholz 08-Rosengarten/Buxtehuder SV, HSG Blomberg-Lippe",
+    "birthPlace": "Berlin",
+    "joined": "2018",
+    "height": "1,79 m",
+    "previousClubs": "Füchse Berlin, Berliner TSC",
     "patron": "Frank Hüpperling",
-    "photo": "/team/zoe-ludwig.jpg",
+    "photo": "/team/mercy-hacker.webp",
     "nationality": "GER"
   },
   {

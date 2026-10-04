@@ -43,3 +43,5 @@ next-env.d.ts
 
 .vercel
 src/data/sponsor-profiles/_extract.json
+
+dev-server.log
