@@ -29,6 +29,13 @@ export function MobileNav() {
     };
   }, [open]);
 
+  const teamIndex = navLinks.findIndex((item) => item.href === "/team");
+  const mobileLinks = [
+    ...navLinks.slice(0, teamIndex + 1),
+    { href: "/mannschaften", label: "Mannschaften" },
+    ...navLinks.slice(teamIndex + 1),
+  ];
+
   const menu =
     mounted &&
     createPortal(
@@ -45,7 +52,7 @@ export function MobileNav() {
       >
         <nav aria-label="Mobilnavigation">
           <ul className="flex flex-col">
-            {navLinks.map((link) => (
+            {mobileLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -61,19 +68,21 @@ export function MobileNav() {
           </ul>
 
           <ul className="mt-6 flex flex-col gap-1 border-t border-white/15 pt-5">
-            {secondaryLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={cn(
-                    "block py-2.5 text-base font-medium text-white/75",
-                    pathname === link.href && "text-[var(--fb-green-300)]",
-                  )}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {secondaryLinks
+              .filter((link) => link.href !== "/mannschaften")
+              .map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block py-2.5 text-base font-medium text-white/75",
+                      pathname === link.href && "text-[var(--fb-green-300)]",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             <li>
               <Link
                 href="/matchday"

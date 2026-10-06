@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { TeamClient } from "@/components/players/team-client";
 import { TopPlayers } from "@/components/players/top-players";
 import { PageHero } from "@/components/ui/page-hero";
@@ -18,6 +19,15 @@ export default async function TeamPage() {
         description="Spielerinnen, Trainerstab und Staff der Füchse Berlin Frauen."
       />
       <div className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-10 md:py-14">
+        <p className="mb-8 text-[var(--fb-text-muted)]">
+          <Link
+            href="/mannschaften"
+            className="font-semibold text-[var(--fb-accent)] underline-offset-2 hover:underline"
+          >
+            Alle Mannschaften
+          </Link>{" "}
+          von den Minis bis zur 2. Frauen.
+        </p>
         <TopPlayers stats={topPlayers} />
         <TeamClient members={members} />
         <p className="mt-8 text-sm text-[var(--fb-muted)]">

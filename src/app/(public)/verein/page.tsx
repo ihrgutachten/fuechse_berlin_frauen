@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHero } from "@/components/ui/page-hero";
 
 export const metadata = { title: "Verein" };
@@ -18,6 +19,15 @@ export default function VereinPage() {
         </p>
         <p className="text-[var(--fb-text-muted)]">
           Platzhalter-Text für Historie, Werte und Meilensteine. Redaktioneller Content kommt später über CMS.
+        </p>
+        <p className="text-[var(--fb-text-muted)]">
+          <Link
+            href="/mannschaften"
+            className="font-semibold text-[var(--fb-accent)] underline-offset-2 hover:underline"
+          >
+            Mannschaften
+          </Link>
+          : 2. und 3. Frauen, Jugend und Minis, mit Liga und Ansprechpartnern.
         </p>
       </div>
     </>

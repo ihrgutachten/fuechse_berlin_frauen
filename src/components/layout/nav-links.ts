@@ -12,6 +12,7 @@ export const navLinks = [
 ] as const;
 
 export const secondaryLinks = [
+  { href: "/mannschaften", label: "Mannschaften" },
   { href: "/verein", label: "Verein" },
   { href: "/kontakt", label: "Kontakt" },
 ] as const;
