@@ -9,6 +9,7 @@ import { tipCardClass } from "@/components/tippspiel/card";
 import { SeasonPodium, WeeklyWinnerCard } from "@/components/tippspiel/highlights";
 import { TippspielPrizes } from "@/components/tippspiel/prizes";
 import { TippspielSponsorStrip } from "@/components/tippspiel/sponsor-strip";
+import { TipperList } from "@/components/tippspiel/tippers";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { TIPPSPIEL_LOGIN_HREF } from "@/lib/callback-path";
@@ -17,6 +18,7 @@ import {
   getCommunityTip,
   getMatchLeaderboard,
   getPrediction,
+  getMatchTippers,
   getProfileForSession,
   getSeasonLeaderboard,
 } from "@/lib/tippspiel-db";
@@ -35,6 +37,7 @@ export default async function TippspielPage() {
   const identity = tipIdentityFromSession(session);
   const { featured, lastFinished, matches } = await hydrateTippspiel();
   const dbUp = isDatabaseConfigured();
+  const showEmails = Boolean(session?.user?.admin);
 
   let dbError = false;
   let profile = null;
@@ -44,6 +47,7 @@ export default async function TippspielPage() {
   let matchBoard: Awaited<ReturnType<typeof getMatchLeaderboard>> = [];
   let lastWeekBoard: Awaited<ReturnType<typeof getMatchLeaderboard>> = [];
   let seasonBoard: Awaited<ReturnType<typeof getSeasonLeaderboard>> = [];
+  let tippers: Awaited<ReturnType<typeof getMatchTippers>> = [];
 
   if (dbUp) {
     try {
@@ -51,8 +55,9 @@ export default async function TippspielPage() {
       const accountId = profile?.userId ?? identity?.userId;
       if (featured) {
         community = await getCommunityTip(featured.id);
-        matchBoard = await getMatchLeaderboard(featured.id, accountId);
+        matchBoard = await getMatchLeaderboard(featured.id, accountId, showEmails);
         if (accountId) myTip = await getPrediction(accountId, featured.id);
+        if (session?.user?.admin) tippers = await getMatchTippers(featured.id);
       }
       if (lastFinished) {
         lastWeekBoard = await getMatchLeaderboard(lastFinished.id, accountId);
@@ -60,7 +65,7 @@ export default async function TippspielPage() {
           lastTip = await getPrediction(accountId, lastFinished.id);
         }
       }
-      seasonBoard = await getSeasonLeaderboard(accountId);
+      seasonBoard = await getSeasonLeaderboard(accountId, showEmails);
     } catch (err) {
       console.error("[tippspiel] page load", err);
       dbError = true;
@@ -92,9 +97,11 @@ export default async function TippspielPage() {
         title="Spieltags-Tippspiel"
         titleNote="(Demoversion, aktuell kein echtes Gewinnspiel)"
         description={
-          session?.user
-            ? undefined
-            : "Wöchentlich 2 Heimspiel-Tickets. Zur Saison ein von allen Spielerinnen unterschriebenes Trikot."
+          profile?.nickname
+            ? `Willkommen, ${profile.nickname}.`
+            : session?.user
+              ? undefined
+              : "Wöchentlich 2 Heimspiel-Tickets. Zur Saison ein von allen Spielerinnen unterschriebenes Trikot."
         }
         titleAction={
           session?.user ? (
@@ -193,6 +200,18 @@ export default async function TippspielPage() {
           <p className="text-[var(--fb-text-muted)]">Aktuell kein Pflichtspiel im Tippspiel.</p>
         )}
 
+        {session?.user?.admin && featured ? (
+          <section className={`${tipCardClass} p-5 md:p-6`}>
+            <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
+              Tipper
+            </h2>
+            <p className="mt-1 mb-4 text-sm text-[var(--fb-text-muted)]">
+              Anzeigename, E-Mail und Tipp für dieses Spiel.
+            </p>
+            <TipperList rows={tippers} />
+          </section>
+        ) : null}
+
         <TippspielPrizes match={featured} matches={matches} />
 
         {lastFinished || seasonBoard.length ? (
@@ -232,6 +251,7 @@ export default async function TippspielPage() {
               rows={matchBoard}
               showScores={showScores}
               showPoints={showPoints}
+              showEmail={showEmails}
             />
           </section>
         ) : null}
@@ -243,7 +263,7 @@ export default async function TippspielPage() {
           <p className="mt-1 mb-4 text-sm text-[var(--fb-text-muted)]">
             Summe über alle abgerechneten Füchse-Spiele. Platz 1 gewinnt das signierte Saisontrikot.
           </p>
-          <SeasonLeaderboard rows={seasonBoard} />
+          <SeasonLeaderboard rows={seasonBoard} showEmail={showEmails} />
         </section>
 
         <TippspielRules />

@@ -29,6 +29,7 @@ export type LeaderboardRow = {
   rank: number;
   userId: string;
   nickname: string;
+  email: string | null;
   homeScore: number | null;
   awayScore: number | null;
   points: number;
@@ -40,10 +41,19 @@ export type SeasonRow = {
   rank: number;
   userId: string;
   nickname: string;
+  email: string | null;
   points: number;
   exact: number;
   tipped: number;
   isYou: boolean;
+};
+
+export type MatchTipper = {
+  userId: string;
+  nickname: string;
+  email: string | null;
+  homeScore: number;
+  awayScore: number;
 };
 
 export type CommunityTip = {
@@ -407,9 +417,50 @@ export async function getCommunityTip(matchId: string): Promise<CommunityTip | n
   return { count: row.count, homeScore: row.home_score, awayScore: row.away_score };
 }
 
+export async function getMatchTippers(matchId: string): Promise<MatchTipper[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  await ensureSchema();
+  const rows = (await sql`
+    SELECT
+      p.user_id,
+      p.home_score,
+      p.away_score,
+      pr.nickname,
+      COALESCE(
+        pr.email,
+        (
+          SELECT e.email
+          FROM tippspiel_profile_emails e
+          WHERE e.user_id = pr.user_id
+          ORDER BY e.email
+          LIMIT 1
+        )
+      ) AS email
+    FROM tippspiel_predictions p
+    JOIN tippspiel_profiles pr ON pr.user_id = p.user_id
+    WHERE p.match_id = ${matchId}
+    ORDER BY p.updated_at DESC
+  `) as Array<{
+    user_id: string;
+    home_score: number;
+    away_score: number;
+    nickname: string;
+    email: string | null;
+  }>;
+  return rows.map((row) => ({
+    userId: row.user_id,
+    nickname: row.nickname,
+    email: row.email,
+    homeScore: row.home_score,
+    awayScore: row.away_score,
+  }));
+}
+
 export async function getMatchLeaderboard(
   matchId: string,
   viewerId?: string,
+  includeEmail = false,
 ): Promise<LeaderboardRow[]> {
   const sql = getSql();
   if (!sql) return [];
@@ -420,7 +471,22 @@ export async function getMatchLeaderboard(
     ? overlayTipMatches([jsonMatch], stored)[0]
     : undefined;
   const rows = (await sql`
-    SELECT p.user_id, p.home_score, p.away_score, p.updated_at, pr.nickname
+    SELECT
+      p.user_id,
+      p.home_score,
+      p.away_score,
+      p.updated_at,
+      pr.nickname,
+      COALESCE(
+        pr.email,
+        (
+          SELECT e.email
+          FROM tippspiel_profile_emails e
+          WHERE e.user_id = pr.user_id
+          ORDER BY e.email
+          LIMIT 1
+        )
+      ) AS email
     FROM tippspiel_predictions p
     JOIN tippspiel_profiles pr ON pr.user_id = p.user_id
     WHERE p.match_id = ${matchId}
@@ -430,6 +496,7 @@ export async function getMatchLeaderboard(
     away_score: number;
     updated_at: string;
     nickname: string;
+    email: string | null;
   }>;
 
   const scored = rows.map((row) => {
@@ -440,6 +507,7 @@ export async function getMatchLeaderboard(
     return {
       userId: row.user_id,
       nickname: row.nickname,
+      email: row.email,
       homeScore: row.home_score,
       awayScore: row.away_score,
       points: result.points,
@@ -458,6 +526,7 @@ export async function getMatchLeaderboard(
     rank: index + 1,
     userId: row.userId,
     nickname: row.nickname,
+    email: includeEmail ? row.email : null,
     homeScore: row.homeScore,
     awayScore: row.awayScore,
     points: row.points,
@@ -466,7 +535,10 @@ export async function getMatchLeaderboard(
   }));
 }
 
-export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow[]> {
+export async function getSeasonLeaderboard(
+  viewerId?: string,
+  includeEmail = false,
+): Promise<SeasonRow[]> {
   const sql = getSql();
   if (!sql) return [];
   await ensureSchema();
@@ -477,7 +549,22 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
   if (!finished.length) return [];
 
   const rows = (await sql`
-    SELECT p.user_id, p.match_id, p.home_score, p.away_score, pr.nickname
+    SELECT
+      p.user_id,
+      p.match_id,
+      p.home_score,
+      p.away_score,
+      pr.nickname,
+      COALESCE(
+        pr.email,
+        (
+          SELECT e.email
+          FROM tippspiel_profile_emails e
+          WHERE e.user_id = pr.user_id
+          ORDER BY e.email
+          LIMIT 1
+        )
+      ) AS email
     FROM tippspiel_predictions p
     JOIN tippspiel_profiles pr ON pr.user_id = p.user_id
   `) as Array<{
@@ -486,11 +573,12 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
     home_score: number;
     away_score: number;
     nickname: string;
+    email: string | null;
   }>;
 
   const byUser = new Map<
     string,
-    { nickname: string; points: number; exact: number; tipped: number }
+    { nickname: string; email: string | null; points: number; exact: number; tipped: number }
   >();
 
   for (const row of rows) {
@@ -504,6 +592,7 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
     );
     const prev = byUser.get(row.user_id) ?? {
       nickname: row.nickname,
+      email: row.email,
       points: 0,
       exact: 0,
       tipped: 0,
@@ -512,6 +601,7 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
     prev.exact += result.exact ? 1 : 0;
     prev.tipped += 1;
     prev.nickname = row.nickname;
+    prev.email = row.email;
     byUser.set(row.user_id, prev);
   }
 
@@ -527,6 +617,7 @@ export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow
     rank: index + 1,
     userId: row.userId,
     nickname: row.nickname,
+    email: includeEmail ? row.email : null,
     points: row.points,
     exact: row.exact,
     tipped: row.tipped,
