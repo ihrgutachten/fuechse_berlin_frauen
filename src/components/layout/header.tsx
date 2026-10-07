@@ -39,7 +39,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-[var(--fb-radius)] px-2 py-1.5 font-[family-name:var(--fb-font-nav)] text-[1.1375rem] font-semibold uppercase leading-none tracking-wide text-white/90 transition hover:bg-white/10 hover:text-white"
+                  className="rounded-[var(--fb-radius)] px-2 py-1.5 font-[family-name:var(--fb-font-nav)] text-[1.1875rem] font-bold uppercase leading-none tracking-normal text-white transition hover:bg-white/10 xl:text-[1.3125rem] 2xl:text-[1.375rem]"
                 >
                   {link.label}
                 </Link>
