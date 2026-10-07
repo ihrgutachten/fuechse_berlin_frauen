@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { NewsItem } from "@/lib/data";
+import type { PublicNews } from "@/lib/news";
 import { cn, formatNewsDate } from "@/lib/format";
 
 type NewsCardProps = {
-  item: NewsItem;
+  item: PublicNews;
   className?: string;
 };
 

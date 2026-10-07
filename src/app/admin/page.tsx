@@ -31,6 +31,21 @@ export default async function AdminPage() {
 
       <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
         <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
+          News
+        </h2>
+        <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
+          Spielberichte, Vorberichte und Meldungen pflegen. Mit Titelbild und Text.
+        </p>
+        <Link
+          href="/admin/news"
+          className="mt-4 inline-flex text-sm font-semibold text-[var(--fb-accent)] hover:underline"
+        >
+          News verwalten
+        </Link>
+      </section>
+
+      <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
+        <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
           Tippspiel
         </h2>
         {stats ? (

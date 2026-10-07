@@ -1,11 +1,12 @@
 import { NewsCard } from "@/components/news/news-card";
 import { PageHero } from "@/components/ui/page-hero";
-import { getNews } from "@/lib/data";
+import { getMergedNews } from "@/lib/news";
 
 export const metadata = { title: "News" };
+export const revalidate = 60;
 
-export default function NewsPage() {
-  const news = getNews().slice(0, 6);
+export default async function NewsPage() {
+  const news = (await getMergedNews()).slice(0, 12);
 
   return (
     <>

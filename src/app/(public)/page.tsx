@@ -8,7 +8,8 @@ import { SponsorWall } from "@/components/sponsors/sponsor-wall";
 import { Button } from "@/components/ui/button";
 import { FanProjectOverlay } from "@/components/ui/fan-project-overlay";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getNews, getLiveMatches, getFeaturedMatch, getMatchEmphasis, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
+import { getLiveMatches, getFeaturedMatch, getMatchEmphasis, getSponsors, getStandings, homepageSponsorTiers } from "@/lib/data";
+import { getMergedNews } from "@/lib/news";
 
 /** Refresh next-match selection after kickoff without a full redeploy. */
 export const revalidate = 60;
@@ -20,7 +21,7 @@ export default async function HomePage() {
     ? getMatchEmphasis(featuredMatch, featuredMatch.id)
     : "next";
   const isToday = featuredEmphasis === "today";
-  const news = getNews().slice(0, 3);
+  const news = (await getMergedNews()).slice(0, 3);
   const standings = await getStandings();
   const sponsors = getSponsors();
 
