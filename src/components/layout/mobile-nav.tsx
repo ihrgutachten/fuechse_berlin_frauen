@@ -85,6 +85,14 @@ export function MobileNav() {
               ))}
             <li>
               <Link
+                href="/login"
+                className="block py-2.5 text-base font-medium text-white/75"
+              >
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/matchday"
                 className="mt-4 inline-flex rounded-[var(--fb-radius)] bg-[var(--fb-green-500)] px-4 py-2.5 text-sm font-semibold text-[var(--fb-green-950)]"
               >

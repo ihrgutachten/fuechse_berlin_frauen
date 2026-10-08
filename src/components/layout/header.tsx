@@ -48,6 +48,12 @@ export function Header() {
 
             <div className="ml-auto flex shrink-0 items-center gap-2 self-center">
               <Link
+                href="/login"
+                className="hidden rounded-[var(--fb-radius)] border border-white/30 px-3 py-1.5 font-[family-name:var(--fb-font-nav)] text-sm font-semibold uppercase text-white transition hover:bg-white/10 sm:inline-flex"
+              >
+                Login
+              </Link>
+              <Link
                 href="/tickets"
                 className="hidden rounded-[var(--fb-radius)] border border-white/30 px-3 py-1.5 font-[family-name:var(--fb-font-nav)] text-sm font-semibold uppercase text-white transition hover:bg-white/10 sm:inline-flex"
               >
