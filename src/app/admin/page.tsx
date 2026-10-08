@@ -31,6 +31,22 @@ export default async function AdminPage() {
 
       <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
         <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
+          Module
+        </h2>
+        <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
+          Funktionsbereiche der Seite an- und abschalten, etwa den Aufstiegs-Rechner.
+          Abgeschaltete Module verschwinden aus der Navigation.
+        </p>
+        <Link
+          href="/admin/modules"
+          className="mt-4 inline-flex text-sm font-semibold text-[var(--fb-accent)] hover:underline"
+        >
+          Module verwalten
+        </Link>
+      </section>
+
+      <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
+        <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
           News
         </h2>
         <p className="mt-3 text-sm text-[var(--fb-text-muted)]">

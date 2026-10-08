@@ -1,11 +1,14 @@
+import { notFound } from "next/navigation";
 import { ScenarioCalculator } from "@/components/tools/scenario-calculator";
 import { PageHero } from "@/components/ui/page-hero";
 import { getScenarioInput } from "@/lib/data";
+import { isModuleEnabled } from "@/lib/modules-db";
 
 export const metadata = { title: "Aufstiegs-Rechner" };
 export const revalidate = 60;
 
 export default async function SzenarioPage() {
+  if (!(await isModuleEnabled("aufstiegsrechner"))) notFound();
   const { standings, fixtures } = await getScenarioInput();
 
   return (

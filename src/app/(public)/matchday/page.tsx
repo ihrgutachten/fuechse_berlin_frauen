@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { ClubLogo } from "@/components/match/club-logo";
 import { Countdown } from "@/components/match/countdown";
 import { MatchdayModules } from "@/components/match/matchday-modules";
@@ -5,6 +6,7 @@ import { TippspielMatchdayCta } from "@/components/tippspiel/matchday-cta";
 import { Button } from "@/components/ui/button";
 import { PageHero, PlaceholderNote } from "@/components/ui/page-hero";
 import { getClubBySlug, getFeaturedMatch, getLastMatchWithReport, getLiveMatches } from "@/lib/data";
+import { isModuleEnabled } from "@/lib/modules-db";
 import { fetchMatchReport, pressReportUrl } from "@/lib/fmp";
 import { formatMatchDate } from "@/lib/format";
 
@@ -14,6 +16,7 @@ export const metadata = { title: "Matchday" };
 export const revalidate = 60;
 
 export default async function MatchdayPage() {
+  if (!(await isModuleEnabled("matchday"))) notFound();
   const matches = await getLiveMatches();
   const match = getFeaturedMatch(matches);
   const isLive = match?.status === "live";

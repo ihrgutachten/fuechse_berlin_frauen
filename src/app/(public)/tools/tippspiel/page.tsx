@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { getSession, tipIdentityFromSession } from "@/lib/session";
+import { isModuleEnabled } from "@/lib/modules-db";
 import { MatchLeaderboard, SeasonLeaderboard } from "@/components/tippspiel/leaderboard";
 import { TippspielMatchBanner } from "@/components/tippspiel/match-banner";
 import { NicknameForm } from "@/components/tippspiel/nickname-form";
@@ -33,6 +35,7 @@ export const metadata = { title: "Tippspiel" };
 export const dynamic = "force-dynamic";
 
 export default async function TippspielPage() {
+  if (!(await isModuleEnabled("tippspiel"))) notFound();
   const session = await getSession();
   const identity = tipIdentityFromSession(session);
   const { featured, lastFinished, matches } = await hydrateTippspiel();

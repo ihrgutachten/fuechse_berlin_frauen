@@ -2,13 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { navLinks } from "@/components/layout/nav-links";
+import { MODULES } from "@/lib/modules";
+import { getModuleState } from "@/lib/modules-db";
 
 /**
  * Two-tier header (Herren-inspired):
  * green nav + white strip (~5% taller); crest in-flow left, nav immediately after.
  * Combined: mobile 7.2rem (3.5+3.7), md+ 8.2rem (4+4.2) — keep MobileNav in sync.
  */
-export function Header() {
+export async function Header() {
+  const moduleState = await getModuleState();
+  const hiddenHrefs = MODULES.filter(
+    (m) => m.surface === "nav" && m.toggleable && !moduleState[m.key],
+  ).map((m) => m.href);
+  const hidden = new Set(hiddenHrefs);
+  const visibleNavLinks = navLinks.filter((link) => !hidden.has(link.href));
   return (
     <header className="sticky top-0 z-[210] overflow-visible">
       <div className="relative overflow-visible">
@@ -35,7 +43,7 @@ export function Header() {
               className="hidden items-center gap-0.5 lg:flex"
               aria-label="Hauptnavigation"
             >
-              {navLinks.map((link) => (
+              {visibleNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -65,7 +73,7 @@ export function Header() {
               >
                 Live
               </Link>
-              <MobileNav />
+              <MobileNav hiddenHrefs={hiddenHrefs} />
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 import { navLinks, secondaryLinks } from "@/components/layout/nav-links";
 import { cn } from "@/lib/format";
 
-export function MobileNav() {
+export function MobileNav({ hiddenHrefs = [] }: { hiddenHrefs?: string[] }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
@@ -29,12 +29,13 @@ export function MobileNav() {
     };
   }, [open]);
 
+  const hidden = new Set(hiddenHrefs);
   const teamIndex = navLinks.findIndex((item) => item.href === "/team");
   const mobileLinks = [
     ...navLinks.slice(0, teamIndex + 1),
     { href: "/mannschaften", label: "Mannschaften" },
     ...navLinks.slice(teamIndex + 1),
-  ];
+  ].filter((link) => !hidden.has(link.href));
 
   const menu =
     mounted &&
