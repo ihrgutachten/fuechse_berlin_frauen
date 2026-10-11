@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isModuleEnabled } from "@/lib/modules-db";
 import { getShopConfig, getShopProduct, isShopOpen } from "@/lib/shop";
 import { consumeCaptchaProof } from "@/lib/shop-captcha";
 
@@ -39,6 +40,9 @@ function buildOrderBody(order: ShopOrderPayload, productName: string, price: num
 }
 
 export async function POST(request: Request) {
+  if (!(await isModuleEnabled("shop"))) {
+    return NextResponse.json({ error: "Nicht gefunden." }, { status: 404 });
+  }
   if (!isShopOpen()) {
     return NextResponse.json(
       { error: "Der Shop ist derzeit geschlossen." },

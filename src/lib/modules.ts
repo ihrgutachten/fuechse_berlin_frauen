@@ -16,6 +16,7 @@ export type ModuleKey =
   | "team"
   | "tabelle"
   | "matchday"
+  | "shop"
   | "tippspiel"
   | "aufstiegsrechner"
   | "kidsclub"
@@ -66,6 +67,16 @@ export const MODULES: ModuleDef[] = [
     label: "Matchday",
     description: "Live-Center am Spieltag: Countdown, Ergebnis, Stream.",
     href: "/matchday",
+    status: "live",
+    toggleable: true,
+    defaultOn: true,
+    surface: "nav",
+  },
+  {
+    key: "shop",
+    label: "Shop",
+    description: "Trikot-Shop in der Navigation. Ausblenden, solange keine Bestellung läuft.",
+    href: "/shop",
     status: "live",
     toggleable: true,
     defaultOn: true,

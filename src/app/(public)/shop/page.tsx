@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import { OrderForm } from "@/components/shop/order-form";
 import { PageHero } from "@/components/ui/page-hero";
+import { isModuleEnabled } from "@/lib/modules-db";
 import { formatShopPrice, getShopConfig } from "@/lib/shop";
 
 export const metadata = {
@@ -8,7 +10,8 @@ export const metadata = {
     "Trikots der Füchse Berlin Frauen bestellen — Bestellwunsch per E-Mail, inkl. Wunschdruck.",
 };
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  if (!(await isModuleEnabled("shop"))) notFound();
   const shop = getShopConfig();
 
   return (

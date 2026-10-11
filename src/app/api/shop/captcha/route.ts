@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isModuleEnabled } from "@/lib/modules-db";
 import {
   createCaptchaChallenge,
   verifyCaptchaPlacement,
@@ -6,6 +7,9 @@ import {
 import { isShopOpen } from "@/lib/shop";
 
 export async function GET() {
+  if (!(await isModuleEnabled("shop"))) {
+    return NextResponse.json({ error: "Nicht gefunden." }, { status: 404 });
+  }
   if (!isShopOpen()) {
     return NextResponse.json({ error: "Der Shop ist derzeit geschlossen." }, { status: 403 });
   }
@@ -20,6 +24,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (!(await isModuleEnabled("shop"))) {
+    return NextResponse.json({ error: "Nicht gefunden." }, { status: 404 });
+  }
   if (!isShopOpen()) {
     return NextResponse.json({ error: "Der Shop ist derzeit geschlossen." }, { status: 403 });
   }

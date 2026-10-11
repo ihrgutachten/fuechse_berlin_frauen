@@ -1,6 +1,7 @@
 import { Bebas_Neue, Oswald } from "next/font/google";
 import { JerseyConfigurator } from "@/components/shop/jersey-configurator";
 import { PageHero } from "@/components/ui/page-hero";
+import { isModuleEnabled } from "@/lib/modules-db";
 import { getShopConfig, getShopProduct, isShopOpen } from "@/lib/shop";
 import { notFound } from "next/navigation";
 
@@ -24,7 +25,8 @@ export const metadata = {
     "Heimtrikot der Füchse Berlin Frauen mit Wunschname und Nummer konfigurieren und per E-Mail bestellen.",
 };
 
-export default function HeimtrikotConfiguratorPage() {
+export default async function HeimtrikotConfiguratorPage() {
+  if (!(await isModuleEnabled("shop"))) notFound();
   if (!isShopOpen()) {
     notFound();
   }
