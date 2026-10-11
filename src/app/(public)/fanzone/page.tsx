@@ -15,8 +15,12 @@ export default function FanzonePage() {
         <PlaceholderNote>Mechaniken folgen in Phase 3. Jetzt: Einstiegsstruktur.</PlaceholderNote>
         <div className="grid gap-4 md:grid-cols-2">
           {[
-            { title: "Fan werden", text: "Mitgliedschaft & Vorteile" },
-            { title: "Einlaufkind", text: "Mit den Füchsen einlaufen" },
+            { title: "Fan werden", text: "Mitgliedschaft & Vorteile", note: null },
+            {
+              title: "Einlaufkind",
+              text: "Mit den Füchsen einlaufen",
+              note: "Aktuell keine freien Termine",
+            },
           ].map((item) => (
             <div
               key={item.title}
@@ -27,7 +31,11 @@ export default function FanzonePage() {
               </h2>
               <p className="mt-2 text-sm text-[var(--fb-text-muted)]">{item.text}</p>
               <div className="mt-4">
-                <Button variant="outline">Mehr erfahren</Button>
+                {item.note ? (
+                  <p className="text-lg font-bold leading-snug">{item.note}</p>
+                ) : (
+                  <Button variant="outline">Mehr erfahren</Button>
+                )}
               </div>
             </div>
           ))}

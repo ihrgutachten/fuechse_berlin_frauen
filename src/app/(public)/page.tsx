@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { HeroMedia } from "@/components/home/hero-media";
 import { MatchCard } from "@/components/match/match-card";
 import { StandingsPreview } from "@/components/match/standings-preview";
 import { NewsCard } from "@/components/news/news-card";
@@ -29,27 +29,7 @@ export default async function HomePage() {
     <>
       <FanProjectOverlay />
       <section className="relative isolate min-h-[88vh] overflow-hidden bg-[var(--fb-green-950)] text-white">
-        <video
-          className="absolute inset-0 h-full w-full object-cover object-[center_35%] motion-reduce:hidden"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/hero/hero-poster.webp"
-          preload="metadata"
-          aria-hidden
-        >
-          <source src="/hero/hero-video.webm" type="video/webm" />
-          <source src="/hero/hero-video.mp4" type="video/mp4" />
-        </video>
-        <Image
-          src="/hero/hero-poster.webp"
-          alt="Füchse Berlin Frauen"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_35%] motion-safe:hidden"
-        />
+        <HeroMedia />
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--fb-green-950)] via-[var(--fb-green-950)]/55 to-black/25"
           aria-hidden

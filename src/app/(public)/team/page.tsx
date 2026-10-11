@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { TeamClient } from "@/components/players/team-client";
 import { TopPlayers } from "@/components/players/top-players";
@@ -19,6 +20,15 @@ export default async function TeamPage() {
         description="Spielerinnen, Trainerstab und Staff der Füchse Berlin Frauen."
       />
       <div className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-10 md:py-14">
+        <Image
+          src="/hero/team-hero.webp"
+          alt="Mannschaftsfoto der Füchse Berlin Frauen"
+          width={1024}
+          height={576}
+          priority
+          sizes="(min-width: 1200px) 1120px, 100vw"
+          className="mb-8 h-auto w-full rounded-[var(--fb-radius-lg)]"
+        />
         <p className="mb-8 text-[var(--fb-text-muted)]">
           <Link
             href="/mannschaften"
