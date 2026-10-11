@@ -291,6 +291,30 @@ function currentStatus(overlay: HbfOverlayMatch): HbfOverlayMatch["status"] {
   return "scheduled";
 }
 
+/** Portal-Startseite oder die Vereinsübersicht, kein Spiel-Stream. */
+function isPortalStream(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    const path = parsed.pathname.replace(/\/+$/, "");
+    if (path === "") return true;
+    return host === "sporteurope.tv" && path === "/fuechse-berlin-frauen";
+  } catch {
+    return true;
+  }
+}
+
+/** Konkreter Spiel-Link gewinnt. Eine Portal-Adresse überschreibt ihn nicht. */
+function pickStream(
+  live: string | null | undefined,
+  stored: string | null | undefined,
+): string | null | undefined {
+  if (stored === null) return null;
+  const liveOk = live && !isPortalStream(live) ? live : null;
+  const storedOk = stored && !isPortalStream(stored) ? stored : null;
+  return liveOk ?? storedOk;
+}
+
 function overlayRecord(record: MatchRecord, overlay: HbfOverlayMatch): MatchRecord {
   return {
     ...record,
@@ -304,7 +328,7 @@ function overlayRecord(record: MatchRecord, overlay: HbfOverlayMatch): MatchReco
     venue: overlay.venue ?? record.venue,
     city: overlay.city ?? record.city,
     venueAddress: overlay.venueAddress ?? record.venueAddress,
-    streamUrl: overlay.livestreamlink ?? record.streamUrl,
+    streamUrl: pickStream(overlay.livestreamlink, record.streamUrl),
     ticketUrl: overlay.ticketShop ?? record.ticketUrl,
     matchday: overlay.matchday ?? record.matchday,
     round: overlay.round ?? record.round,
@@ -335,7 +359,7 @@ function recordFromOverlay(overlay: HbfOverlayMatch): MatchRecord {
     venue: overlay.venue ?? undefined,
     city: overlay.city ?? undefined,
     venueAddress: overlay.venueAddress ?? undefined,
-    streamUrl: overlay.livestreamlink,
+    streamUrl: pickStream(overlay.livestreamlink, undefined),
     ticketUrl: overlay.ticketShop,
     fmpMatchId: overlay.fmpMatchId,
   };
@@ -374,12 +398,7 @@ function hydrateMatch(record: MatchRecord): Match {
   const isHome = home.isUs;
   const host = home;
   const streamUrl =
-    record.streamUrl === null
-      ? null
-      : (record.streamUrl ??
-        (record.competitionKind === "turnier"
-          ? null
-          : "https://www.sportdeutschland.tv"));
+    record.streamUrl && !isPortalStream(record.streamUrl) ? record.streamUrl : null;
 
   const venue = record.venue ?? host.venue ?? `Spielstätte ${host.city}`;
   const city = record.city ?? host.city;
@@ -407,7 +426,9 @@ function hydrateMatch(record: MatchRecord): Match {
     ticketUrl:
       record.ticketUrl === null
         ? null
-        : (record.ticketUrl ?? (isHome ? TICKET_SHOP_URL : null)),
+        : isHome
+          ? TICKET_SHOP_URL
+          : (record.ticketUrl ?? null),
     homeScore: record.homeScore,
     awayScore: record.awayScore,
     homeHalftime: record.homeHalftime,

@@ -56,12 +56,16 @@ export default async function HomePage() {
         />
 
         <div className="relative mx-auto flex min-h-[88vh] max-w-[var(--fb-container)] flex-col justify-end px-[var(--fb-gutter)] pb-14 pt-24 md:pb-20">
-          <p className="animate-fade-up text-[var(--fb-fs-label)] font-semibold uppercase tracking-[0.22em] text-[var(--fb-green-300)]">
+          <p className="animate-fade-up text-[var(--fb-fs-label)] font-semibold uppercase tracking-[0.22em] text-[#204d13]">
             2. Handball-Bundesliga · Berlin
           </p>
           <h1 className="animate-fade-up-delay mt-4 max-w-4xl font-[family-name:var(--fb-font-display)] text-[length:var(--fb-fs-hero)] font-extrabold uppercase leading-[0.9] tracking-tight drop-shadow-sm">
-            Füchse Berlin
-            <span className="block text-[var(--fb-green-300)]">Frauen</span>
+            <span className="[-webkit-text-stroke:2px_#204d13] [paint-order:stroke_fill]">
+              Füchse Berlin
+            </span>
+            <span className="block text-[#204d13] [-webkit-text-stroke:2px_var(--fb-green-300)] [paint-order:stroke_fill]">
+              Frauen
+            </span>
           </h1>
           <p className="animate-fade-up-delay-2 mt-5 max-w-xl text-lg text-white/85">
             Handball aus dem Revier. Tempo, Härte, Berliner Attitude — jetzt unter einem Namen mit den Herren.

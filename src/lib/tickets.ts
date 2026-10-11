@@ -1,5 +1,8 @@
-/** Official club ticket shop (leoticket white-label). */
-export const TICKET_SHOP_URL = "https://fuechseberlinfrauen.de/tickets/";
+/** Heimspiel-Tickets liegen auf unserer Seite, die Liste kommt von LeoTicket. */
+export const TICKET_SHOP_URL = "/tickets";
+
+export const LEOTICKET_SCRIPT_SRC =
+  "https://backend.leoticket.de/merchant-websites-provider/fbf/assets/index.js";
 
 export type TicketPriceRow = {
   label: string;

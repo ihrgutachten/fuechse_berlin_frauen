@@ -1,8 +1,9 @@
 import { MatchCard } from "@/components/match/match-card";
+import { LeoticketEvents } from "@/components/tickets/leoticket-events";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { getLiveMatches, getNextHomeMatch } from "@/lib/data";
-import { TICKET_SHOP_URL, ticketPriceGroups } from "@/lib/tickets";
+import { ticketPriceGroups } from "@/lib/tickets";
 
 export const metadata = {
   title: "Tickets",
@@ -24,23 +25,7 @@ export default async function TicketsPage() {
       />
 
       <div className="mx-auto max-w-[var(--fb-container)] space-y-12 px-[var(--fb-gutter)] py-10 md:py-14">
-        <section className="rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-[var(--fb-green-950)] px-6 py-8 text-white md:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--fb-green-300)]">
-            Ticketshop
-          </p>
-          <h2 className="mt-3 font-[family-name:var(--fb-font-display)] text-3xl font-extrabold uppercase md:text-4xl">
-            Karten online kaufen
-          </h2>
-          <p className="mt-3 max-w-2xl text-white/75">
-            Der Vorverkauf läuft über leoticket auf der Vereinsseite. Digitalticket aufs Handy oder
-            ausdrucken. Abendkasse in der Halle bleibt zusätzlich offen.
-          </p>
-          <div className="mt-6">
-            <Button href={TICKET_SHOP_URL} variant="on-dark">
-              Zum Ticketshop
-            </Button>
-          </div>
-        </section>
+        <LeoticketEvents />
 
         {nextHome ? (
           <section>

@@ -85,7 +85,11 @@ function matchDescription(match: Match, origin?: string): string {
   if (upcoming && hasSpecificStream(match.streamUrl)) {
     lines.push(`Stream: ${match.streamUrl}`);
   }
-  if (upcoming && match.ticketUrl) lines.push(`Tickets: ${match.ticketUrl}`);
+  if (upcoming && match.ticketUrl) {
+    const tickets =
+      match.ticketUrl.startsWith("/") && origin ? `${origin}${match.ticketUrl}` : match.ticketUrl;
+    lines.push(`Tickets: ${tickets}`);
+  }
   if (origin) lines.push(`Spielseite: ${origin}/spielplan/${match.id}`);
   return lines.join("\n");
 }

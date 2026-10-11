@@ -46,7 +46,8 @@
     "awayHalftime": 14,
     "attendance": 139,
     "status": "finished",
-    "fmpMatchId": "90062"
+    "fmpMatchId": "90062",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-vs-sv-werder-bremen"
   },
   {
     "id": "pokal-r2-roedertal",
@@ -58,7 +59,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-10-03T18:30:00+02:00",
     "status": "scheduled",
-    "fmpMatchId": "90101"
+    "fmpMatchId": "90101",
+    "streamUrl": "https://sporteurope.tv/hc-roedertal-frauen/hc-roedertal-vs-fuechse-berlin"
   },
   {
     "id": "md01",
@@ -74,7 +76,8 @@
     "awayHalftime": 16,
     "attendance": 400,
     "status": "finished",
-    "fmpMatchId": "89825"
+    "fmpMatchId": "89825",
+    "streamUrl": "https://sporteurope.tv/hl-buchholz-08-rosengarten-frauen/hl-buchholz-08-rosengarten-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md02",
@@ -90,7 +93,8 @@
     "awayHalftime": 12,
     "attendance": 417,
     "status": "finished",
-    "fmpMatchId": "89832"
+    "fmpMatchId": "89832",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-bergischer-hc-frauen"
   },
   {
     "id": "md03",
@@ -106,7 +110,8 @@
     "awayHalftime": 14,
     "attendance": 219,
     "status": "finished",
-    "fmpMatchId": "89840"
+    "fmpMatchId": "89840",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-rostocker-handball-club-frauen"
   },
   {
     "id": "md04",
@@ -117,7 +122,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-09-19T18:00:00+02:00",
     "status": "scheduled",
-    "fmpMatchId": "89846"
+    "fmpMatchId": "89846",
+    "streamUrl": "https://sporteurope.tv/vfl-waiblingen-frauen/vfl-waiblingen-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md05",
@@ -128,7 +134,8 @@
     "awaySlug": "sg-nuertingen-zizishausen",
     "startsAt": "2026-10-10T19:00:00+02:00",
     "status": "scheduled",
-    "fmpMatchId": "89856"
+    "fmpMatchId": "89856",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-sg-nuertingen-zizishausen-frauen"
   },
   {
     "id": "md06",
@@ -139,7 +146,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-10-17T18:00:00+02:00",
     "status": "scheduled",
-    "fmpMatchId": "89860"
+    "fmpMatchId": "89860",
+    "streamUrl": "https://sporteurope.tv/tsvbayer04leverkusen-frauen/tsv-bayer-04-leverkusen-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md07",
@@ -150,7 +158,8 @@
     "awaySlug": "mainz-05",
     "startsAt": "2026-10-31T19:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89872"
+    "fmpMatchId": "89872",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-1-fsv-mainz-05-frauen"
   },
   {
     "id": "md08",
@@ -161,7 +170,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-11-07T18:30:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89874"
+    "fmpMatchId": "89874",
+    "streamUrl": "https://sporteurope.tv/hsv-solingen-graefrath-76-frauen/hsv-solingen-graefrath-76-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md09",
@@ -172,7 +182,8 @@
     "awaySlug": "esv-regensburg",
     "startsAt": "2026-11-14T19:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89888"
+    "fmpMatchId": "89888",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-esv-1927-regensburg-frauen"
   },
   {
     "id": "md10",
@@ -183,7 +194,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-11-21T19:30:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89896"
+    "fmpMatchId": "89896",
+    "streamUrl": "https://sporteurope.tv/tus-lintfort-frauen/tus-lintfort-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md11",
@@ -194,7 +206,8 @@
     "awaySlug": "werder-bremen",
     "startsAt": "2026-12-19T19:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89904"
+    "fmpMatchId": "89904",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-sv-werder-bremen-frauen"
   },
   {
     "id": "md12",
@@ -205,7 +218,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2026-12-30T18:30:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89910"
+    "fmpMatchId": "89910",
+    "streamUrl": "https://sporteurope.tv/hc-roedertal-frauen/hc-roedertal-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md13",
@@ -216,7 +230,8 @@
     "awaySlug": "sg-kirchhof",
     "startsAt": "2027-01-02T19:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89920"
+    "fmpMatchId": "89920",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-sg-09-kirchhof-frauen"
   },
   {
     "id": "md14",
@@ -227,7 +242,8 @@
     "awaySlug": "fuechse-berlin",
     "startsAt": "2027-01-09T20:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89924"
+    "fmpMatchId": "89924",
+    "streamUrl": "https://sporteurope.tv/sv-todesfelde-frauen/sv-todesfelde-von-1928-e-v-frauen-vs-fuechse-berlin-frauen"
   },
   {
     "id": "md15",
@@ -238,7 +254,8 @@
     "awaySlug": "hsg-freiburg",
     "startsAt": "2027-01-23T19:00:00+01:00",
     "status": "scheduled",
-    "fmpMatchId": "89936"
+    "fmpMatchId": "89936",
+    "streamUrl": "https://sporteurope.tv/fuechse-berlin-frauen/fuechse-berlin-frauen-vs-hsg-freiburg-frauen"
   },
   {
     "id": "md16",
