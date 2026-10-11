@@ -9,15 +9,14 @@ export default function FanzonePage() {
       <PageHero
         eyebrow="Community"
         title="Fanzone"
-        description="Fan-Mitgliedschaft, Kids Club, Einlaufkind — leichte Adaption des Herren-Vorbilds."
+        description="Fan-Mitgliedschaft und Einlaufkind. Leichte Adaption des Herren-Vorbilds."
       />
       <div className="mx-auto max-w-[var(--fb-container)] space-y-6 px-[var(--fb-gutter)] py-10 md:py-14">
         <PlaceholderNote>Mechaniken folgen in Phase 3. Jetzt: Einstiegsstruktur.</PlaceholderNote>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {[
             { title: "Fan werden", text: "Mitgliedschaft & Vorteile" },
             { title: "Einlaufkind", text: "Mit den Füchsen einlaufen" },
-            { title: "Kids Club", text: "Angebote für Nachwuchs-Fans" },
           ].map((item) => (
             <div
               key={item.title}

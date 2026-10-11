@@ -19,7 +19,6 @@ export type ModuleKey =
   | "shop"
   | "tippspiel"
   | "aufstiegsrechner"
-  | "kidsclub"
   | "einlaufkind"
   | "fanwerden";
 
@@ -101,16 +100,6 @@ export const MODULES: ModuleDef[] = [
     toggleable: true,
     defaultOn: true,
     surface: "tools-teaser",
-  },
-  {
-    key: "kidsclub",
-    label: "Kids Club",
-    description: "Bereich für junge Fans. In Vorbereitung.",
-    href: "/kids-club",
-    status: "geplant",
-    toggleable: false,
-    defaultOn: false,
-    surface: "none",
   },
   {
     key: "einlaufkind",
