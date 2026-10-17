@@ -231,15 +231,13 @@ export default async function TippspielPage() {
                 ? showPoints
                   ? "Punkte nach dem offiziellen Endstand."
                   : "Tipps sind sichtbar, Punkte kommen nach dem offiziellen Endstand."
-                : "Die Tipps der Mitspieler bleiben bis zum Anpfiff verborgen."}
+                : "Die einzelnen Stände bleiben bis zum Anpfiff verborgen."}
             </p>
-            {showScores ? (
-              <MatchLeaderboard
-                rows={matchBoard}
-                showScores={showScores}
-                showPoints={showPoints}
-              />
-            ) : null}
+            <MatchLeaderboard
+              rows={matchBoard}
+              showScores={showScores}
+              showPoints={showPoints}
+            />
           </section>
         ) : null}
 
