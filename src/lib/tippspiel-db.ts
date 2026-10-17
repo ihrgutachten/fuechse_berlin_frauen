@@ -2,6 +2,7 @@ import { getLiveMatchById, getLiveMatches } from "@/lib/data";
 import { getSql } from "@/lib/db";
 import {
   getFinishedTipMatches,
+  getTipPhase,
   getTippspielMatches,
   nicknameKey,
   normalizeEmail,
@@ -52,14 +53,14 @@ export type MatchTipper = {
   userId: string;
   nickname: string;
   email: string | null;
-  homeScore: number;
-  awayScore: number;
+  homeScore: number | null;
+  awayScore: number | null;
 };
 
 export type CommunityTip = {
   count: number;
-  homeScore: number;
-  awayScore: number;
+  homeScore: number | null;
+  awayScore: number | null;
 };
 
 let schemaReady: Promise<void> | null = null;
@@ -400,6 +401,14 @@ export async function countPredictions(matchId: string): Promise<number> {
   return rows[0]?.count ?? 0;
 }
 
+async function tipsArePublic(matchId: string): Promise<boolean> {
+  const jsonMatch = await getLiveMatchById(matchId);
+  if (!jsonMatch) return false;
+  const stored = await getStoredMatchResults();
+  const match = overlayTipMatches([jsonMatch], stored)[0];
+  return getTipPhase(match) !== "open";
+}
+
 export async function getCommunityTip(matchId: string): Promise<CommunityTip | null> {
   const sql = getSql();
   if (!sql) return null;
@@ -413,7 +422,11 @@ export async function getCommunityTip(matchId: string): Promise<CommunityTip | n
     WHERE match_id = ${matchId}
   `) as Array<{ count: number; home_score: number | null; away_score: number | null }>;
   const row = rows[0];
-  if (!row || row.count < 1 || row.home_score == null || row.away_score == null) return null;
+  if (!row || row.count < 1) return null;
+  const reveal = await tipsArePublic(matchId);
+  if (!reveal || row.home_score == null || row.away_score == null) {
+    return { count: row.count, homeScore: null, awayScore: null };
+  }
   return { count: row.count, homeScore: row.home_score, awayScore: row.away_score };
 }
 
@@ -448,12 +461,13 @@ export async function getMatchTippers(matchId: string): Promise<MatchTipper[]> {
     nickname: string;
     email: string | null;
   }>;
+  const reveal = await tipsArePublic(matchId);
   return rows.map((row) => ({
     userId: row.user_id,
     nickname: row.nickname,
     email: row.email,
-    homeScore: row.home_score,
-    awayScore: row.away_score,
+    homeScore: reveal ? row.home_score : null,
+    awayScore: reveal ? row.away_score : null,
   }));
 }
 
@@ -470,6 +484,7 @@ export async function getMatchLeaderboard(
   const match = jsonMatch
     ? overlayTipMatches([jsonMatch], stored)[0]
     : undefined;
+  const reveal = Boolean(match && getTipPhase(match) !== "open");
   const rows = (await sql`
     SELECT
       p.user_id,
@@ -501,15 +516,15 @@ export async function getMatchLeaderboard(
 
   const scored = rows.map((row) => {
     const result =
-      match && match.homeScore != null && match.awayScore != null
+      reveal && match && match.homeScore != null && match.awayScore != null
         ? predictionPoints(row.home_score, row.away_score, match.homeScore, match.awayScore)
         : { points: 0, exact: false };
     return {
       userId: row.user_id,
       nickname: row.nickname,
       email: row.email,
-      homeScore: row.home_score,
-      awayScore: row.away_score,
+      homeScore: reveal ? row.home_score : null,
+      awayScore: reveal ? row.away_score : null,
       points: result.points,
       exact: result.exact,
       updatedAt: +new Date(row.updated_at),

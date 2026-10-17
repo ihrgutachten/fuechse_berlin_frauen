@@ -78,7 +78,7 @@ export default async function TippspielPage() {
   const phase = featured ? getTipPhase(featured) : "open";
   const showScores = phase !== "open";
   const showPoints = phase === "scored";
-  const showCommunity = Boolean(community && (myTip || showScores));
+  const showCommunity = Boolean(community && showScores);
   const myScore =
     featured && myTip && featured.homeScore != null && featured.awayScore != null
       ? predictionPoints(myTip.homeScore, myTip.awayScore, featured.homeScore, featured.awayScore)
@@ -132,7 +132,7 @@ export default async function TippspielPage() {
               <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-bold uppercase">
                 {phase === "open" ? "Tipp abgeben" : "Dein Tipp"}
               </h2>
-              {showCommunity && community ? (
+              {showCommunity && community?.homeScore != null && community.awayScore != null ? (
                 <p className="text-sm text-[var(--fb-text-muted)]">
                   Community-Tipp:{" "}
                   <strong className="text-[var(--fb-ink)]">
@@ -209,9 +209,11 @@ export default async function TippspielPage() {
               Tipper
             </h2>
             <p className="mt-1 mb-4 text-sm text-[var(--fb-text-muted)]">
-              Anzeigename, E-Mail und Tipp für dieses Spiel.
+              {showScores
+                ? "Anzeigename, E-Mail und Tipp für dieses Spiel."
+                : "Anzeigename und E-Mail. Die Tipps bleiben bis zum Anpfiff verborgen."}
             </p>
-            <TipperList rows={tippers} />
+            <TipperList rows={tippers} showScores={showScores} />
           </section>
         ) : null}
 

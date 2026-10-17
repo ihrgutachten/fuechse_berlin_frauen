@@ -1,6 +1,12 @@
 import type { MatchTipper } from "@/lib/tippspiel-db";
 
-export function TipperList({ rows }: { rows: MatchTipper[] }) {
+export function TipperList({
+  rows,
+  showScores,
+}: {
+  rows: MatchTipper[];
+  showScores: boolean;
+}) {
   if (!rows.length) {
     return <p className="text-sm text-[var(--fb-text-muted)]">Noch keine Tipps.</p>;
   }
@@ -18,9 +24,11 @@ export function TipperList({ rows }: { rows: MatchTipper[] }) {
           <span className="min-w-0 flex-1 truncate text-[var(--fb-text-muted)]">
             {row.email ?? "keine E-Mail"}
           </span>
-          <span className="font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-ink)]">
-            {row.homeScore}:{row.awayScore}
-          </span>
+          {showScores && row.homeScore != null && row.awayScore != null ? (
+            <span className="font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-ink)]">
+              {row.homeScore}:{row.awayScore}
+            </span>
+          ) : null}
         </li>
       ))}
     </ul>
