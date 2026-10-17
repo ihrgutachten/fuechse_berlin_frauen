@@ -49,14 +49,6 @@ export type SeasonRow = {
   isYou: boolean;
 };
 
-export type MatchTipper = {
-  userId: string;
-  nickname: string;
-  email: string | null;
-  homeScore: number | null;
-  awayScore: number | null;
-};
-
 export type CommunityTip = {
   count: number;
   homeScore: number | null;
@@ -430,51 +422,9 @@ export async function getCommunityTip(matchId: string): Promise<CommunityTip | n
   return { count: row.count, homeScore: row.home_score, awayScore: row.away_score };
 }
 
-export async function getMatchTippers(matchId: string): Promise<MatchTipper[]> {
-  const sql = getSql();
-  if (!sql) return [];
-  await ensureSchema();
-  const rows = (await sql`
-    SELECT
-      p.user_id,
-      p.home_score,
-      p.away_score,
-      pr.nickname,
-      COALESCE(
-        pr.email,
-        (
-          SELECT e.email
-          FROM tippspiel_profile_emails e
-          WHERE e.user_id = pr.user_id
-          ORDER BY e.email
-          LIMIT 1
-        )
-      ) AS email
-    FROM tippspiel_predictions p
-    JOIN tippspiel_profiles pr ON pr.user_id = p.user_id
-    WHERE p.match_id = ${matchId}
-    ORDER BY p.updated_at DESC
-  `) as Array<{
-    user_id: string;
-    home_score: number;
-    away_score: number;
-    nickname: string;
-    email: string | null;
-  }>;
-  const reveal = await tipsArePublic(matchId);
-  return rows.map((row) => ({
-    userId: row.user_id,
-    nickname: row.nickname,
-    email: row.email,
-    homeScore: reveal ? row.home_score : null,
-    awayScore: reveal ? row.away_score : null,
-  }));
-}
-
 export async function getMatchLeaderboard(
   matchId: string,
   viewerId?: string,
-  includeEmail = false,
 ): Promise<LeaderboardRow[]> {
   const sql = getSql();
   if (!sql) return [];
@@ -541,7 +491,7 @@ export async function getMatchLeaderboard(
     rank: index + 1,
     userId: row.userId,
     nickname: row.nickname,
-    email: includeEmail ? row.email : null,
+    email: null,
     homeScore: row.homeScore,
     awayScore: row.awayScore,
     points: row.points,
@@ -550,10 +500,7 @@ export async function getMatchLeaderboard(
   }));
 }
 
-export async function getSeasonLeaderboard(
-  viewerId?: string,
-  includeEmail = false,
-): Promise<SeasonRow[]> {
+export async function getSeasonLeaderboard(viewerId?: string): Promise<SeasonRow[]> {
   const sql = getSql();
   if (!sql) return [];
   await ensureSchema();
@@ -632,7 +579,7 @@ export async function getSeasonLeaderboard(
     rank: index + 1,
     userId: row.userId,
     nickname: row.nickname,
-    email: includeEmail ? row.email : null,
+    email: null,
     points: row.points,
     exact: row.exact,
     tipped: row.tipped,

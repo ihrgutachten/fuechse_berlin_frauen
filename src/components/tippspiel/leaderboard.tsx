@@ -1,28 +1,13 @@
 import { cn } from "@/lib/format";
 import type { LeaderboardRow, SeasonRow } from "@/lib/tippspiel-db";
 
-function NameWithEmail({
-  nickname,
-  email,
-  isYou,
-  showEmail,
-}: {
-  nickname: string;
-  email: string | null;
-  isYou: boolean;
-  showEmail: boolean;
-}) {
+function Name({ nickname, isYou }: { nickname: string; isYou: boolean }) {
   return (
     <span className="min-w-0 flex-1">
       <span className="font-semibold text-[var(--fb-ink)]">{nickname}</span>
       {isYou ? (
         <span className="ml-2 text-xs font-bold uppercase tracking-wider text-[var(--fb-accent)]">
           Du
-        </span>
-      ) : null}
-      {showEmail && email ? (
-        <span className="mt-0.5 block truncate text-xs font-normal text-[var(--fb-text-muted)]">
-          {email}
         </span>
       ) : null}
     </span>
@@ -33,12 +18,10 @@ export function MatchLeaderboard({
   rows,
   showScores,
   showPoints,
-  showEmail = false,
 }: {
   rows: LeaderboardRow[];
   showScores: boolean;
   showPoints: boolean;
-  showEmail?: boolean;
 }) {
   if (!rows.length) {
     return (
@@ -61,12 +44,7 @@ export function MatchLeaderboard({
           <span className="w-7 font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-text-faint)]">
             {row.rank}.
           </span>
-          <NameWithEmail
-            nickname={row.nickname}
-            email={row.email}
-            isYou={row.isYou}
-            showEmail={showEmail}
-          />
+          <Name nickname={row.nickname} isYou={row.isYou} />
           {showScores && row.homeScore != null && row.awayScore != null ? (
             <span className="tabular-nums text-[var(--fb-text-muted)]">
               {row.homeScore}:{row.awayScore}
@@ -83,13 +61,7 @@ export function MatchLeaderboard({
   );
 }
 
-export function SeasonLeaderboard({
-  rows,
-  showEmail = false,
-}: {
-  rows: SeasonRow[];
-  showEmail?: boolean;
-}) {
+export function SeasonLeaderboard({ rows }: { rows: SeasonRow[] }) {
   if (!rows.length) {
     return (
       <p className="text-sm text-[var(--fb-text-muted)]">
@@ -111,12 +83,7 @@ export function SeasonLeaderboard({
           <span className="w-7 font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-text-faint)]">
             {row.rank}.
           </span>
-          <NameWithEmail
-            nickname={row.nickname}
-            email={row.email}
-            isYou={row.isYou}
-            showEmail={showEmail}
-          />
+          <Name nickname={row.nickname} isYou={row.isYou} />
           <span className="shrink-0 text-xs text-[var(--fb-text-faint)]">
             {row.exact} exakt · {row.tipped} Tipps
           </span>
