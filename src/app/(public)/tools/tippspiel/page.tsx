@@ -224,7 +224,7 @@ export default async function TippspielPage() {
         {featured ? (
           <section className={`${tipCardClass} p-5 md:p-6`}>
             <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
-              {showPoints ? "Spieltag" : "Rangliste"}
+              {phase === "open" ? "Mitspieler" : showPoints ? "Spieltag" : "Tipps"}
             </h2>
             <p className="mt-1 mb-4 text-sm text-[var(--fb-text-muted)]">
               {showScores

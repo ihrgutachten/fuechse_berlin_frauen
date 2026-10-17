@@ -41,9 +41,11 @@ export function MatchLeaderboard({
             row.isYou && "rounded-[var(--fb-radius)] bg-[var(--fb-green-100)] px-2",
           )}
         >
-          <span className="w-7 font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-text-faint)]">
-            {row.rank}.
-          </span>
+          {showPoints ? (
+            <span className="w-7 font-[family-name:var(--fb-font-display)] font-bold tabular-nums text-[var(--fb-text-faint)]">
+              {row.rank}.
+            </span>
+          ) : null}
           <Name nickname={row.nickname} isYou={row.isYou} />
           {showScores && row.homeScore != null && row.awayScore != null ? (
             <span className="tabular-nums text-[var(--fb-text-muted)]">
