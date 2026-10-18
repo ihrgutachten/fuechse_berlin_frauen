@@ -6,14 +6,14 @@ export const metadata = { title: "News" };
 export const revalidate = 60;
 
 export default async function NewsPage() {
-  const news = (await getMergedNews()).slice(0, 12);
+  const news = await getMergedNews();
 
   return (
     <>
       <PageHero
         eyebrow="Aktuelles"
         title="News"
-        description="Die jüngsten Spielberichte und Vorschauen."
+        description="Spielberichte, Vorschauen und weitere Meldungen."
       />
       <div className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-10 md:py-14">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

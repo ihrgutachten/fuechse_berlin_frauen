@@ -1,15 +1,17 @@
 import { getSql } from "@/lib/db";
 
-export type NewsCategory = "spielbericht" | "vorbericht" | "verletzung";
+export type NewsCategory = "news" | "spielbericht" | "vorbericht" | "verletzung";
 export type NewsStatus = "entwurf" | "veroeffentlicht";
 
 export const NEWS_CATEGORIES: { id: NewsCategory; label: string }[] = [
+  { id: "news", label: "News" },
   { id: "spielbericht", label: "Spielbericht" },
   { id: "vorbericht", label: "Vorbericht" },
   { id: "verletzung", label: "Verletzung" },
 ];
 
 export const CATEGORY_LABEL: Record<NewsCategory, string> = {
+  news: "News",
   spielbericht: "Spielbericht",
   vorbericht: "Vorbericht",
   verletzung: "Verletzung",
@@ -48,7 +50,7 @@ type NewsRow = {
 };
 
 function isCategory(value: string): value is NewsCategory {
-  return value === "spielbericht" || value === "vorbericht" || value === "verletzung";
+  return value === "news" || value === "spielbericht" || value === "vorbericht" || value === "verletzung";
 }
 
 function toIso(value: string | null): string | null {

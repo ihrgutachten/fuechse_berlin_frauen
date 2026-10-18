@@ -1,4 +1,5 @@
 import { getNews, getNewsBySlug, type NewsItem } from "@/lib/data";
+import archiv from "@/data/news-archiv.json";
 import {
   listPublishedNews,
   getPublishedNewsBySlug,
@@ -40,8 +41,34 @@ function fromStatic(n: NewsItem): PublicNews {
     coverLabel: n.coverLabel,
     cover: n.cover,
     coverCredit: n.coverCredit,
-    // Statische Absätze als simple Absatz-Tags rendern.
     bodyHtml: n.body.map((p) => `<p>${escapeHtml(p)}</p>`).join(""),
+    source: "static",
+  };
+}
+
+type ArchiveNews = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  publishedAt: string;
+  category: string;
+  coverLabel: string;
+  cover?: string;
+  coverCredit?: string;
+  bodyHtml: string;
+};
+
+function fromArchive(n: ArchiveNews): PublicNews {
+  return {
+    slug: n.slug,
+    title: n.title,
+    excerpt: n.excerpt,
+    publishedAt: n.publishedAt,
+    category: "News",
+    coverLabel: "News",
+    cover: n.cover,
+    coverCredit: n.coverCredit,
+    bodyHtml: n.bodyHtml,
     source: "static",
   };
 }
@@ -64,13 +91,18 @@ function fromDb(n: NewsRecord): PublicNews {
 
 export async function getMergedNews(): Promise<PublicNews[]> {
   const db = await listPublishedNews();
-  const all = [...getNews().map(fromStatic), ...db.map(fromDb)];
-  return all.sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
+  const bySlug = new Map<string, PublicNews>();
+  for (const item of (archiv as ArchiveNews[]).map(fromArchive)) bySlug.set(item.slug, item);
+  for (const item of getNews().map(fromStatic)) bySlug.set(item.slug, item);
+  for (const item of db.map(fromDb)) bySlug.set(item.slug, item);
+  return [...bySlug.values()].sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
 }
 
 export async function getMergedNewsBySlug(slug: string): Promise<PublicNews | null> {
   const db = await getPublishedNewsBySlug(slug);
   if (db) return fromDb(db);
   const stat = getNewsBySlug(slug);
-  return stat ? fromStatic(stat) : null;
+  if (stat) return fromStatic(stat);
+  const archived = (archiv as ArchiveNews[]).find((item) => item.slug === slug);
+  return archived ? fromArchive(archived) : null;
 }
