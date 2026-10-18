@@ -9,5 +9,5 @@ export default async function AdminLayout({
   const session = await getSession();
   if (!session?.user) redirect("/login");
   if (!session.user.admin) redirect("/tools/tippspiel");
-  return children;
+  return <div className="min-h-screen bg-[var(--fb-soft)] text-[var(--fb-ink)]">{children}</div>;
 }

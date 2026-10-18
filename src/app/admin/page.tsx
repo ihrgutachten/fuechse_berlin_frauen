@@ -17,83 +17,82 @@ export default async function AdminPage() {
     await signOut({ redirectTo: "/login" });
   }
 
+  const actionClass =
+    "mt-5 inline-flex rounded-[var(--fb-radius)] bg-[var(--fb-green-700)] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[var(--fb-green-800)]";
+
   return (
-    <div className="mx-auto max-w-[var(--fb-container)] px-[var(--fb-gutter)] py-12">
-      <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-muted)]">
-        Backend
-      </p>
-      <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-3xl font-bold uppercase tracking-tight">
-        Admin
-      </h1>
-      <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-        Angemeldet als <strong>{session?.user?.email}</strong>
-      </p>
-
-      <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
-        <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
-          Module
-        </h2>
-        <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-          Funktionsbereiche der Seite an- und abschalten, etwa den Aufstiegs-Rechner.
-          Abgeschaltete Module verschwinden aus der Navigation.
-        </p>
-        <Link
-          href="/admin/modules"
-          className="mt-4 inline-flex text-sm font-semibold text-[var(--fb-accent)] hover:underline"
-        >
-          Module verwalten
-        </Link>
-      </section>
-
-      <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
-        <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
-          News
-        </h2>
-        <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-          Spielberichte, Vorberichte und Meldungen pflegen. Mit Titelbild und Text.
-        </p>
-        <Link
-          href="/admin/news"
-          className="mt-4 inline-flex text-sm font-semibold text-[var(--fb-accent)] hover:underline"
-        >
-          News verwalten
-        </Link>
-      </section>
-
-      <section className="mt-8 rounded-[var(--fb-radius-lg)] border border-[var(--fb-border)] bg-white p-6">
-        <h2 className="font-[family-name:var(--fb-font-display)] text-xl font-bold uppercase">
-          Tippspiel
-        </h2>
-        {stats ? (
-          <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-            {stats.profiles} {stats.profiles === 1 ? "Konto" : "Konten"} · {stats.predictions}{" "}
-            {stats.predictions === 1 ? "Tipp" : "Tipps"}
+    <div>
+      <header className="bg-[var(--fb-green-950)] px-[var(--fb-gutter)] py-10 text-white md:py-14">
+        <div className="mx-auto max-w-[var(--fb-container)]">
+          <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-green-300)]">
+            Backend
           </p>
-        ) : (
-          <p className="mt-3 text-sm text-[var(--fb-text-muted)]">
-            Zahlen nicht verfügbar. DATABASE_URL prüfen.
+          <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-4xl font-extrabold uppercase leading-none tracking-tight md:text-5xl">
+            Admin
+          </h1>
+          <p className="mt-3 text-white/80">
+            Angemeldet als <strong className="text-white">{session?.user?.email}</strong>
           </p>
-        )}
-        <Link
-          href="/tools/tippspiel"
-          className="mt-4 inline-flex text-sm font-semibold text-[var(--fb-accent)] hover:underline"
-        >
-          Zum Tippspiel
-        </Link>
-      </section>
+        </div>
+      </header>
 
-      <p className="mt-6 rounded-[var(--fb-radius-lg)] border border-dashed border-[var(--fb-border)] bg-[var(--fb-soft)] p-6 text-sm text-[var(--fb-text-muted)]">
-        Magic-Link-Login steht. Hier kommen später Bestellungen, Inhalte und weitere
-        Backend-Funktionen hin.
-      </p>
-      <form action={logoutAction} className="mt-8">
-        <button
-          type="submit"
-          className="rounded-[var(--fb-radius)] border border-[var(--fb-border)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--fb-accent)]"
-        >
-          Abmelden
-        </button>
-      </form>
+      <div className="mx-auto max-w-[var(--fb-container)] space-y-4 px-[var(--fb-gutter)] py-10">
+        <section className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-950)] bg-white p-6">
+          <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-extrabold uppercase">
+            Module
+          </h2>
+          <p className="mt-3 max-w-2xl text-[var(--fb-ink-2)]">
+            Funktionsbereiche der Seite an- und abschalten, etwa den Aufstiegs-Rechner.
+            Abgeschaltete Module verschwinden aus der Navigation.
+          </p>
+          <Link href="/admin/modules" className={actionClass}>
+            Module verwalten
+          </Link>
+        </section>
+
+        <section className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-950)] bg-white p-6">
+          <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-extrabold uppercase">
+            News
+          </h2>
+          <p className="mt-3 max-w-2xl text-[var(--fb-ink-2)]">
+            Spielberichte, Vorberichte und Meldungen pflegen. Mit Titelbild und Text.
+          </p>
+          <Link href="/admin/news" className={actionClass}>
+            News verwalten
+          </Link>
+        </section>
+
+        <section className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-950)] bg-white p-6">
+          <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-extrabold uppercase">
+            Tippspiel
+          </h2>
+          {stats ? (
+            <p className="mt-3 text-[var(--fb-ink-2)]">
+              {stats.profiles} {stats.profiles === 1 ? "Konto" : "Konten"} · {stats.predictions}{" "}
+              {stats.predictions === 1 ? "Tipp" : "Tipps"}
+            </p>
+          ) : (
+            <p className="mt-3 text-[var(--fb-ink-2)]">Zahlen nicht verfügbar. DATABASE_URL prüfen.</p>
+          )}
+          <Link href="/tools/tippspiel" className={actionClass}>
+            Zum Tippspiel
+          </Link>
+        </section>
+
+        <p className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-800)] bg-white p-6 text-[var(--fb-ink-2)]">
+          Magic-Link-Login steht. Hier kommen später Bestellungen, Inhalte und weitere
+          Backend-Funktionen hin.
+        </p>
+
+        <form action={logoutAction}>
+          <button
+            type="submit"
+            className="rounded-[var(--fb-radius)] border-2 border-[var(--fb-ink)] bg-white px-4 py-2.5 text-sm font-bold text-[var(--fb-ink)] transition hover:bg-[var(--fb-ink)] hover:text-white"
+          >
+            Abmelden
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
