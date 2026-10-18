@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "@/auth";
 import { getSession } from "@/lib/session";
@@ -22,17 +23,29 @@ export default async function AdminPage() {
 
   return (
     <div>
-      <header className="bg-[var(--fb-green-950)] px-[var(--fb-gutter)] py-10 text-white md:py-14">
-        <div className="mx-auto max-w-[var(--fb-container)]">
-          <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-green-300)]">
-            Backend
-          </p>
-          <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-4xl font-extrabold uppercase leading-none tracking-tight md:text-5xl">
-            Admin
-          </h1>
-          <p className="mt-3 text-white/80">
-            Angemeldet als <strong className="text-white">{session?.user?.email}</strong>
-          </p>
+      <header className="bg-[var(--fb-green-950)] px-[var(--fb-gutter)] py-8 text-white md:py-10">
+        <div className="mx-auto flex max-w-[var(--fb-container)] items-center gap-5">
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/logo-fuechse-berlin-frauen.png"
+              alt="Füchse Berlin Frauen"
+              width={140}
+              height={160}
+              priority
+              className="h-20 w-auto md:h-24"
+            />
+          </Link>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[var(--fb-ls-label)] text-[var(--fb-green-300)]">
+              Backend
+            </p>
+            <h1 className="mt-2 font-[family-name:var(--fb-font-display)] text-4xl font-extrabold uppercase leading-none tracking-tight md:text-5xl">
+              Admin
+            </h1>
+            <p className="mt-3 text-white/80">
+              Angemeldet als <strong className="text-white">{session?.user?.email}</strong>
+            </p>
+          </div>
         </div>
       </header>
 
