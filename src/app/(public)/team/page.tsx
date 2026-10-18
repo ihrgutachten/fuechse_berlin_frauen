@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TeamClient } from "@/components/players/team-client";
 import { TopPlayers } from "@/components/players/top-players";
 import { PageHero } from "@/components/ui/page-hero";
+import { youthSiteUrl } from "@/data/mannschaften";
 import { getTeamMembers, getTopPlayers } from "@/lib/data";
 
 export const metadata = { title: "Team" };
@@ -36,7 +37,23 @@ export default async function TeamPage() {
           >
             Alle Mannschaften
           </Link>{" "}
-          von den Minis bis zur 2. Frauen.
+          von den Minis bis zur 2. Frauen. Jugend und Minis auch auf der{" "}
+          <a
+            href={youthSiteUrl}
+            className="font-semibold text-[var(--fb-accent)] underline-offset-2 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Nachwuchsseite
+          </a>
+          .{" "}
+          <Link
+            href="/team/statistiken"
+            className="font-semibold text-[var(--fb-accent)] underline-offset-2 hover:underline"
+          >
+            Saisonstatistiken
+          </Link>
+          .
         </p>
         <TopPlayers stats={topPlayers} />
         <TeamClient members={members} />

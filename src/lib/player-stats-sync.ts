@@ -65,10 +65,30 @@ type HbfPlayer = {
   avgGoals?: number;
   sevenMeterGoals?: number;
   seven_m_goals?: number;
+  sevenMeter?: number;
+  assists?: number;
+  twoMinutePenalties?: number;
+  shirtNumber?: number;
+  number?: number;
   saves?: number;
   games_played?: number;
   totalMatches?: number;
   goals_conceded?: number;
+};
+
+export type SquadSeasonStat = {
+  firstName: string;
+  lastName: string;
+  name: string;
+  position: string;
+  shirtNumber: number | null;
+  games: number;
+  goals: number;
+  sevenMeterGoals: number;
+  sevenMeterAttempts: number;
+  assists: number;
+  twoMinutePenalties: number;
+  saves: number;
 };
 
 let schemaReady: Promise<void> | null = null;
@@ -180,6 +200,34 @@ export function parseHbfPlayerStats(payload: unknown): { scorers: PlayerStatsRow
     });
 
   return { scorers, keepers };
+}
+
+export function parseSquadSeason(payload: unknown): SquadSeasonStat[] {
+  const root = payload as { playerStatistics?: HbfPlayer[] };
+  const list = Array.isArray(root?.playerStatistics) ? root.playerStatistics : [];
+  return list
+    .filter((player) => String(player.fmpTeamId) === FUECHSE_FMP_TEAM_ID)
+    .map((player) => {
+      const firstName = player.firstName?.trim() ?? "";
+      const lastName = player.lastName?.trim() ?? "";
+      const shirt = asNumber(player.shirtNumber) || asNumber(player.number);
+      const sevenMeterGoals = asNumber(player.sevenMeterGoals ?? player.seven_m_goals);
+      const sevenMeterAttempts = Math.max(asNumber(player.sevenMeter), sevenMeterGoals);
+      return {
+        firstName,
+        lastName,
+        name: `${firstName} ${lastName}`.trim(),
+        position: player.position ?? "",
+        shirtNumber: shirt > 0 ? shirt : null,
+        games: asNumber(player.games_played ?? player.totalMatches),
+        goals: asNumber(player.goals),
+        sevenMeterGoals,
+        sevenMeterAttempts,
+        assists: asNumber(player.assists),
+        twoMinutePenalties: asNumber(player.twoMinutePenalties),
+        saves: asNumber(player.saves),
+      };
+    });
 }
 
 function parseJsonRows(value: unknown): PlayerStatsRow[] {

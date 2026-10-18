@@ -1,3 +1,5 @@
+export const youthSiteUrl = "https://fuechse-berlin-frauen-nachwuchs.vercel.app/";
+
 export type SquadGroupId = "erwachsene" | "a" | "b" | "c" | "d" | "e" | "minis";
 
 export type SquadContact = {
