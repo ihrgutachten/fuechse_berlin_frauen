@@ -156,6 +156,8 @@ export type Player = {
   photo: string;
   nationality?: string;
   bio?: string;
+  /** false: nicht mehr im Kader. Fehlt bei den statischen Daten, gilt als aktiv. */
+  active?: boolean;
   /** Optional recorded pronunciation (preferred). */
   nameAudio?: string;
   /** BCP-47 lang for TTS fallback, e.g. nl-NL */
@@ -665,12 +667,14 @@ export type TopPlayers = {
   source: string;
 };
 
-export async function getTopPlayers(): Promise<TopPlayers> {
+export async function getTopPlayers(
+  roster: Array<Pick<Player, "slug" | "name" | "photo" | "positionLabel" | "role">> = players as Player[],
+): Promise<TopPlayers> {
   const live = await getPlayerStatsSnapshot();
   const snapshot = (live ?? playerStatsFallback) as PlayerStatsSnapshot;
   return hydrateTopPlayers(
     snapshot,
-    getTeamMembers().map((player) => ({
+    roster.map((player) => ({
       slug: player.slug,
       name: player.name,
       photo: player.photo,
@@ -688,20 +692,6 @@ export function getNews(): NewsItem[] {
 
 export function getNewsBySlug(slug: string): NewsItem | undefined {
   return getNews().find((n) => n.slug === slug);
-}
-
-export function getPlayers(): Player[] {
-  return (players as Player[]).filter((p) => p.role === "spielerin");
-}
-
-export function getTeamMembers(role?: TeamRole | "all"): Player[] {
-  const list = players as Player[];
-  if (!role || role === "all") return list;
-  return list.filter((p) => p.role === role);
-}
-
-export function getPlayerBySlug(slug: string): Player | undefined {
-  return (players as Player[]).find((p) => p.slug === slug);
 }
 
 export function getSponsors(): Sponsor[] {

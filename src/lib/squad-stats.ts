@@ -1,4 +1,4 @@
-import { getTeamMembers } from "@/lib/data";
+import { getRoster } from "@/lib/roster";
 import {
   PLAYER_STATS_SOURCE_URL,
   matchRosterPlayer,
@@ -34,7 +34,7 @@ export async function getSquadSeason(): Promise<SquadStatRow[]> {
       next: { revalidate: 1800 },
     });
     if (!res.ok) return [];
-    const roster = getTeamMembers().filter((player) => player.role === "spielerin");
+    const roster = (await getRoster()).filter((player) => player.role === "spielerin");
     const lookup = roster.map((player) => ({
       slug: player.slug,
       name: player.name,

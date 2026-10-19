@@ -4,14 +4,16 @@ import { TeamClient } from "@/components/players/team-client";
 import { TopPlayers } from "@/components/players/top-players";
 import { PageHero } from "@/components/ui/page-hero";
 import { youthSiteUrl } from "@/data/mannschaften";
-import { getTeamMembers, getTopPlayers } from "@/lib/data";
+import { getTopPlayers } from "@/lib/data";
+import { getRoster } from "@/lib/roster";
 
 export const metadata = { title: "Team" };
 export const revalidate = 60;
 
 export default async function TeamPage() {
-  const members = getTeamMembers();
-  const topPlayers = await getTopPlayers();
+  const roster = await getRoster();
+  const members = roster.filter((player) => player.active !== false);
+  const topPlayers = await getTopPlayers(roster);
 
   return (
     <>

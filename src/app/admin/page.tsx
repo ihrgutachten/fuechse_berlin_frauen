@@ -65,6 +65,19 @@ export default async function AdminPage() {
 
         <section className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-950)] bg-white p-6">
           <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-extrabold uppercase">
+            Spielerinnen
+          </h2>
+          <p className="mt-3 max-w-2xl text-[var(--fb-ink-2)]">
+            Kader pflegen. Foto, Name, Nummer, Position. Inaktive bleiben gespeichert, mit grauem
+            Foto, und erscheinen nicht auf der Teamseite.
+          </p>
+          <Link href="/admin/team" className={actionClass}>
+            Spielerinnen verwalten
+          </Link>
+        </section>
+
+        <section className="rounded-[var(--fb-radius-lg)] border-2 border-[var(--fb-green-950)] bg-white p-6">
+          <h2 className="font-[family-name:var(--fb-font-display)] text-2xl font-extrabold uppercase">
             News
           </h2>
           <p className="mt-3 max-w-2xl text-[var(--fb-ink-2)]">

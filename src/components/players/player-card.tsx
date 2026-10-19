@@ -19,13 +19,15 @@ export function PlayerCard({ player, className }: PlayerCardProps) {
       )}
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-[var(--fb-green-900)]">
-        <Image
-          src={player.photo}
-          alt={`${player.name}${player.positionLabel ? ` – ${player.positionLabel}` : ""}`}
-          fill
-          sizes="(max-width: 768px) 50vw, 25vw"
-          className="object-cover object-top"
-        />
+        {player.photo ? (
+          <Image
+            src={player.photo}
+            alt={player.positionLabel ? `${player.name}, ${player.positionLabel}` : player.name}
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="object-cover object-top"
+          />
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
         {isPlayer && player.number != null ? (
           <span className="absolute right-3 top-3 font-[family-name:var(--fb-font-display)] text-5xl font-black text-white/25">

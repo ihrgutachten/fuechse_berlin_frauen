@@ -1,5 +1,5 @@
 import { extractText, getDocumentProxy } from "unpdf";
-import { getTeamMembers } from "@/lib/data";
+import { getTeamMembers } from "@/lib/roster";
 import { fetchMatchDetailsReport, pressReportPdfUrl } from "@/lib/hbf";
 import { parseEndstand, parsePressReport, type MatchReport } from "@/lib/parse-press-report";
 
@@ -9,8 +9,8 @@ export function pressReportUrl(fmpMatchId: string): string {
   return pressReportPdfUrl(fmpMatchId);
 }
 
-function rosterLookup() {
-  return getTeamMembers().map((member) => ({
+async function rosterLookup() {
+  return (await getTeamMembers()).map((member) => ({
     slug: member.slug,
     name: member.name,
     number: member.number,
@@ -21,11 +21,12 @@ function rosterLookup() {
 }
 
 export async function fetchMatchReport(fmpMatchId: string): Promise<MatchReport | null> {
-  const fromFeed = await fetchMatchDetailsReport(fmpMatchId, rosterLookup(), 1800);
+  const roster = await rosterLookup();
+  const fromFeed = await fetchMatchDetailsReport(fmpMatchId, roster, 1800);
   if (fromFeed) return fromFeed;
   const text = await pressReportText(fmpMatchId, 1800);
   if (!text) return null;
-  return parsePressReport(text, rosterLookup());
+  return parsePressReport(text, roster);
 }
 
 async function pressReportText(

@@ -1,29 +1,27 @@
 import Image from "next/image";
+import { cn } from "@/lib/format";
 import { notFound } from "next/navigation";
 import { PronounceNameButton } from "@/components/players/pronounce-name-button";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
-import {
-  getPlayerBySlug,
-  getTeamMembers,
-  speechLangFromNationality,
-} from "@/lib/data";
+import { getPlayerBySlug, getRoster } from "@/lib/roster";
+import { speechLangFromNationality } from "@/lib/data";
 
 type Props = { params: Promise<{ spielerin: string }> };
 
 export async function generateStaticParams() {
-  return getTeamMembers().map((p) => ({ spielerin: p.slug }));
+  return (await getRoster()).map((p) => ({ spielerin: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { spielerin } = await params;
-  const player = getPlayerBySlug(spielerin);
+  const player = await getPlayerBySlug(spielerin);
   return { title: player?.name ?? "Team" };
 }
 
 export default async function PlayerPage({ params }: Props) {
   const { spielerin } = await params;
-  const player = getPlayerBySlug(spielerin);
+  const player = await getPlayerBySlug(spielerin);
   if (!player) notFound();
 
   const isPlayer = player.role === "spielerin";
@@ -47,16 +45,21 @@ export default async function PlayerPage({ params }: Props) {
       />
       <div className="mx-auto grid max-w-[var(--fb-container)] gap-8 px-[var(--fb-gutter)] py-10 md:grid-cols-[280px_1fr] md:py-14">
         <div className="relative aspect-[3/4] overflow-hidden rounded-[var(--fb-radius-lg)] bg-[var(--fb-green-900)]">
-          <Image
-            src={player.photo}
-            alt={player.name}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 280px"
-            className="object-cover object-top"
-          />
+          {player.photo ? (
+            <Image
+              src={player.photo}
+              alt={player.name}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 280px"
+              className={cn("object-cover object-top", player.active === false && "grayscale")}
+            />
+          ) : null}
         </div>
         <div>
+          {player.active === false ? (
+            <p className="mb-4 text-sm font-semibold text-[var(--fb-text-muted)]">Nicht mehr im Kader.</p>
+          ) : null}
           <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-3">
             <div>
               <dt className="text-[var(--fb-text-faint)]">Rolle</dt>
@@ -93,6 +96,8 @@ export default async function PlayerPage({ params }: Props) {
               </div>
             ) : null}
           </dl>
+
+          {player.bio ? <p className="mt-6 max-w-2xl text-[var(--fb-text-muted)]">{player.bio}</p> : null}
 
           {player.previousClubs ? (
             <div className="mt-6">
