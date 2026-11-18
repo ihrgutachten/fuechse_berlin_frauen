@@ -2,8 +2,11 @@ export function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
+const BERLIN = "Europe/Berlin";
+
 export function formatMatchDate(iso: string) {
   return new Intl.DateTimeFormat("de-DE", {
+    timeZone: BERLIN,
     weekday: "short",
     day: "2-digit",
     month: "short",
@@ -14,6 +17,7 @@ export function formatMatchDate(iso: string) {
 
 export function formatNewsDate(iso: string) {
   return new Intl.DateTimeFormat("de-DE", {
+    timeZone: BERLIN,
     day: "2-digit",
     month: "long",
     year: "numeric",
@@ -31,7 +35,7 @@ export function formatScenarioTime(iso: string) {
 }
 
 export function berlinDayKey(value: string | number | Date): string {
-  const stamp = new Date(value).toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
+  const stamp = new Date(value).toLocaleString("sv-SE", { timeZone: BERLIN });
   return stamp.split(" ")[0] ?? "";
 }
 
@@ -40,7 +44,7 @@ export function isSameBerlinDay(iso: string, now = Date.now()): boolean {
 }
 
 function berlinDateParts(iso: string) {
-  const stamp = new Date(iso).toLocaleString("sv-SE", { timeZone: "Europe/Berlin" });
+  const stamp = new Date(iso).toLocaleString("sv-SE", { timeZone: BERLIN });
   const [datePart, timePart = "00:00:00"] = stamp.split(" ");
   const [year, month, day] = datePart.split("-");
   const [hour, minute] = timePart.split(":");
