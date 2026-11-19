@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test src/lib/format.test.ts"
+    "test": "node --experimental-strip-types --test src/lib/format.test.ts src/lib/stream-link-alert.test.ts"
   },
   "dependencies": {
     "@auth/neon-adapter": "^1.11.3",

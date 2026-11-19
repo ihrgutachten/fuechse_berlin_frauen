@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/tippspiel-results",
       "schedule": "*/3 * * * *"
+    },
+    {
+      "path": "/api/cron/stream-link-alert",
+      "schedule": "15 * * * *"
     }
   ]
 }
