@@ -25,6 +25,7 @@ export const HBF_TEAM_SLUG: Record<number, string> = {
   774: "hsg-freiburg",
   132: "tus-metzingen",
   144: "hsg-bensheim-auerbach",
+  123: "thuringer-hc",
 };
 
 export const HBF_LIGA_TEAM_IDS = [

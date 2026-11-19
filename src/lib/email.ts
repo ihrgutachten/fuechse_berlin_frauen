@@ -27,8 +27,8 @@ function fromAddress(): string {
   return name ? `${name} <${email}>` : email;
 }
 
-async function sendEmail(opts: {
-  to: string;
+export async function sendEmail(opts: {
+  to: string | string[];
   subject: string;
   html: string;
   text: string;

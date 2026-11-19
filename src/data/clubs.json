@@ -190,5 +190,15 @@
     "isUs": false,
     "hasLogo": false,
     "logo": "/clubs/hsg-bensheim-auerbach.png"
+  },
+  {
+    "slug": "thuringer-hc",
+    "name": "Thüringer HC",
+    "short": "THC",
+    "city": "Erfurt",
+    "website": "https://thueringer-hc.de/",
+    "isUs": false,
+    "hasLogo": false,
+    "logo": "/clubs/thuringer-hc.png"
   }
 ]
